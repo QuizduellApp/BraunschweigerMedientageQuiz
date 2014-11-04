@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="de.braunschweig.braunschweigermedientagequiz" >
+    <uses-sdk android:minSdkVersion="9" android:targetSdkVersion="19" /> <!-- Kleinste unterstützte Android Version: Gingerbread. Neueste unterstützte Android Version KitKat -->
 
     <application
         android:allowBackup="true"

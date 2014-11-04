@@ -5,19 +5,32 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
 
-    <TextView android:text="@string/hello_world" android:layout_width="wrap_content"
+    <Button
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="138dp" />
+        android:text="Mit Facebook einloggen"
+        android:id="@+id/button_facebook"
+        android:layout_marginTop="56dp"
+        android:layout_below="@+id/button_neuerBenutzer"
+        android:layout_alignRight="@+id/button_neuerBenutzer"
+        android:layout_alignEnd="@+id/button_neuerBenutzer" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Button"
-        android:id="@+id/button"
-        android:layout_alignParentBottom="true"
+        android:text="Neuen Benutzer anlegen"
+        android:id="@+id/button_neuerBenutzer"
+        android:layout_marginTop="45dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Login (bereits angemeldet)"
+        android:id="@+id/button_login"
+        android:layout_below="@+id/button_facebook"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="50dp" />
+        android:layout_marginTop="85dp" />
 
 </RelativeLayout>
