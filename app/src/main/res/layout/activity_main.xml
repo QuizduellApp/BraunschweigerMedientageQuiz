@@ -8,29 +8,51 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Mit Facebook einloggen"
-        android:id="@+id/button_facebook"
-        android:layout_marginTop="56dp"
-        android:layout_below="@+id/button_neuerBenutzer"
-        android:layout_alignRight="@+id/button_neuerBenutzer"
-        android:layout_alignEnd="@+id/button_neuerBenutzer" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Neuen Benutzer anlegen"
-        android:id="@+id/button_neuerBenutzer"
-        android:layout_marginTop="45dp"
+        android:text="@string/button_facebook_login"
+        android:id="@+id/buttonFacebook"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Login (bereits angemeldet)"
-        android:id="@+id/button_login"
-        android:layout_below="@+id/button_facebook"
+        android:text="@string/button_benutzer_anmelden"
+        android:id="@+id/buttonNeuerBenutzer"
+        android:layout_below="@+id/buttonFacebook"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="85dp" />
+        android:layout_marginTop="20dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:id="@+id/editTextEmail"
+        android:autoText="false"
+        android:hint="@string/edit_text_email"
+        android:layout_below="@+id/buttonNeuerBenutzer"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:hint="@string/edit_text_passwort"
+        android:ems="10"
+        android:id="@+id/editTextPasswort"
+        android:layout_below="@+id/editTextEmail"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/button_login"
+        android:id="@+id/buttonLogin"
+        android:layout_below="@+id/editTextPasswort"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"/>
 
 </RelativeLayout>

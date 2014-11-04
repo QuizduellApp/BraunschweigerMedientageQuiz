@@ -4,5 +4,10 @@
     <string name="app_name">Braunschweiger Medientage Quiz</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="button_facebook_login">Facebook Login</string>
+    <string name="button_benutzer_anmelden">Neuen Benutzer anlegen</string>
+    <string name="button_login">Login</string>
+    <string name="edit_text_email">Ihre E-Mail-Adresse</string>
+    <string name="edit_text_passwort">Ihr Passwort</string>
 
 </resources>
