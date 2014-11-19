@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <EditText
+        android:layout_width="219dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/editUsername"
+        android:hint="@string/edit_text_username"
+        android:layout_gravity="center_horizontal" />
+
+    <EditText
+        android:layout_width="219dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:inputType="textPersonName"
+        android:text="Name"
+        android:ems="10"
+        android:id="@+id/editFirstName"
+        android:hint="@string/edit_text_firstname"/>
+
+    <EditText
+        android:layout_width="219dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:inputType="textPersonName"
+        android:text="Name"
+        android:ems="10"
+        android:id="@+id/editLastName"
+        android:hint="@string/edit_text_lastname"/>
+
+    <EditText
+        android:layout_width="219dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:id="@+id/editEmail"
+        android:hint="@string/edit_text_e_mail"/>
+
+    <EditText
+        android:layout_width="219dp"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/editPassword"
+        android:hint="@string/edit_text_password"
+        android:layout_gravity="center_horizontal" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonEintragen"
+        android:layout_below="@+id/buttonEintragen"
+        android:layout_centerHorizontal="true"
+        android:text="Eintragen"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center_horizontal" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonAbbrechen"
+        android:layout_below="@+id/buttonAbbrechen"
+        android:layout_centerHorizontal="true"
+        android:text="Abbrechen"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center_horizontal" />
+
+
+</LinearLayout>
