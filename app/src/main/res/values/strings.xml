@@ -2,12 +2,18 @@
 <resources>
 
     <string name="app_name">Braunschweiger Medientage Quiz</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="button_facebook_login">Facebook Login</string>
     <string name="button_benutzer_anmelden">Neuen Benutzer anlegen</string>
     <string name="button_login">Login</string>
     <string name="edit_text_email">Ihre E-Mail-Adresse</string>
     <string name="edit_text_passwort">Ihr Passwort</string>
+    <!--Registieren.class -->
+    <string name="title_activity_registrieren">Registrieren</string>
+    <string name="edit_text_username">Benutzername</string>
+    <string name="edit_text_firstname">Vorname</string>
+    <string name="edit_text_lastname">Nachname</string>
+    <string name="edit_text_e_mail">Email-Adresse</string>
+    <string name="edit_text_password">Passwort</string>
 
 </resources>
