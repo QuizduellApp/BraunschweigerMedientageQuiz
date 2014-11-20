@@ -21,7 +21,8 @@
         android:id="@+id/buttonNeuerBenutzer"
         android:layout_below="@+id/buttonFacebook"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="20dp"
+        android:clickable="true" />
 
     <EditText
         android:layout_width="wrap_content"
