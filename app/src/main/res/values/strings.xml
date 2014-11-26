@@ -13,7 +13,8 @@
     <string name="edit_text_username">Benutzername</string>
     <string name="edit_text_firstname">Vorname</string>
     <string name="edit_text_lastname">Nachname</string>
-    <string name="edit_text_e_mail">Email-Adresse</string>
     <string name="edit_text_password">Passwort</string>
+    <string name="edit_text_e_mail">Email</string>
+
 
 </resources>

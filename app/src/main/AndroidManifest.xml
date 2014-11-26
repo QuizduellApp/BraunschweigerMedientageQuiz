@@ -2,7 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 package="de.braunschweig.braunschweigermedientagequiz" >
 <uses-sdk android:minSdkVersion="9" android:targetSdkVersion="19" /> <!-- Kleinste unterstützte Android Version: Gingerbread. Neueste unterstützte Android Version KitKat -->
-
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 <application
     android:allowBackup="true"
     android:icon="@drawable/ic_launcher"
