@@ -53,6 +53,7 @@ public class Registrieren extends Activity
 
 
 
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -86,18 +87,23 @@ public class Registrieren extends Activity
                         ) {
                     Toast.makeText(Registrieren.this, "Bitte fuellen Sie alle Felder aus!", Toast.LENGTH_LONG).show();
                 } else {
+                    String benutzer_id = "0";
                     String benutzername = ""+editUsername.getText().toString();
                     String vorname = ""+editFirstName.getText().toString();
                     String nachname = ""+editLastName.getText().toString();
                     String passwort = ""+editPassword.getText().toString();
                     String email = ""+editEmail.getText().toString();
+                    String highscore = "0";
 
                     List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+                    nameValuePairs.add(new BasicNameValuePair("benutzer_id", benutzer_id));
                     nameValuePairs.add(new BasicNameValuePair("benutzername", benutzername));
                     nameValuePairs.add(new BasicNameValuePair("vorname", vorname));
                     nameValuePairs.add(new BasicNameValuePair("nachname", nachname));
                     nameValuePairs.add(new BasicNameValuePair("passwort", passwort));
                     nameValuePairs.add(new BasicNameValuePair("email", email));
+                    nameValuePairs.add(new BasicNameValuePair("highscore", highscore));
+
                     try {
                         HttpClient httpClient = new DefaultHttpClient();
                         HttpPost httpPost =  new HttpPost("http://braunschweigermedientage.comyr.com/create_user.php");
