@@ -53,7 +53,7 @@
         android:id="@+id/buttonEintragen"
         android:layout_below="@+id/buttonEintragen"
         android:layout_centerHorizontal="true"
-        android:text="Eintragen"
+        android:text="Registrieren"
         android:layout_marginTop="10dp"
         android:layout_gravity="center_horizontal" />
 

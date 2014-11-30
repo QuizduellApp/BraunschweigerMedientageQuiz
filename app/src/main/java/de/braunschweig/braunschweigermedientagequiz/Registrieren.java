@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 
 import java.io.InputStream;
@@ -28,9 +29,9 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONObject;
 
 import android.content.Context;
-
 import android.widget.TextView;
 
 /**
@@ -48,7 +49,11 @@ public class Registrieren extends Activity
     EditText editLastName;
     EditText editEmail;
     EditText editPassword;
+    InputStream is = null;
+    // SELECT Strings for HTTP Request
 
+    boolean result;
+    String name;
 
 
 
@@ -58,15 +63,14 @@ public class Registrieren extends Activity
         super.onCreate(savedInstanceState);
 
 
-       StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-       StrictMode.setThreadPolicy(policy);
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
         setContentView(R.layout.activity_registrieren);
 
 
         Button eintragen = (Button) findViewById(R.id.buttonEintragen);
         eintragen.setOnClickListener(new View.OnClickListener() {
-          InputStream is = null;
             public void onClick(View view1) {
                 editUsername = (EditText) findViewById(R.id.editUsername);
                 editFirstName = (EditText) findViewById(R.id.editFirstName);
@@ -86,7 +90,18 @@ public class Registrieren extends Activity
                     //	 || editPWiederholung.length() == 0
                         ) {
                     Toast.makeText(Registrieren.this, "Bitte fuellen Sie alle Felder aus!", Toast.LENGTH_LONG).show();
-                } else {
+                } else if
+
+                        (select(editUsername.getText().toString())==true)
+                {String msg = "Benutzer existiert bereits";
+                   Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+                    Intent myIntent = new Intent(view1.getContext(),
+                            Registrieren.class);
+                    startActivityForResult(myIntent, 0);
+                }
+
+
+                else {
                     String benutzer_id = "0";
                     String benutzername = ""+editUsername.getText().toString();
                     String vorname = ""+editFirstName.getText().toString();
@@ -112,16 +127,19 @@ public class Registrieren extends Activity
 
                         HttpEntity entity = response.getEntity();
 
-                         is = entity.getContent();
+                        is = entity.getContent();
 
 
-                        String msg = "Erfolgreich Benutzer registriert";
+                        String msg = "Benutzer erfolgreich registriert";
                         Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+                        Intent myIntent = new Intent(view1.getContext(),
+                                MainActivity.class);
+                        startActivityForResult(myIntent, 0);
 
                     }
                     catch(ClientProtocolException e)
                     {
-                       Log.e("ClientProtocol", "Log_tag");
+                        Log.e("ClientProtocol", "Log_tag");
                         e.printStackTrace();
                     }catch (IOException e)
                     {
@@ -135,7 +153,8 @@ public class Registrieren extends Activity
 
         });
 
-         Button abbrechen = (Button) findViewById(R.id.buttonAbbrechen);
+
+          Button abbrechen = (Button) findViewById(R.id.buttonAbbrechen);
          abbrechen.setOnClickListener(new View.OnClickListener() {
          public void onClick(View view) {
          Intent myIntent = new Intent(view.getContext(),
@@ -149,10 +168,63 @@ public class Registrieren extends Activity
     }
 
 
+    public boolean select(String user)
+    {
+
+        ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+
+        nameValuePairs.add(new BasicNameValuePair("user",user));
+        try
+        {
+            HttpClient httpClient = new DefaultHttpClient();
+            HttpPost httpPost =  new HttpPost("http://braunschweigermedientage.comyr.com/compare_userdata.php");
+            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+            HttpResponse response = httpClient.execute(httpPost);
+
+            HttpEntity entity = response.getEntity();
+
+            is = entity.getContent();
+
+
+        }
+        catch(Exception e)
+        {
+            Log.e("Fail 1", e.toString());
+            Toast.makeText(getApplicationContext(), "Invalid IP Address",
+                    Toast.LENGTH_LONG).show();
+        }
+
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is,"iso-8859-1"),8);
+            StringBuilder sb = new StringBuilder();
+
+            String line = sb.append(reader.readLine()).toString();
+            int lol = line.length();
+
+
+
+            if (lol  == 5) {
+                result = false; //Benutzer nicht vorhanden
+
+
+            } else {
+                result = true; // Benutzer existiert
+
+
+            }
+            is.close();
+
+
+        }catch(Exception e){
+            Log.e("log_tag", "Error converting result "+e.toString());
+
+        }
+        return result;
+    }
+
+
+
+
+
 
 }
-
-
-
-
-
