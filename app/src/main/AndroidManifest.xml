@@ -22,6 +22,26 @@ package="de.braunschweig.braunschweigermedientagequiz" >
         android:name="de.braunschweig.braunschweigermedientagequiz.Registrieren"
         android:label="@string/title_activity_registrieren" >
     </activity>
+    <activity
+        android:name="de.braunschweig.braunschweigermedientagequiz.MainMenuActivity"
+        android:label="@string/title_activity_mainmenu" >
+    </activity>
+    <activity
+        android:name="de.braunschweig.braunschweigermedientagequiz.NeuesSpielActivity"
+        android:label="@string/title_activity_neuesspiel" >
+    </activity>
+    <activity
+        android:name="de.braunschweig.braunschweigermedientagequiz.OffeneSpieleActivity"
+        android:label="@string/title_activity_offenespiele" >
+    </activity>
+    <activity
+        android:name="de.braunschweig.braunschweigermedientagequiz.PersDatenActivity"
+        android:label="@string/title_activity_persdaten" >
+    </activity>
+    <activity
+        android:name="de.braunschweig.braunschweigermedientagequiz.HighscoreActivity"
+        android:label="@string/title_activity_highscore" >
+    </activity>
 </application>
 
 </manifest>

@@ -68,7 +68,7 @@ public class MainActivity extends Activity {
 
 
                Intent myIntent = new Intent(view.getContext(),
-                        Registrieren.class); //TODO Main Menu angeben
+                        MainMenuActivity.class);
                 startActivityForResult(myIntent, 0);
                 }
             }
