@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +19,7 @@ public class MainActivity extends Activity {
     EditText editUsername;
     EditText editPassword;
     Select select = new Select();
+    private static final String TAG_BID = "benutzerid";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,30 +48,29 @@ public class MainActivity extends Activity {
                 editUsername = (EditText) findViewById(R.id.editTextEmail);
                 editPassword = (EditText) findViewById(R.id.editTextPasswort);
 
-                if ( editUsername.length() == 0
-                        || editPassword.length() == 0 )
-                {
+                if( editUsername.length() == 0 || editPassword.length() == 0 ) {
                     Toast.makeText(MainActivity.this, "Bitte fuellen Sie alle Felder aus!", Toast.LENGTH_LONG).show();
 
-                } else if
-
-                        (select.select_login(editUsername.getText().toString(),editPassword.getText().toString())==false)
-
-
-                {String msg = "Benutzerdaten sind inkorrekt";
+                } else if(select.select_login(editUsername.getText().toString(),editPassword.getText().toString())==false) {
+                    String msg = "Benutzerdaten sind inkorrekt";
                     Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+
+                    /**Intent myIntent = new Intent(view.getContext(),
+                            MainActivity.class);   //TODO MainMenü eintragen zum weiterleiten | Christian: Sicher? habs mal auskommentiert, damit nur der toast kommt.
+                    startActivityForResult(myIntent, 0);*/
+
+                } else if(select.select_login(editUsername.getText().toString(),editPassword.getText().toString())==true) {
+
+                    //ID des angemeldeten Benutzers ermitteln
+                    String bid = select.getBenutzerID(editUsername.getText().toString(),editPassword.getText().toString());
+
                     Intent myIntent = new Intent(view.getContext(),
-                            MainActivity.class);   //TODO MainMenü eintragen zum weiterleiten
+                            MainMenuActivity.class);
+
+                    //Benutzer ID an die nächste Activity übermitteln
+                    myIntent.putExtra(TAG_BID, bid);
+
                     startActivityForResult(myIntent, 0);
-                }
-               else if
-                        (select.select_login(editUsername.getText().toString(),editPassword.getText().toString())==true)
-               {
-
-
-               Intent myIntent = new Intent(view.getContext(),
-                        MainMenuActivity.class);
-                startActivityForResult(myIntent, 0);
                 }
             }
 

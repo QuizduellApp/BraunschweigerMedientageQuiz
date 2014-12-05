@@ -3,6 +3,7 @@ package de.braunschweig.braunschweigermedientagequiz;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -10,10 +11,18 @@ import android.widget.Button;
  * Created by Christian on 22.11.2014.
  */
 public class MainMenuActivity extends Activity {
+
+    String bid;
+    private static final String TAG_BID = "benutzerid";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainmenu);
+
+        //Benutzer ID übernehmen
+        Intent i = getIntent();
+        bid = i.getStringExtra(TAG_BID);
 
         setNeuesSpielButtonClickListener();
         setOffeneSpieleButtonClickListener();
@@ -56,6 +65,10 @@ public class MainMenuActivity extends Activity {
         persDaten.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent myIntent = new Intent(v.getContext(), PersDatenActivity.class);
+
+                //Benutzer ID an nächste Activity senden
+                myIntent.putExtra(TAG_BID, bid);
+
                 startActivityForResult(myIntent, 0);
             }
         });

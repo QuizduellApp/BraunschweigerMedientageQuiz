@@ -190,4 +190,43 @@ public class Select extends Activity{
         }
         return result;
     }
+
+
+    public String getBenutzerID(String user, String passwort) {
+
+        ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+
+        nameValuePairs.add(new BasicNameValuePair("user", user));
+        nameValuePairs.add(new BasicNameValuePair("passwort", passwort));
+        try {
+            HttpClient httpClient = new DefaultHttpClient();
+            HttpPost httpPost = new HttpPost("http://braunschweigermedientage.comyr.com/get_benutzerid.php");
+            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+            HttpResponse response = httpClient.execute(httpPost);
+
+            HttpEntity entity = response.getEntity();
+
+            is = entity.getContent();
+
+
+        } catch (Exception e) {
+            Log.e("Fail 1", e.toString());
+            Toast.makeText(getApplicationContext(), "Invalid IP Address",
+                    Toast.LENGTH_LONG).show();
+        }
+
+        String line = null;
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is, "iso-8859-1"), 8);
+            StringBuilder sb = new StringBuilder();
+
+            line = sb.append(reader.readLine()).toString();
+            is.close();
+
+        } catch (Exception e) {
+            Log.e("log_tag", "Error converting result " + e.toString());
+
+        }
+        return line;
+    }
 }
