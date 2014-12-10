@@ -38,6 +38,7 @@ public class PersDatenActivity extends Activity {
 
     // URL um Benutzerdaten zu laden
     private static final String url_get_persdaten = "http://braunschweigermedientage.comyr.com/get_persdaten.php";
+    private static final String url_update_persdaten = "http://braunschweigermedientage.comyr.com/update_persdaten.php";
 
     // JSON Node names
     private static final String TAG_SUCCESS = "success";
@@ -60,7 +61,7 @@ public class PersDatenActivity extends Activity {
         bid = i.getStringExtra(TAG_BID);
 
         // Getting complete product details in background thread
-        new GetProductDetails().execute();
+        new GetBenutzerDetails().execute();
 
         setDatenAendernButtonClickListener();
     }
@@ -71,7 +72,7 @@ public class PersDatenActivity extends Activity {
         datenAendern.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // starting background task to update product
-                //new SaveProductDetails().execute();
+                new SaveBenutzerDetails().execute();
             }
         });
     }
@@ -79,7 +80,7 @@ public class PersDatenActivity extends Activity {
     /**
      * Background Async Task to get user data
      * */
-    class GetProductDetails extends AsyncTask<String, String, String> {
+    class GetBenutzerDetails extends AsyncTask<String, String, String> {
 
         /**
          * Before starting background thread Show Progress Dialog
@@ -120,8 +121,7 @@ public class PersDatenActivity extends Activity {
                         success = json.getInt(TAG_SUCCESS);
                         if (success == 1) {
                             // successfully received user data
-                            JSONArray userObj = json
-                                    .getJSONArray(TAG_USER); // JSON Array
+                            JSONArray userObj = json.getJSONArray(TAG_USER); // JSON Array
 
                             // get first user object from JSON Array
                             JSONObject user = userObj.getJSONObject(0);
@@ -152,6 +152,78 @@ public class PersDatenActivity extends Activity {
          * **/
         protected void onPostExecute(String file_url) {
             // dismiss the dialog once got all data
+            pDialog.dismiss();
+        }
+    }
+
+    /**
+     * Background Async Task to  Save product Details
+     * */
+    class SaveBenutzerDetails extends AsyncTask<String, String, String> {
+
+        /**
+         * Before starting background thread Show Progress Dialog
+         * */
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pDialog = new ProgressDialog(PersDatenActivity.this);
+            pDialog.setMessage("Daten ändern...");
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(true);
+            pDialog.show();
+        }
+
+        /**
+         * Saving product
+         * */
+        protected String doInBackground(String... args) {
+
+            // getting updated data from EditTexts
+            String benutzername = editBenutzername.getText().toString();
+            String email = editEmail.getText().toString();
+            String passwort = null;
+
+            if(editPasswort != null){
+                passwort = editPasswort.getText().toString();
+            }
+
+            // Building Parameters
+            List<NameValuePair> params = new ArrayList<NameValuePair>();
+            params.add(new BasicNameValuePair("bid", bid));
+            params.add(new BasicNameValuePair("benutzername", benutzername));
+            params.add(new BasicNameValuePair("email", email));
+            params.add(new BasicNameValuePair("passwort", passwort));
+
+            // sending modified data through http request
+            // Notice that update product url accepts POST method
+            JSONObject json = jsonParser.makeHttpRequest(url_update_persdaten, "POST", params);
+
+            // check json success tag
+            try {
+                int success = json.getInt(TAG_SUCCESS);
+
+                if (success == 1) {
+                    // successfully updated
+                    Intent i = getIntent();
+                    // send result code 100 to notify about product update
+                    setResult(100, i);
+                    finish();
+                } else {
+                    // failed to update product
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        /**
+         * After completing background task Dismiss the progress dialog
+         * **/
+        protected void onPostExecute(String file_url) {
+            // dismiss the dialog once product uupdated
             pDialog.dismiss();
         }
     }

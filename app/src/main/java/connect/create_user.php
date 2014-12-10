@@ -7,13 +7,13 @@
 	$con = mysql_connect($host,$uname,$pwd) or die("connection failed");
 	mysql_select_db($db,$con) or die("db selection failed");
 	 
-$benutzer_id =$_REQUEST['benutzer_id'];
+    $benutzer_id =$_REQUEST['benutzer_id'];
 	$benutzername =$_REQUEST['benutzername'];
 	$vorname=$_REQUEST['vorname'];
-        $nachname =$_REQUEST['nachname'];
-        $passwort =$_REQUEST['passwort'];
-        $email =$_REQUEST['email'];
-        $highscore =$_REQUEST['highscore'];
+    $nachname =$_REQUEST['nachname'];
+    $passwort =$_REQUEST['passwort'];
+    $email =$_REQUEST['email'];
+    $highscore =$_REQUEST['highscore'];
 
 
 	$flag['code']=0;

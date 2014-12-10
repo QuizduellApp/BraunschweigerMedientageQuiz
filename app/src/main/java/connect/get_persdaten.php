@@ -1,8 +1,8 @@
 <?php
 
 /*
- * Following code will get personal data of one person
- * A person is identified by user id (bid)
+ * Following code will get personal data of one user
+ * A user is identified by user id (bid)
  */
 
 // array for JSON response
