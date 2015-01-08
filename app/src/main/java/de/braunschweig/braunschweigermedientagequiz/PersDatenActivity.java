@@ -172,6 +172,7 @@ public class PersDatenActivity extends Activity {
             pDialog.setIndeterminate(false);
             pDialog.setCancelable(true);
             pDialog.show();
+
         }
 
         /**

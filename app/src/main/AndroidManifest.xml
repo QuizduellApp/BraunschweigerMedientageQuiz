@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 package="de.braunschweig.braunschweigermedientagequiz" >
-<uses-sdk android:minSdkVersion="9" android:targetSdkVersion="19" /> <!-- Kleinste unterstützte Android Version: Gingerbread. Neueste unterstützte Android Version KitKat -->
+<uses-sdk android:minSdkVersion="10" android:targetSdkVersion="19" /> <!-- Kleinste unterstützte Android Version: Gingerbread. Neueste unterstützte Android Version KitKat -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 <application
@@ -9,6 +9,10 @@ package="de.braunschweig.braunschweigermedientagequiz" >
     android:icon="@drawable/ic_launcher"
     android:label="@string/app_name"
     android:theme="@style/AppTheme" >
+
+    <meta-data android:name="com.facebook.sdk.ApplicationId"
+        android:value="@string/facebook_app_id" />
+
     <activity
         android:name="de.braunschweig.braunschweigermedientagequiz.MainActivity"
         android:label="@string/app_name" >
@@ -18,6 +22,7 @@ package="de.braunschweig.braunschweigermedientagequiz" >
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
     </activity>
+
     <activity
         android:name="de.braunschweig.braunschweigermedientagequiz.Registrieren"
         android:label="@string/title_activity_registrieren" >
@@ -25,6 +30,7 @@ package="de.braunschweig.braunschweigermedientagequiz" >
     <activity
         android:name="de.braunschweig.braunschweigermedientagequiz.MainMenuActivity"
         android:label="@string/title_activity_mainmenu" >
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
     </activity>
     <activity
         android:name="de.braunschweig.braunschweigermedientagequiz.NeuesSpielActivity"
@@ -42,6 +48,11 @@ package="de.braunschweig.braunschweigermedientagequiz" >
         android:name="de.braunschweig.braunschweigermedientagequiz.HighscoreActivity"
         android:label="@string/title_activity_highscore" >
     </activity>
+
+    <activity android:name="com.facebook.LoginActivity"
+        android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+
 </application>
 
 </manifest>

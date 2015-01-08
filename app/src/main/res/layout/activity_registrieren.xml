@@ -3,7 +3,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@drawable/Background">
+    android:background="@drawable/background">
 
 
     <EditText
@@ -67,7 +67,7 @@
         android:layout_centerHorizontal="true"
         android:text="Registrieren"
         android:layout_marginTop="10dp"
-        android:background="@drawable/ButtonLayout"
+        android:background="@drawable/button_layout"
         android:layout_gravity="center_horizontal" />
 
     <Button
@@ -78,7 +78,7 @@
         android:layout_centerHorizontal="true"
         android:text="Abbrechen"
         android:layout_marginTop="10dp"
-        android:background="@drawable/ButtonLayout"
+        android:background="@drawable/button_layout"
         android:layout_gravity="center_horizontal" />
 
 

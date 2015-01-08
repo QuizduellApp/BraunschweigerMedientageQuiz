@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/Background">
+    android:background="@drawable/background">
 
 
     <TextView
@@ -74,7 +74,7 @@
         android:layout_below="@+id/buttonHighscore"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:background="@drawable/ButtonLayout"
+        android:background="@drawable/button_layout"
         android:layout_gravity="center_horizontal"/>
 
 </LinearLayout>
