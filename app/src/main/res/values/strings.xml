@@ -23,7 +23,7 @@
 
     <!--MainMenuActivity.class -->
     <string name="title_activity_mainmenu">Hauptmenü</string>
-    <string name="button_neuesSpiel">Neues Spiel</string>
+    <string name="button_neuesSpiel">Freund herausfordern</string>
     <string name="button_offeneSpiele">Offene Spiele</string>
     <string name="button_highscore">Highscore</string>
     <string name="button_persDaten">Persönliche Daten</string>
@@ -32,8 +32,8 @@
     <string name="title_activity_persdaten">Persönliche Daten</string>
     <string name="button_datenAendern">Daten ändern</string>
 
-    <!--NeuesSpielActivity.class -->
-    <string name="title_activity_neuesspiel">Neues Spiel</string>
+    <!--FriendlistActivity.class -->
+    <string name="title_activity_friendlist">Freundesliste</string>
 
     <!--OffeneSpieleActivity.class -->
     <string name="title_activity_offenespiele">Offene Spiele</string>

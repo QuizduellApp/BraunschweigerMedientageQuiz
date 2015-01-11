@@ -34,7 +34,7 @@ public class MainMenuActivity extends Activity {
         Button neuesSpiel = (Button) findViewById(R.id.buttonNeuesSpiel);
         neuesSpiel.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent myIntent = new Intent(v.getContext(), NeuesSpielActivity.class);
+                Intent myIntent = new Intent(v.getContext(), FriendlistActivity.class);
                 startActivityForResult(myIntent, 0);
             }
         });
