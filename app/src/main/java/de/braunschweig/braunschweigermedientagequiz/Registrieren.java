@@ -92,27 +92,27 @@ public class Registrieren extends Activity
 
                 {String msg = "Benutzer existiert bereits";
                    Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
-                    Intent myIntent = new Intent(view1.getContext(),
-                            Registrieren.class);
-                    startActivityForResult(myIntent, 0);
+                    editUsername.setText("");
+                    editPassword.setText("");
+                    editPWiederholung.setText("");
                 }
 
                 else if (select.select_mail(editEmail.getText().toString())==true)
 
                 {String msg = "Emailadresse bereits registriert";
                     Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
-                    Intent myIntent = new Intent(view1.getContext(),
-                            Registrieren.class);
-                    startActivityForResult(myIntent, 0);
+                    editEmail.setText("");
+                    editPassword.setText("");
+                    editPWiederholung.setText("");
                 }
 
                 // Zum Passwort vergleichen
                 else if (!editPassword.getText().toString().equals(editPWiederholung.getText().toString()))
                 {String msg = "Passwörter stimmen nicht überein";
                     Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
-                    Intent myIntent = new Intent(view1.getContext(),
-                            Registrieren.class);
-                    startActivityForResult(myIntent, 0);
+                    editPassword.setText("");
+                    editPWiederholung.setText("");
+
                 }
 
             else {

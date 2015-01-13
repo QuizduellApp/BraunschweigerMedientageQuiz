@@ -84,10 +84,10 @@ public class MainActivity extends FragmentActivity {
                 } else if(select.select_login(editUsername.getText().toString(),editPassword.getText().toString())==false) {
                     String msg = "Benutzerdaten sind inkorrekt";
                     Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+                    editUsername.setText("");
+                    editPassword.setText("");
 
-                    /**Intent myIntent = new Intent(view.getContext(),
-                            MainActivity.class);   //TODO MainMenü eintragen zum weiterleiten | Christian: Sicher? habs mal auskommentiert, damit nur der toast kommt.
-                    startActivityForResult(myIntent, 0);*/
+
 
                 } else if(select.select_login(editUsername.getText().toString(),editPassword.getText().toString())==true) {
 
