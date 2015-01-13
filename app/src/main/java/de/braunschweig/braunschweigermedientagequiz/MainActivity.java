@@ -29,7 +29,7 @@ public class MainActivity extends FragmentActivity {
     Select select = new Select();
     private static final String TAG_BID = "benutzerid";
 
-    private MainFragment mainFragment;
+    //private MainFragment mainFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,7 +106,7 @@ public class MainActivity extends FragmentActivity {
 
         });
 
-        /** Facebook Login **/
+        /** Facebook Login
         if (savedInstanceState == null) {
             // Add the fragment on initial activity setup
             mainFragment = new MainFragment();
@@ -118,7 +118,7 @@ public class MainActivity extends FragmentActivity {
             // Or set the fragment from restored state info
             mainFragment = (MainFragment) getSupportFragmentManager()
                     .findFragmentById(android.R.id.content);
-        }
+        }**/
     }
 
 

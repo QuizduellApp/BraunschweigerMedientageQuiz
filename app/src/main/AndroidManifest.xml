@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 package="de.braunschweig.braunschweigermedientagequiz" >
-<uses-sdk android:minSdkVersion="10" android:targetSdkVersion="19" /> <!-- Kleinste unterstützte Android Version: Gingerbread. Neueste unterstützte Android Version KitKat -->
+<uses-sdk android:minSdkVersion="14" android:targetSdkVersion="19" /> <!-- Kleinste unterstützte Android Version: 14 (wegen Facebook SDK) ??. Neueste unterstützte Android Version KitKat -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 <application

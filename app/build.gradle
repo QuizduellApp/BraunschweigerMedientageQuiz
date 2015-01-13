@@ -2,10 +2,10 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 21
-    buildToolsVersion "20.0.0"
+    buildToolsVersion "20.0.0" // Neueste Version: 21.1.2
     defaultConfig {
         applicationId "de.braunschweig.braunschweigermedientagequiz"
-        minSdkVersion 10
+        minSdkVersion 14 // 14 als Minimum wegen Facebook SDK
         targetSdkVersion 21
         versionCode 1
         versionName "1.0"
@@ -20,11 +20,22 @@ android {
     }
 }
 
+/*repositories {
+    maven {
+        url 'https://oss.sonatype.org/content/groups/public'
+    }
+}
+
+dependencies {
+    compile 'com.shamanland:facebook-android-sdk:3.15.0-SNAPSHOT'
+}*/
+
 dependencies {
     compile 'com.android.support:appcompat-v7:21.0.0'
     compile fileTree(dir: 'libs', include: ['*.jar'])
     //compile 'org.json:json:20141113'
     compile files('lib/java-json.jar')
     compile files('lib/json-lib-2.4-jdk15.jar')
-    compile project(':facebook')
+    //compile 'com.facebook.android:facebook-android-sdk:3.20.0'
+    compile project(':libraries:facebook')
 }
