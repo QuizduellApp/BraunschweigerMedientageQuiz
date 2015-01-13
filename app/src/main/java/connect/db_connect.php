@@ -8,7 +8,7 @@ class DB_CONNECT {
     // constructor
     function __construct() {
         // connecting to database
-        $this->connect();
+        //$this->connect(); Entfernt, weil die Klasseninitialisierung keinen $con-String zurück geben kann
     }
 
     // destructor

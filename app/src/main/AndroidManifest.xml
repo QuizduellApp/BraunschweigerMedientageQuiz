@@ -8,7 +8,9 @@ package="de.braunschweig.braunschweigermedientagequiz" >
     android:allowBackup="true"
     android:icon="@drawable/ic_launcher"
     android:label="@string/app_name"
-    android:theme="@style/AppTheme" >
+    android:theme="@style/AppTheme"
+    android:exported="false"
+    > <!-- android:exported: Zugriff auf die App von anderen Android Programmen beschränken -->
 
     <meta-data android:name="com.facebook.sdk.ApplicationId"
         android:value="@string/facebook_app_id" />

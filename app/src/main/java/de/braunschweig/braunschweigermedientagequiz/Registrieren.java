@@ -74,8 +74,6 @@ public class Registrieren extends Activity
                 editPWiederholung = (EditText) findViewById(R.id.editPasswordAgain);
 
 
-
-
                 /**
                  * Fehlermeldung falls nicht alle Felder ausgefuellt sind!
                  **/
@@ -90,10 +88,7 @@ public class Registrieren extends Activity
 
                     // Falls der Benutzer schon existiert
                 }
-                else if
-
-                        (select.select_user(editUsername.getText().toString())==true)
-
+                else if (select.select_user(editUsername.getText().toString())==true)
 
                 {String msg = "Benutzer existiert bereits";
                    Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
@@ -102,10 +97,7 @@ public class Registrieren extends Activity
                     startActivityForResult(myIntent, 0);
                 }
 
-                else if
-
-                        (select.select_mail(editEmail.getText().toString())==true)
-
+                else if (select.select_mail(editEmail.getText().toString())==true)
 
                 {String msg = "Emailadresse bereits registriert";
                     Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
@@ -115,17 +107,13 @@ public class Registrieren extends Activity
                 }
 
                 // Zum Passwort vergleichen
-                else if
-
-                        (!editPassword.getText().toString().equals(editPWiederholung.getText().toString()))
+                else if (!editPassword.getText().toString().equals(editPWiederholung.getText().toString()))
                 {String msg = "Passwörter stimmen nicht überein";
                     Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
                     Intent myIntent = new Intent(view1.getContext(),
                             Registrieren.class);
                     startActivityForResult(myIntent, 0);
                 }
-
-
 
             else {
                     String benutzer_id = "0";
@@ -146,6 +134,7 @@ public class Registrieren extends Activity
                     nameValuePairs.add(new BasicNameValuePair("highscore", highscore));
 
                     try {
+                        // TODO Überprüfung einbauen, ob der Benutzer wirklich angelegt wurde
                         HttpClient httpClient = new DefaultHttpClient();
                         HttpPost httpPost =  new HttpPost("http://braunschweigermedientage.comyr.com/create_user.php");
                         httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));

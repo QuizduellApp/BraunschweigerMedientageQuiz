@@ -8,18 +8,21 @@
 // array for JSON response
 $response = array();
 
-// include db connect class
-require_once('/home/a4717469/public_html/db_connect.php');
+// Datenbankverbindungsklasse einbinden
+require_once(dirname(__FILE__).'/db_connect.php');
 
-// connecting to db
+// Klasseninstanz und -verbindung herstellen
 $db = new DB_CONNECT();
+$con = $db->connect();
 
 // check for post data
 if (isset($_GET["bid"])) {
-    $bid = $_GET['bid'];
+    $bid = intval($_GET['bid']);
 
     // get a benutzer from benutzer table
-    $result = mysql_query("SELECT benutzername, email FROM Benutzer WHERE benutzer_id = $bid");
+    $query = sprintf("SELECT benutzername, email FROM Benutzer WHERE benutzer_id = %d",
+                mysql_real_escape_string($bid, $con));
+    $result = mysql_query($query);
 
     if (!empty($result)) {
         // check for empty result
