@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--Settings -->
+    <string name="webserver">http://androidlab.besaba.com/</string>
+
     <!--Facebook SDK -->
     <string name="facebook_app_id">679617708822117</string>
 
@@ -41,5 +44,7 @@
     <!--HighscoreActivity.class -->
     <string name="title_activity_highscore">Highscore</string>
 
+    <!--Select.class -->
+    <string name="title_select">Select</string>
 
 </resources>

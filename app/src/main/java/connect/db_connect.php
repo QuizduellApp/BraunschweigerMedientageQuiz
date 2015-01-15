@@ -4,6 +4,7 @@
  * A class file to connect to database
  */
 class DB_CONNECT {
+    private $con;
 
     // constructor
     function __construct() {
@@ -28,7 +29,7 @@ class DB_CONNECT {
 	    $database="QuizDB";
 
         // Connecting to mysql database
-        $con = mysql_connect($host,$uname,$pwd) or die(mysql_error());
+        $con = @mysql_connect($host,$uname,$pwd) or die(mysql_error());
 
         // Selecing database
         $db = mysql_select_db($database) or die(mysql_error()) or die(mysql_error());

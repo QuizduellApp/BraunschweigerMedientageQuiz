@@ -1,8 +1,8 @@
 package de.braunschweig.braunschweigermedientagequiz;
 
 
+import android.content.Context;
 import android.content.Intent;
-import android.app.Activity;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.FragmentActivity;
@@ -15,13 +15,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.facebook.AppEventsLogger;
-import com.facebook.LoggingBehavior;
-import com.facebook.Request;
-import com.facebook.Response;
-import com.facebook.Settings;
-import com.facebook.model.GraphUser;
-
-import connect.Select;
 
 public class MainActivity extends FragmentActivity {
     EditText editUsername;
@@ -40,6 +33,9 @@ public class MainActivity extends FragmentActivity {
 
         setContentView(R.layout.activity_main);
 
+        Log.i("APP","TESTEN");
+        String hosturl = this.getString(R.string.webserver);
+        Log.i("APP", "HOSTURL: "+hosturl);
 
         /** TEST FOR FACEBOOK FUNCTION **/
         /**Settings.addLoggingBehavior(LoggingBehavior.INCLUDE_ACCESS_TOKENS);
@@ -78,10 +74,15 @@ public class MainActivity extends FragmentActivity {
                 editUsername = (EditText) findViewById(R.id.editTextEmail);
                 editPassword = (EditText) findViewById(R.id.editTextPasswort);
 
+                Log.i("APP","Username: "+editUsername.getText().toString());
+                Log.i("APP","Passwort: "+editPassword.getText().toString());
+
+
+
                 if( editUsername.length() == 0 || editPassword.length() == 0 ) {
                     Toast.makeText(MainActivity.this, "Bitte fuellen Sie alle Felder aus!", Toast.LENGTH_LONG).show();
 
-                } else if(select.select_login(editUsername.getText().toString(),editPassword.getText().toString())==false) {
+                } else if(select.select_login(getApplicationContext(), editUsername.getText().toString(),editPassword.getText().toString())==false) {
                     String msg = "Benutzerdaten sind inkorrekt";
                     Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
                     editUsername.setText("");
@@ -89,7 +90,7 @@ public class MainActivity extends FragmentActivity {
 
 
 
-                } else if(select.select_login(editUsername.getText().toString(),editPassword.getText().toString())==true) {
+                } else if(select.select_login(getApplicationContext(),editUsername.getText().toString(),editPassword.getText().toString())==true) {
 
                     //ID des angemeldeten Benutzers ermitteln
                     String bid = select.getBenutzerID(editUsername.getText().toString(),editPassword.getText().toString());

@@ -3,7 +3,6 @@ package de.braunschweig.braunschweigermedientagequiz;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
-import android.app.ProgressDialog;
 
 import android.os.StrictMode;
 import android.util.Log;
@@ -12,11 +11,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.http.HttpEntity;
@@ -25,14 +22,9 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-import connect.Select;
-
-import android.content.Context;
-import android.widget.TextView;
 
 /**
  * Created by Dennis on 18.11.14.
@@ -133,10 +125,12 @@ public class Registrieren extends Activity
                     nameValuePairs.add(new BasicNameValuePair("email", email));
                     nameValuePairs.add(new BasicNameValuePair("highscore", highscore));
 
+                    String hosturl = MyApplication.get().getString(R.string.webserver);
+
                     try {
                         // TODO Überprüfung einbauen, ob der Benutzer wirklich angelegt wurde
                         HttpClient httpClient = new DefaultHttpClient();
-                        HttpPost httpPost =  new HttpPost("http://braunschweigermedientage.comyr.com/create_user.php");
+                        HttpPost httpPost =  new HttpPost(hosturl+"create_user.php");
                         httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
                         HttpResponse response = httpClient.execute(httpPost);
 
@@ -181,13 +175,5 @@ public class Registrieren extends Activity
 
 
     }
-
-
-
-
-
-
-
-
 
 }

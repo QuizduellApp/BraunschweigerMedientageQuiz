@@ -6,14 +6,16 @@ require_once(dirname(__FILE__).'/db_connect.php');
 $db = new DB_CONNECT();
 $con = $db->connect();
 
-$query = sprintf("SELECT benutzer_id FROM Benutzer WHERE benutzername='%s' AND passwort='%s'",
-			mysql_real_escape_string($_REQUEST['user'], $con),
-			mysql_real_escape_string($_REQUEST['passwort'], $con));
+$query = sprintf("SELECT benutzer_id,passwort FROM Benutzer WHERE benutzername='%s'",
+			mysql_real_escape_string($_REQUEST['user'], $con));
 
 $result = mysql_query($query);
 
 $row = mysql_fetch_object($result);
-echo "$row->benutzer_id";
-
 $db->close();
+
+// Passwort überprüfen
+if (password_verify($_REQUEST['passwort'], $row->passwort) {
+    echo "$row->benutzer_id";
+}
 ?>

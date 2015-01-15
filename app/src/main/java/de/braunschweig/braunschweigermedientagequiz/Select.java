@@ -1,6 +1,7 @@
-package connect;
+package de.braunschweig.braunschweigermedientagequiz;
 
 import android.app.Activity;
+import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -35,7 +36,7 @@ public class Select extends Activity{
         try
         {
             HttpClient httpClient = new DefaultHttpClient();
-            HttpPost httpPost =  new HttpPost("http://braunschweigermedientage.comyr.com/compare_user.php");
+            HttpPost httpPost =  new HttpPost(getString(R.string.webserver)+"compare_user.php");
             httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
             HttpResponse response = httpClient.execute(httpPost);
 
@@ -87,10 +88,12 @@ public class Select extends Activity{
         ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 
         nameValuePairs.add(new BasicNameValuePair("email",email));
+
+        String hosturl = MyApplication.get().getString(R.string.webserver);
         try
         {
             HttpClient httpClient = new DefaultHttpClient();
-            HttpPost httpPost =  new HttpPost("http://braunschweigermedientage.comyr.com/compare_mail.php");
+            HttpPost httpPost =  new HttpPost(hosturl+"compare_mail.php");
             httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
             HttpResponse response = httpClient.execute(httpPost);
 
@@ -136,24 +139,29 @@ public class Select extends Activity{
     }
 
 
-    public boolean select_login(String user, String passwort)
+    public boolean select_login(Context context, String user, String passwort)
     {
 
         ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 
         nameValuePairs.add(new BasicNameValuePair("user",user));
         nameValuePairs.add(new BasicNameValuePair("passwort",passwort));
+
+        //String hosturl = getString(R.string.webserver);
+        //Log.d("APP","HOST: "+hosturl);
+
+        String hosturl = MyApplication.get().getString(R.string.webserver);
+
         try
         {
             HttpClient httpClient = new DefaultHttpClient();
-            HttpPost httpPost =  new HttpPost("http://braunschweigermedientage.comyr.com/login.php");
+            HttpPost httpPost =  new HttpPost(hosturl+"login.php");
             httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
             HttpResponse response = httpClient.execute(httpPost);
 
             HttpEntity entity = response.getEntity();
 
             is = entity.getContent();
-
 
         }
         catch(Exception e)
@@ -173,6 +181,7 @@ public class Select extends Activity{
 
 
             if (lol  == 5) {
+                Log.d("APP","Log:"+lol);
                 result = false; //Eingabe falsch
 
 
@@ -198,9 +207,12 @@ public class Select extends Activity{
 
         nameValuePairs.add(new BasicNameValuePair("user", user));
         nameValuePairs.add(new BasicNameValuePair("passwort", passwort));
+
+        String hosturl = MyApplication.get().getString(R.string.webserver);
+
         try {
             HttpClient httpClient = new DefaultHttpClient();
-            HttpPost httpPost = new HttpPost("http://braunschweigermedientage.comyr.com/get_benutzerid.php");
+            HttpPost httpPost = new HttpPost(hosturl+"get_benutzerid.php");
             httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
             HttpResponse response = httpClient.execute(httpPost);
 

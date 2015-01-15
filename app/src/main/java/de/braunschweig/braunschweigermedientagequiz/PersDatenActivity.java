@@ -36,9 +36,11 @@ public class PersDatenActivity extends Activity {
     // JSON parser class
     JSONParser jsonParser = new JSONParser();
 
+    private static final String hosturl = MyApplication.get().getString(R.string.webserver);
+
     // URL um Benutzerdaten zu laden
-    private static final String url_get_persdaten = "http://braunschweigermedientage.comyr.com/get_persdaten.php";
-    private static final String url_update_persdaten = "http://braunschweigermedientage.comyr.com/update_persdaten.php";
+    private static final String url_get_persdaten = hosturl+"get_persdaten.php";
+    private static final String url_update_persdaten = hosturl+"update_persdaten.php";
 
     // JSON Node names
     private static final String TAG_SUCCESS = "success";
@@ -53,6 +55,8 @@ public class PersDatenActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pers_daten);
+
+        Log.i("APP", url_get_persdaten);
 
         // getting product details from intent
         Intent i = getIntent();

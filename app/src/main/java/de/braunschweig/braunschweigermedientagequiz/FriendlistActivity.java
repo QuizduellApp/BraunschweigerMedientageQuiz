@@ -1,7 +1,6 @@
 package de.braunschweig.braunschweigermedientagequiz;
 
 import android.app.Activity;
-import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -14,8 +13,6 @@ import android.widget.Toast;
 
 import java.io.InputStream;
 import java.util.ArrayList;
-
-import connect.Select;
 
 /**
  * Created by Dennis on 11.01.15.
