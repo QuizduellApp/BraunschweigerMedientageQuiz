@@ -24,6 +24,8 @@ if (isset($_GET["bid"])) {
                 mysql_real_escape_string($bid, $con));
     $result = mysql_query($query);
 
+file_put_contents("log.txt",$query."    --     ". $_GET['bid']);
+
     if (!empty($result)) {
         // check for empty result
         if (mysql_num_rows($result) > 0) {

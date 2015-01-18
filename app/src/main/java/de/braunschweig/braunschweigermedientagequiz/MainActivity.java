@@ -77,8 +77,6 @@ public class MainActivity extends FragmentActivity {
                 Log.i("APP","Username: "+editUsername.getText().toString());
                 Log.i("APP","Passwort: "+editPassword.getText().toString());
 
-
-
                 if( editUsername.length() == 0 || editPassword.length() == 0 ) {
                     Toast.makeText(MainActivity.this, "Bitte fuellen Sie alle Felder aus!", Toast.LENGTH_LONG).show();
 

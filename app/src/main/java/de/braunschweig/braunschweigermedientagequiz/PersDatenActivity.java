@@ -119,6 +119,7 @@ public class PersDatenActivity extends Activity {
                         JSONObject json = jsonParser.makeHttpRequest(url_get_persdaten, "GET", params);
 
                         // check your log for json response
+                        Log.d("User Data BID:", bid);
                         Log.d("User Data", json.toString());
 
                         // json success tag

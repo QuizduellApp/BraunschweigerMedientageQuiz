@@ -26,6 +26,7 @@ public class Select extends Activity{
     InputStream is = null;
     boolean result;
 
+    private static final String hosturl = MyApplication.get().getString(R.string.webserver);
 
     public boolean select_user(String user)
     {
@@ -36,7 +37,7 @@ public class Select extends Activity{
         try
         {
             HttpClient httpClient = new DefaultHttpClient();
-            HttpPost httpPost =  new HttpPost(getString(R.string.webserver)+"compare_user.php");
+            HttpPost httpPost =  new HttpPost(hosturl+"compare_user.php");
             httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
             HttpResponse response = httpClient.execute(httpPost);
 
@@ -89,7 +90,6 @@ public class Select extends Activity{
 
         nameValuePairs.add(new BasicNameValuePair("email",email));
 
-        String hosturl = MyApplication.get().getString(R.string.webserver);
         try
         {
             HttpClient httpClient = new DefaultHttpClient();
@@ -150,8 +150,6 @@ public class Select extends Activity{
         //String hosturl = getString(R.string.webserver);
         //Log.d("APP","HOST: "+hosturl);
 
-        String hosturl = MyApplication.get().getString(R.string.webserver);
-
         try
         {
             HttpClient httpClient = new DefaultHttpClient();
@@ -208,8 +206,6 @@ public class Select extends Activity{
         nameValuePairs.add(new BasicNameValuePair("user", user));
         nameValuePairs.add(new BasicNameValuePair("passwort", passwort));
 
-        String hosturl = MyApplication.get().getString(R.string.webserver);
-
         try {
             HttpClient httpClient = new DefaultHttpClient();
             HttpPost httpPost = new HttpPost(hosturl+"get_benutzerid.php");
@@ -219,7 +215,6 @@ public class Select extends Activity{
             HttpEntity entity = response.getEntity();
 
             is = entity.getContent();
-
 
         } catch (Exception e) {
             Log.e("Fail 1", e.toString());
@@ -239,6 +234,7 @@ public class Select extends Activity{
             Log.e("log_tag", "Error converting result " + e.toString());
 
         }
+        Log.i("getBenutzerID: ",line);
         return line;
     }
 }
