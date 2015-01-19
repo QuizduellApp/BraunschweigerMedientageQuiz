@@ -41,6 +41,10 @@
     <string name="title_activity_neuesspiel">Spielen</string>
 
     <!-- OffeneSpieleActivity.class -->
+    <string name="button_cat1">Kategorie1</string>
+    <string name="button_cat2">Kategorie2</string>
+
+    <!-- NeuesSpielActivity.class -->
     <string name="title_activity_offenespiele">Offene Spiele</string>
 
     <!-- HighscoreActivity.class -->
