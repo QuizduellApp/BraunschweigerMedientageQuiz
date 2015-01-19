@@ -1,69 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-package="de.braunschweig.braunschweigermedientagequiz" >
-<uses-sdk android:minSdkVersion="14" android:targetSdkVersion="19" /> <!-- Kleinste unterstützte Android Version: 14 (wegen Facebook SDK) ??. Neueste unterstützte Android Version KitKat -->
+    package="de.braunschweig.braunschweigermedientagequiz" >
+
+    <uses-sdk
+        android:minSdkVersion="14"
+        android:targetSdkVersion="19" />
+    <!-- Kleinste unterstützte Android Version: 14 (wegen Facebook SDK) ??. Neueste unterstützte Android Version KitKat -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-<application
-    android:allowBackup="true"
-    android:icon="@drawable/ic_launcher"
-    android:label="@string/app_name"
-    android:theme="@style/AppTheme"
-    android:exported="false"
-    android:name=".MyApplication"
-    > <!-- android:exported: Zugriff auf die App von anderen Android Programmen beschränken -->
 
-    <meta-data android:name="com.facebook.sdk.ApplicationId"
-        android:value="@string/facebook_app_id" />
+    <application
+        android:name=".MyApplication"
+        android:allowBackup="true"
+        android:exported="false"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/CustomActionBarTheme" >
 
-    <activity
-        android:name="de.braunschweig.braunschweigermedientagequiz.MainActivity"
-        android:label="@string/app_name" >
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+        <!-- android:theme="@style/AppTheme" -->
+        <!-- android:exported: Zugriff auf die App von anderen Android Programmen beschränken -->
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-    </activity>
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
 
-    <activity
-        android:name="de.braunschweig.braunschweigermedientagequiz.Registrieren"
-        android:label="@string/title_activity_registrieren" >
-    </activity>
-    <activity
-        android:name="de.braunschweig.braunschweigermedientagequiz.MainMenuActivity"
-        android:label="@string/title_activity_mainmenu" >
-        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
-    </activity>
-    <activity
-        android:name="de.braunschweig.braunschweigermedientagequiz.FriendlistActivity"
-        android:label="@string/title_activity_friendlist" >
-    </activity>
-    <activity
-        android:name="de.braunschweig.braunschweigermedientagequiz.OffeneSpieleActivity"
-        android:label="@string/title_activity_offenespiele" >
-    </activity>
-    <activity
-        android:name="de.braunschweig.braunschweigermedientagequiz.PersDatenActivity"
-        android:label="@string/title_activity_persdaten" >
-    </activity>
-    <activity
-        android:name="de.braunschweig.braunschweigermedientagequiz.HighscoreActivity"
-        android:label="@string/title_activity_highscore" >
-    </activity>
-    <activity
-        android:name="de.braunschweig.braunschweigermedientagequiz.Select"
-        android:label="@string/title_select" >
-    </activity>
-    <activity
-        android:name="de.braunschweig.braunschweigermedientagequiz.Select"
-        android:label="@string/title_select" >
-    </activity>
-
-    <activity android:name="com.facebook.LoginActivity"
-        android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-
-
-</application>
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Registrieren"
+            android:label="@string/title_activity_registrieren" >
+        </activity>
+        <activity
+            android:name=".MainMenuActivity"
+            android:label="@string/title_activity_mainmenu" >
+        </activity>
+        <activity
+            android:name=".FriendlistActivity"
+            android:label="@string/title_activity_friendlist" >
+        </activity>
+        <activity
+            android:name=".OffeneSpieleActivity"
+            android:label="@string/title_activity_offenespiele" >
+        </activity>
+        <activity
+            android:name=".PersDatenActivity"
+            android:label="@string/title_activity_persdaten" >
+        </activity>
+        <activity
+            android:name=".HighscoreActivity"
+            android:label="@string/title_activity_highscore"
+            android:theme="@style/CustomActionBarTheme" >
+        </activity>
+        <activity
+            android:name=".Select"
+            android:label="@string/title_select" >
+        </activity>
+        <activity
+            android:name="com.facebook.LoginActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+    </application>
 
 </manifest>

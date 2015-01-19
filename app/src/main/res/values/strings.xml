@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--Settings -->
+
+    <!-- Settings -->
     <string name="webserver">http://androidlab.besaba.com/</string>
 
-    <!--Facebook SDK -->
+    <!-- Facebook SDK -->
     <string name="facebook_app_id">679617708822117</string>
 
-    <!--General App -->
+    <!-- General App -->
     <string name="app_name">BS MediaQuiz</string>
     <string name="action_settings">Settings</string>
     <string name="button_facebook_login">Facebook Login</string>
-    <string name="button_benutzer_anmelden">Neuen Benutzer anlegen</string>
+    <string name="button_benutzer_anmelden">Neuer Benutzer</string>
     <string name="button_login">Login</string>
     <string name="edit_text_email">Ihre E-Mail-Adresse</string>
     <string name="edit_text_passwort">Ihr Passwort</string>
 
-    <!--Registieren.class -->
+    <!-- Registieren.class -->
     <string name="title_activity_registrieren">Registrieren</string>
     <string name="edit_text_username">Benutzername</string>
     <string name="edit_text_firstname">Vorname</string>
@@ -24,27 +25,28 @@
     <string name="edit_text_password_again">Passwort wiederholen</string>
     <string name="edit_text_e_mail">Email</string>
 
-    <!--MainMenuActivity.class -->
+    <!-- MainMenuActivity.class -->
     <string name="title_activity_mainmenu">Hauptmenü</string>
     <string name="button_neuesSpiel">Freund herausfordern</string>
     <string name="button_offeneSpiele">Offene Spiele</string>
     <string name="button_highscore">Highscore</string>
     <string name="button_persDaten">Persönliche Daten</string>
 
-    <!--PersDatenActivity.class -->
+    <!-- PersDatenActivity.class -->
     <string name="title_activity_persdaten">Persönliche Daten</string>
     <string name="button_datenAendern">Daten ändern</string>
 
-    <!--FriendlistActivity.class -->
+    <!-- FriendlistActivity.class -->
     <string name="title_activity_friendlist">Freundesliste</string>
 
-    <!--OffeneSpieleActivity.class -->
+    <!-- OffeneSpieleActivity.class -->
     <string name="title_activity_offenespiele">Offene Spiele</string>
 
-    <!--HighscoreActivity.class -->
+    <!-- HighscoreActivity.class -->
     <string name="title_activity_highscore">Highscore</string>
 
-    <!--Select.class -->
+    <!-- Select.class -->
     <string name="title_select">Select</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>

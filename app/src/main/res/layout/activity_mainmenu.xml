@@ -14,7 +14,8 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:background="@drawable/button_layout"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="20dp"
+        android:textColor="@color/button_text" />
 
     <Button
         android:layout_width="@dimen/button_width"
@@ -24,7 +25,8 @@
         android:layout_below="@+id/buttonNeuesSpiel"
         android:layout_centerHorizontal="true"
         android:background="@drawable/button_layout"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="20dp"
+        android:textColor="@color/button_text" />
 
     <Button
         android:layout_width="@dimen/button_width"
@@ -34,7 +36,8 @@
         android:layout_below="@+id/buttonOffeneSpiele"
         android:layout_centerHorizontal="true"
         android:background="@drawable/button_layout"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="20dp"
+        android:textColor="@color/button_text" />
 
     <Button
         android:layout_width="@dimen/button_width"
@@ -44,6 +47,7 @@
         android:layout_below="@+id/buttonHighscore"
         android:layout_centerHorizontal="true"
         android:background="@drawable/button_layout"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="20dp"
+        android:textColor="@color/button_text" />
 
 </RelativeLayout>

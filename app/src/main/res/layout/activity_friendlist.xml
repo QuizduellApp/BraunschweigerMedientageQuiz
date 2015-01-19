@@ -55,7 +55,8 @@
             android:background="@drawable/button_layout"
             android:id="@+id/buttonaddfriend"
             android:textSize="10dp"
-            android:layout_marginLeft="5dp" />
+            android:layout_marginLeft="5dp"
+            android:textColor="@color/button_text" />
     </LinearLayout>
 
     <Button
@@ -66,5 +67,6 @@
         android:background="@drawable/button_layout"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="30dp"
-        android:textSize="10dp" />
+        android:textSize="10dp"
+        android:textColor="@color/button_text" />
 </LinearLayout>

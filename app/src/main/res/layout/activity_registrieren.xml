@@ -68,7 +68,8 @@
         android:text="Registrieren"
         android:layout_marginTop="10dp"
         android:background="@drawable/button_layout"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:textColor="@color/button_text" />
 
     <Button
         android:layout_width="wrap_content"
@@ -79,7 +80,8 @@
         android:text="Abbrechen"
         android:layout_marginTop="10dp"
         android:background="@drawable/button_layout"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:textColor="@color/button_text" />
 
 
 </LinearLayout>
