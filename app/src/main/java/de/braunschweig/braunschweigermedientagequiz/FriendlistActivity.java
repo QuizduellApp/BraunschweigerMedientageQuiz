@@ -1,21 +1,22 @@
 package de.braunschweig.braunschweigermedientagequiz;
 
 import android.app.Activity;
-<<<<<<< HEAD
+
 import android.app.ListActivity;
 import android.app.ProgressDialog;
-=======
->>>>>>> FETCH_HEAD
+
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.http.NameValuePair;
@@ -76,6 +77,20 @@ public class FriendlistActivity extends Activity
         friendlistview = (ListView) findViewById(R.id.friendListView);
 
 
+
+        // Item Clickable
+        friendlistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent Intent = new Intent(getBaseContext(),
+                            NeuesSpielActivity.class);
+                Intent.putExtra(TAG_BID, bid);
+                startActivityForResult(Intent, 0);
+            }
+        });
+
+
+
         /** Benutzer der Freundesliste hinzufügen */
         Button eintragen = (Button) findViewById(R.id.buttonaddfriend);
         listadapter = new ArrayAdapter<String>(this,R.layout.simplerow,friendlist);
@@ -89,12 +104,12 @@ public class FriendlistActivity extends Activity
                                                  Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
                                              }
                                              /** Selbst adden verboten */
-                                                 else if(select.self(addfriend.getText().toString()).equals(addfriend.getText().toString()))
+                                             /**    else if(select.self(addfriend.getText().toString()).equals(addfriend.getText().toString()))
                                                  {
                                                      /** Wenn Benutzer existiert, dann in die Liste schreiben */
-                                                     String msg = "Das bist du";
+                                            /**         String msg = "Das bist du";
                                                      Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
-                                                 }
+                                                 } */
 
                                              /** Prüfen ob Benutzer schon in Liste vorhanden */
                                              else if(listadapter.getCount()==0)
@@ -224,7 +239,14 @@ public class FriendlistActivity extends Activity
             // dismiss the dialog once got all data
             pDialog.dismiss();
         }
+
+
+
+
+
     }
+
+
 
 
 

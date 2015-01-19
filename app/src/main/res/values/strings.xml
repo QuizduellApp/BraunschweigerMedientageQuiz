@@ -38,6 +38,7 @@
 
     <!-- FriendlistActivity.class -->
     <string name="title_activity_friendlist">Freundesliste</string>
+    <string name="title_activity_neuesspiel">Spielen</string>
 
     <!-- OffeneSpieleActivity.class -->
     <string name="title_activity_offenespiele">Offene Spiele</string>

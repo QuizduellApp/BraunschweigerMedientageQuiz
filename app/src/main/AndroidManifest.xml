@@ -49,6 +49,10 @@
             android:label="@string/title_activity_offenespiele" >
         </activity>
         <activity
+            android:name=".NeuesSpielActivity"
+            android:label="@string/title_activity_neuesspiel" >
+        </activity>
+        <activity
             android:name=".PersDatenActivity"
             android:label="@string/title_activity_persdaten" >
         </activity>
