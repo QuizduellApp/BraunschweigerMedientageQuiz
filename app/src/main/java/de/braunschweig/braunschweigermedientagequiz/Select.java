@@ -283,6 +283,29 @@ public class Select extends Activity{
     }
 
 
+    public void insert_friend(String name, String id){
+        ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 
+        nameValuePairs.add(new BasicNameValuePair("name", name));
+        nameValuePairs.add(new BasicNameValuePair("id", id));
+
+        try {
+            HttpClient httpClient = new DefaultHttpClient();
+            HttpPost httpPost = new HttpPost(hosturl+"insert_friend.php");
+            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+            HttpResponse response = httpClient.execute(httpPost);
+
+            HttpEntity entity = response.getEntity();
+
+            is = entity.getContent();
+
+        }
+        catch(Exception e)
+        {
+            Log.e("Fail 1", e.toString());
+            Toast.makeText(getApplicationContext(), "Invalid IP Address",
+                    Toast.LENGTH_LONG).show();
+        }
+    }
 
 }

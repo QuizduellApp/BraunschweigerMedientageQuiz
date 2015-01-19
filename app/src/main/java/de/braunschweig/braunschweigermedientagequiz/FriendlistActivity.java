@@ -121,6 +121,7 @@ public class FriendlistActivity extends Activity
                                                  listadapter.add(benutzername);
                                                  addfriend.setText("");
                                                  friendlistview.setAdapter(listadapter);
+                                                 select.insert_friend(addfriend.getText().toString(),bid.toString());
                                                  String msg = "Freund hinzugefügt";
                                                  Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
                                              }
@@ -139,6 +140,7 @@ public class FriendlistActivity extends Activity
                                                              listadapter.add(benutzername);
                                                              addfriend.setText("");
                                                              friendlistview.setAdapter(listadapter);
+                                                             select.insert_friend(addfriend.getText().toString(),bid.toString());
                                                              String msg = "Freund hinzugefügt";
                                                              Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
                                                              i=listadapter.getCount();
