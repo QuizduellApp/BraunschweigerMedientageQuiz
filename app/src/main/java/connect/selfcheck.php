@@ -6,17 +6,15 @@ require_once(dirname(__FILE__).'/db_connect.php');
 $db = new DB_CONNECT();
 $con = $db->connect();
 
-$query = sprintf("SELECT benutzername, passwort FROM Benutzer WHERE benutzername='%s' AND passwort='%s'",
-	mysql_real_escape_string($_REQUEST['user'], $con),
-	mysql_real_escape_string($_REQUEST['passwort'],$con));
+$query = sprintf("SELECT benutzername FROM Benutzer WHERE benutzer_ID='%d'",
+	
+	mysql_real_escape_string($_REQUEST['bid'],$con));
 
 $result = mysql_query($query);
 
-if($row = mysql_num_rows($result) > 0) {
-	echo "true";
-} 
-else {
-	echo "false";
-}
+$row = mysql_fetch_row($result);
+
+echo $row[0];
+
 $db->close();
 ?>

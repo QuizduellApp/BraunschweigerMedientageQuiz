@@ -25,6 +25,7 @@ import java.util.ArrayList;
 public class Select extends Activity{
     InputStream is = null;
     boolean result;
+    String line;
 
     private static final String hosturl = MyApplication.get().getString(R.string.webserver);
 
@@ -237,4 +238,51 @@ public class Select extends Activity{
         Log.i("getBenutzerID: ",line);
         return line;
     }
+
+    public String self(String bid) {
+
+        ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+
+        nameValuePairs.add(new BasicNameValuePair("bid", bid));
+
+        try {
+            HttpClient httpClient = new DefaultHttpClient();
+            HttpPost httpPost = new HttpPost(hosturl+"selfcheck.php");
+            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+            HttpResponse response = httpClient.execute(httpPost);
+
+            HttpEntity entity = response.getEntity();
+
+            is = entity.getContent();
+
+
+
+
+        }
+        catch(Exception e)
+        {
+            Log.e("Fail 1", e.toString());
+            Toast.makeText(getApplicationContext(), "Invalid IP Address",
+                    Toast.LENGTH_LONG).show();
+        }
+
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is,"iso-8859-1"),8);
+            StringBuilder sb = new StringBuilder();
+
+            line = sb.append(reader.readLine()).toString();
+            Log.d("benutzername",line);
+            is.close();
+
+
+        }catch(Exception e){
+            Log.e("log_tag", "Error converting result "+e.toString());
+
+        }
+        return line;
+    }
+
+
+
+
 }

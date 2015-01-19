@@ -37,6 +37,7 @@ public class FriendlistActivity extends Activity
     EditText addfriend;
     EditText freund;
     String bid;
+    private static final String hosturl = MyApplication.get().getString(R.string.webserver);
 
     ArrayAdapter<String> listadapter;
     ListView friendlistview;
@@ -104,17 +105,18 @@ public class FriendlistActivity extends Activity
                                                  Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
                                              }
                                              /** Selbst adden verboten */
-                                             /**    else if(select.self(addfriend.getText().toString()).equals(addfriend.getText().toString()))
+                                                 else if(select.self(bid).equals(addfriend.getText().toString()))
                                                  {
                                                      /** Wenn Benutzer existiert, dann in die Liste schreiben */
-                                            /**         String msg = "Das bist du";
+                                                    String msg = "Das bist du";
                                                      Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
-                                                 } */
+                                                 }
 
                                              /** Prüfen ob Benutzer schon in Liste vorhanden */
                                              else if(listadapter.getCount()==0)
                                              {
                                                  /** Wenn Benutzer existiert, dann in die Liste schreiben */
+                                             //TODO Freundschaft in die Db schreiben
                                                  String benutzername = ""+addfriend.getText().toString();
                                                  listadapter.add(benutzername);
                                                  addfriend.setText("");
@@ -195,7 +197,7 @@ public class FriendlistActivity extends Activity
 
                         // getting user data by making HTTP request
                         // Note that user data url will use GET request
-                        JSONObject json = jsonParser.makeHttpRequest("http://braunschweigermedientage.comyr.com/get_friends.php", "GET", params);
+                        JSONObject json = jsonParser.makeHttpRequest(hosturl+"get_friends.php", "GET", params);
 
                         // json success tag
                         success = json.getInt(TAG_SUCCESS);
