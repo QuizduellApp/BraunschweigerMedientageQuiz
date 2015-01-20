@@ -19,29 +19,28 @@ $con = $db->connect();
 if (isset($_GET["bid"])) {
     $bid = intval($_GET['bid']);
 
-   
-    $query = sprintf("SELECT Name FROM Kategorie ORDER BY RAND() LIMIT 2“);
+    $query = sprintf("SELECT Kategorie_ID,Name FROM Kategorie ORDER BY RAND() LIMIT 2");
     $result = mysql_query($query);
 
-file_put_contents("log.txt",$query."    --     ". $_GET['bid']);
+    file_put_contents("get_cat_log.txt",$query." - ".$_GET['bid']);
 
     if (!empty($result)) {
         // check for empty result
         if (mysql_num_rows($result) > 0) {
 
-            $result = mysql_fetch_array($result);
-
-            $benutzer = array();
-            $benutzer[„cat1“] = $result[„cat1“];
-            $benutzer[„cat2“] = $result[„cat2“];
+            $i = 1;
+            while ($row = mysql_fetch_array($result)) {
+                $response['cat'.$i] = $row['Name'];
+                $i++;
+            }
 
             // success
             $response["success"] = 1;
 
             // user node
-            $response["benutzer"] = array();
+            //$response["benutzer"] = array();
 
-            array_push($response["benutzer"], $benutzer);
+            //array_push($response["benutzer"], $benutzer);
 
             // echoing JSON response
             echo json_encode($response);

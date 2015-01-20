@@ -40,61 +40,53 @@ public class NeuesSpielActivity extends Activity{
         new Get_Categories().execute();
     }
 
-        class Get_Categories extends AsyncTask<String, String, String> {
+    class Get_Categories extends AsyncTask<String, String, String> {
+        /**
+         * Getting user data in background thread
+         * */
+        protected String doInBackground(String... params) {
 
+            // updating UI from Background Thread
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    // Check for success tag
+                    int success;
+                    try {
+                        // Building Parameters
+                        List<NameValuePair> params = new ArrayList<NameValuePair>();
+                        params.add(new BasicNameValuePair("bid", bid));
 
+                        // getting user data by making HTTP request
+                        // Note that user data url will use GET request
+                        JSONObject json = jsonParser.makeHttpRequest(url_get_cat, "GET", params);
 
-            /**
-             * Getting user data in background thread
-             * */
-            protected String doInBackground(String... params) {
+                        // json success tag
+                        success = json.getInt(TAG_SUCCESS);
+                        if (success == 1) {
+                            // successfully received user data
+                            JSONArray userObj = json.getJSONArray(TAG_NAME); // JSON Array
 
-                // updating UI from Background Thread
-                runOnUiThread(new Runnable() {
-                    public void run() {
-                        // Check for success tag
-                        int success;
-                        try {
-                            // Building Parameters
-                            List<NameValuePair> params = new ArrayList<NameValuePair>();
-                            params.add(new BasicNameValuePair("bid", bid));
+                            // get first user object from JSON Array
+                            JSONObject user = userObj.getJSONObject(0);
 
-                            // getting user data by making HTTP request
-                            // Note that user data url will use GET request
-                            JSONObject json = jsonParser.makeHttpRequest(url_get_cat, "GET", params);
+                            Log.d(TAG_NAME,TAG_NAME);
 
-                            // json success tag
-                            success = json.getInt(TAG_SUCCESS);
-                            if (success == 1) {
-                                // successfully received user data
-                                JSONArray userObj = json.getJSONArray(TAG_NAME); // JSON Array
+                            // display user data in EditText
+                            editcat1.setText(user.getString(TAG_NAME));
+                            editcat2.setText(user.getString(TAG_NAME));
 
-                                // get first user object from JSON Array
-                                JSONObject user = userObj.getJSONObject(0);
-
-                                Log.d(TAG_NAME,TAG_NAME);
-
-                                // display user data in EditText
-                                editcat1.setText(user.getString(TAG_NAME));
-                                editcat2.setText(user.getString(TAG_NAME));
-
-                            }else{
-                                // user with bid not found
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                        }else{
+                            // user with bid not found
                         }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                });
+                }
+            });
 
-                return null;
-            }
-
+            return null;
         }
-
-
-
-
     }
+}
 
 
