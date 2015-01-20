@@ -1,12 +1,12 @@
 package de.braunschweig.braunschweigermedientagequiz;
 
-import android.support.v7.app.ActionBarActivity;
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
 
-public class HighscoreActivity extends ActionBarActivity {
+public class HighscoreActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

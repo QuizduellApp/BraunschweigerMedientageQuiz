@@ -9,21 +9,18 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Freundesliste"
-        android:id="@+id/textView"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Auf einen Freund klicken, um diesen zu einem Spiel herauszufordern"
+        android:text="Fordere einen Freund zum Duell heraus!"
         android:id="@+id/Text_explain"
         android:layout_gravity="center_horizontal"
         android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp" />
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="30dp"
+        android:padding="10dp"
+        android:textColor="#FFFFFF"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:background="@color/orange" />
 
     <ListView
         android:layout_width="match_parent"
@@ -38,7 +35,7 @@
         android:weightSum="1">
 
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="175dp"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:hint="Name des Freundes"
@@ -46,7 +43,7 @@
             android:id="@+id/addfriend"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="0dp"
-            android:layout_weight="0.23" />
+            android:layout_weight="0.47" />
 
         <Button
             android:layout_width="wrap_content"
@@ -54,7 +51,7 @@
             android:text="Freund hinzufügen"
             android:background="@drawable/button_layout"
             android:id="@+id/buttonaddfriend"
-            android:textSize="10dp"
+            android:textSize="14dp"
             android:layout_marginLeft="5dp"
             android:textColor="@color/button_text" />
     </LinearLayout>
@@ -62,11 +59,11 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Zurück zum Hauptmenü"
+        android:text="Zum Hauptmenü"
         android:id="@+id/buttonstepback"
         android:background="@drawable/button_layout"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="30dp"
-        android:textSize="10dp"
+        android:layout_marginTop="80dp"
+        android:textSize="14dp"
         android:textColor="@color/button_text" />
 </LinearLayout>

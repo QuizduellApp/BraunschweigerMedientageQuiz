@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="button_text">#FFFFFF</color>
+    <color name="blau">#82c6e7</color>
+    <color name="orange">#edae07</color>
+    <color name="gelb">#ffed00</color>
+    <color name="gruen">#c1d100</color>
+
 </resources>

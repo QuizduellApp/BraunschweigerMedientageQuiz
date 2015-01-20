@@ -58,8 +58,7 @@
         </activity>
         <activity
             android:name=".HighscoreActivity"
-            android:label="@string/title_activity_highscore"
-            android:theme="@style/CustomActionBarTheme" >
+            android:label="@string/title_activity_highscore" >
         </activity>
         <activity
             android:name=".Select"
