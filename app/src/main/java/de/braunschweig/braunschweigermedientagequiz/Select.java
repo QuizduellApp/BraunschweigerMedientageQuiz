@@ -289,6 +289,9 @@ public class Select extends Activity{
         nameValuePairs.add(new BasicNameValuePair("name", name));
         nameValuePairs.add(new BasicNameValuePair("id", id));
 
+        Log.d("INSERT_FRIEND","Name: "+name);
+        Log.d("INSERT_FRIEND","id: "+id);
+
         try {
             HttpClient httpClient = new DefaultHttpClient();
             HttpPost httpPost = new HttpPost(hosturl+"insert_friend.php");
