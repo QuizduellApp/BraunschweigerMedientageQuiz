@@ -200,26 +200,30 @@ public class FriendlistActivity extends Activity
                         if (success == 1) {
                             // successfully received user data
                             JSONArray userObj = json.getJSONArray(TAG_USER);  // JSON Array
-                            JSONObject user = userObj.getJSONObject(0);
                             Log.d("APP_Friendlist",userObj.toString());
-                            String friend = json.getString("benutzer");
-                            int l = 0;  // Länge des Benutzernamens
-                            int r = 2;  // Kommt nach dem Namen
-                            int a = 27;   // Anfang des Strings
-                            for (int i =0; i<userObj.length(); i++) {
-                                int end = friend.indexOf("\"",a+l);
-                                String freund = friend.substring(a+l,end);
-                                int k = (freund.length());
-                                l = l+ k;
-                                Log.d(String.valueOf(l),String.valueOf(a));
-                                a= a+27+r;
 
-                                listadapter.add(freund);
+                            int lengthJsonArr = userObj.length();
 
-                             }
+                            for(int i=0; i < lengthJsonArr; i++) {
+                                // Get Objekt für jeden Benutzer
+                                JSONObject jsonChildNode = userObj.getJSONObject(i);
+
+                                // Name des Freundes ermitteln
+                                String freund = jsonChildNode.optString(TAG_NAME);
+                                Log.d("Freund: ", freund);
+
+                                // Überprüfen, ob Benutzer (Freund) schon in der Liste
+                                boolean friendExists = false;
+                                for (int j = 0; j < listadapter.getCount(); j++){
+                                    if (freund.equals(listadapter.getItem(j))) {
+                                        friendExists = true;
+                                    }
+                                }
+                                if (!friendExists) {
+                                    listadapter.add(freund);
+                                }
+                            }
                             friendlistview.setAdapter(listadapter);
-
-
                         }else{
                             // user with bid not found
                         }

@@ -26,14 +26,9 @@ if (isset($_GET["bid"])) {
         // check for empty result
         if (mysql_num_rows($result) > 0) {
 
-            $benutzer = array();
             $response["benutzer"] = array();
-            while($benutzer = mysql_fetch_array($result)) {
-
-                $benutzer["benutzername"] = $result["benutzername"];
-
+            while($benutzer = mysql_fetch_assoc($result)) {
                 $response["success"] = 1;
-
                 array_push($response["benutzer"], $benutzer);
             }
             // echoing JSON response
