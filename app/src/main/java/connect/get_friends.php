@@ -14,28 +14,28 @@ $con = $db->connect();
 if (isset($_GET["bid"])) {
     $bid = intval($_GET['bid']);
 
-$query = sprintf("SELECT Benutzer.benutzername
-                           FROM Benutzer
-                           INNER JOIN Freundesliste
-                           ON benutzer_ID = Freundesliste.Bid_2 and Freundesliste.Bid_1='%d'",
-               mysql_real_escape_string($bid, $con));
+    $query = sprintf("SELECT Benutzer.benutzername
+                               FROM Benutzer
+                               INNER JOIN Freundesliste
+                               ON benutzer_ID = Freundesliste.Bid_2 and Freundesliste.Bid_1='%d'",
+                   mysql_real_escape_string($bid, $con));
 
-$result = mysql_query($query);
+    $result = mysql_query($query);
 
-if (!empty($result)) {
+    if (!empty($result)) {
         // check for empty result
         if (mysql_num_rows($result) > 0) {
 
-$benutzer = array();    
-$response["benutzer"] = array();
-while($benutzer = mysql_fetch_array($result)) {
+            $benutzer = array();
+            $response["benutzer"] = array();
+            while($benutzer = mysql_fetch_array($result)) {
 
-  $benutzer["benutzername"] = $result["benutzername"];
+                $benutzer["benutzername"] = $result["benutzername"];
 
-  $response["success"] = 1;
+                $response["success"] = 1;
 
-array_push($response["benutzer"], $benutzer);
-}
+                array_push($response["benutzer"], $benutzer);
+            }
             // echoing JSON response
             echo json_encode($response);
         } else {

@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.EditText;
 
 import org.apache.http.NameValuePair;
@@ -63,20 +64,18 @@ public class NeuesSpielActivity extends Activity{
                         // json success tag
                         success = json.getInt(TAG_SUCCESS);
                         if (success == 1) {
-                            // successfully received user data
-                            JSONArray userObj = json.getJSONArray(TAG_NAME); // JSON Array
 
-                            // get first user object from JSON Array
-                            JSONObject user = userObj.getJSONObject(0);
+                            // Button Text ändern
+                            Button button = (Button)findViewById(R.id.cat1);
+                            button.setText(json.getString("cat1"));
 
-                            Log.d(TAG_NAME,TAG_NAME);
+                            Button button2 = (Button)findViewById(R.id.cat2);
+                            button2.setText(json.getString("cat2"));
 
-                            // display user data in EditText
-                            editcat1.setText(user.getString(TAG_NAME));
-                            editcat2.setText(user.getString(TAG_NAME));
-
+                            Log.d("APP_NEUESSPIEL",json.getString("cat1")+json.getString("cat2"));
                         }else{
                             // user with bid not found
+                            // TODO Fehlerbehandlung
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();

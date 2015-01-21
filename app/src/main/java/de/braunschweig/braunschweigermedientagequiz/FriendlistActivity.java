@@ -201,6 +201,7 @@ public class FriendlistActivity extends Activity
                             // successfully received user data
                             JSONArray userObj = json.getJSONArray(TAG_USER);  // JSON Array
                             JSONObject user = userObj.getJSONObject(0);
+                            Log.d("APP_Friendlist",userObj.toString());
                             String friend = json.getString("benutzer");
                             int l = 0;  // Länge des Benutzernamens
                             int r = 2;  // Kommt nach dem Namen
