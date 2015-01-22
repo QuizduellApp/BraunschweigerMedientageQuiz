@@ -15,6 +15,7 @@
         android:layout_centerHorizontal="true"
         android:background="@drawable/button_layout"
         android:layout_marginTop="20dp"
+        android:textSize="12dp"
         android:textColor="@color/button_text" />
 
     <Button
@@ -26,6 +27,7 @@
         android:layout_centerHorizontal="true"
         android:background="@drawable/button_layout"
         android:layout_marginTop="20dp"
+        android:textSize="12dp"
         android:textColor="@color/button_text" />
 
     <Button
@@ -37,6 +39,7 @@
         android:layout_centerHorizontal="true"
         android:background="@drawable/button_layout"
         android:layout_marginTop="20dp"
+        android:textSize="12dp"
         android:textColor="@color/button_text" />
 
     <Button
@@ -48,6 +51,7 @@
         android:layout_centerHorizontal="true"
         android:background="@drawable/button_layout"
         android:layout_marginTop="20dp"
+        android:textSize="12dp"
         android:textColor="@color/button_text" />
 
 </RelativeLayout>
