@@ -31,6 +31,7 @@ if (isset($_GET["bid"])) {
             $i = 1;
             while ($row = mysql_fetch_array($result)) {
                 $response['cat'.$i] = $row['Name'];
+                $response['cat'.$i."_id"] = $row['Kategorie_ID'];
                 $i++;
             }
 

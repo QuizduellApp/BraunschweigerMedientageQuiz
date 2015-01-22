@@ -20,7 +20,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 /**
- * Created by Christian on 30.11.2014.
+ * Persönliche Daten des Benutzers anzeigen.
  */
 public class PersDatenActivity extends Activity {
 

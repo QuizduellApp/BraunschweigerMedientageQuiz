@@ -47,11 +47,16 @@
     <!-- NeuesSpielActivity.class -->
     <string name="title_activity_offenespiele">Offene Spiele</string>
 
+    <!-- FrageActivity.class -->
+    <string name="title_activity_frage">Frage beantworten</string>
+
     <!-- HighscoreActivity.class -->
     <string name="title_activity_highscore">Highscore</string>
 
     <!-- Select.class -->
     <string name="title_select">Select</string>
-    <string name="hello_world">Hello world!</string>
+
+    <!-- Spiel.class -->
+    <string name="title_spiel">Spiel</string>
 
 </resources>

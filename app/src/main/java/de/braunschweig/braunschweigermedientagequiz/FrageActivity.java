@@ -4,24 +4,31 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 /**
- * Created by Dennis on 21.01.15.
+ * Frage zur ausgewählten Kategorie wird angezeigt.
  */
-public class Frage_Activity extends Activity{
+public class FrageActivity extends Activity{
 
     String cat_id; // Geerbt von Kategorie_Activity, Kategorien_id
     String User1; // Geerbt von Kategorie_Activity, Benutzer 1
     String User2; // Geerbt von Kategorie_Activity, Benutzer 2
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_fragen);
+        setContentView(R.layout.activity_frage);
+
+        // Ausgewählte Kategorie Speichern
+        Intent i = getIntent();
+        cat_id = i.getStringExtra("cat_id");
+
+        Log.d("Gewählte Kategorie",cat_id);
+
         new Get_Question().execute(); //Frage laden
     }
 
@@ -46,7 +53,7 @@ public class Frage_Activity extends Activity{
         Button Antwort1 = (Button) findViewById(R.id.Antwort1);
         Antwort1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent myIntent = new Intent(v.getContext(), Frage_Activity.class);
+                Intent myIntent = new Intent(v.getContext(), FrageActivity.class);
                 new Save_Answer().execute();
                 startActivityForResult(myIntent, 0);
             }
@@ -57,7 +64,7 @@ public class Frage_Activity extends Activity{
         Button Antwort2 = (Button) findViewById(R.id.Antwort1);
         Antwort2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent myIntent = new Intent(v.getContext(), Frage_Activity.class);
+                Intent myIntent = new Intent(v.getContext(), FrageActivity.class);
                 new Save_Answer().execute();
                 startActivityForResult(myIntent, 0);
             }
@@ -68,7 +75,7 @@ public class Frage_Activity extends Activity{
         Button Antwort3 = (Button) findViewById(R.id.Antwort1);
         Antwort3.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent myIntent = new Intent(v.getContext(), Frage_Activity.class);
+                Intent myIntent = new Intent(v.getContext(), FrageActivity.class);
                 new Save_Answer().execute();
                 startActivityForResult(myIntent, 0);
             }
@@ -79,7 +86,7 @@ public class Frage_Activity extends Activity{
         Button Antwort4 = (Button) findViewById(R.id.Antwort1);
         Antwort4.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent myIntent = new Intent(v.getContext(), Frage_Activity.class);
+                Intent myIntent = new Intent(v.getContext(), FrageActivity.class);
                 new Save_Answer().execute();
                 startActivityForResult(myIntent, 0);
             }
