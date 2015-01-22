@@ -18,6 +18,7 @@ import java.util.Map;
 public class Spiel extends Activity {
     private static final String hosturl = MyApplication.get().getString(R.string.webserver);
     private static final String url_get_cat = hosturl+"get_cat.php";
+    private static final String url_get_frage = hosturl+"get_frage.php";
 
     int bid;
 
@@ -105,10 +106,40 @@ public class Spiel extends Activity {
     /**
      * Frage auswählen
      */
-    public int getFrage(int kategorieId){
-        int frageId = 0;
+    public Map<String, String> getFrage(int kategorieId){
+        Map<String, String> frage = new HashMap<>();
 
-        return frageId;
+        // Building Parameters
+        List<NameValuePair> params = new ArrayList<NameValuePair>();
+        params.add(new BasicNameValuePair("kategorie_id", ""+kategorieId));
+
+        try {
+            // getting category data by making HTTP request
+            // Note that user data url will use GET request
+            JSONObject json = jsonParser.makeHttpRequest(url_get_frage, "GET", params);
+
+            // json success tag
+            int success;
+            success = json.getInt(TAG_SUCCESS);
+
+            if (success == 1) {
+                // Frage mit Antworten in der Map speichern
+                frage.put("frage_id",json.getString("Frage_ID"));
+                frage.put("cat_id",json.getString("Kategorie_ID"));
+                frage.put("frage",json.getString("Frage"));
+                frage.put("antwort1",json.getString("Antwort_1"));
+                frage.put("antwort2",json.getString("Antwort_2"));
+                frage.put("antwort3",json.getString("Antwort_3"));
+                frage.put("antwort4",json.getString("Antwort_4"));
+
+            } else {
+                // TODO Fehlerbehandlung
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return frage;
     }
 
     /**

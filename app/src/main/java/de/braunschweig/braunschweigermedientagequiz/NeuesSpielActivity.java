@@ -76,7 +76,7 @@ public class NeuesSpielActivity extends Activity{
                 if (!kategorie.isEmpty()) {
                     myIntent.putExtra("cat_id", kategorie.get("cat1_id"));
                     myIntent.putExtra("cat_text", kategorie.get("cat1"));
-                    myIntent.putExtra("bid", bid);
+                    myIntent.putExtra(TAG_BID, bid);
                 }
                 startActivityForResult(myIntent, 0);
             }
@@ -92,7 +92,7 @@ public class NeuesSpielActivity extends Activity{
                 if (!kategorie.isEmpty()) {
                     myIntent.putExtra("cat_id", kategorie.get("cat2_id"));
                     myIntent.putExtra("cat_text", kategorie.get("cat2"));
-                    myIntent.putExtra("bid", bid);
+                    myIntent.putExtra(TAG_BID, bid);
                 }
                 startActivityForResult(myIntent, 0);
             }
