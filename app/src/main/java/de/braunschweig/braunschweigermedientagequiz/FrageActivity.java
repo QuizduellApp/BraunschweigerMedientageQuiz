@@ -39,24 +39,24 @@ public class FrageActivity extends Activity{
             // Frage schreiben
             TextView tvFrage = (TextView) findViewById(R.id.FrageView1);
             tvFrage.setText(frage.get("frage"));
-            if (tvFrage.getText().length()>30) tvFrage.setTextSize(8); // Break nach char 30
+
 
             // Button Text ändern
             Button Antwort1 = (Button) findViewById(R.id.Antwort1);
             Antwort1.setText(frage.get("antwort1"));
-            if (Antwort1.getText().length()>30) Antwort1.setTextSize(8);
+
 
             Button Antwort2 = (Button) findViewById(R.id.Antwort2);
             Antwort2.setText(frage.get("antwort2"));
-            if (Antwort2.getText().length()>30) Antwort2.setTextSize(8);
+
 
             Button Antwort3 = (Button) findViewById(R.id.Antwort3);
             Antwort3.setText(frage.get("antwort3"));
-            if (Antwort3.getText().length()>30) Antwort3.setTextSize(8);
+
 
             Button Antwort4 = (Button) findViewById(R.id.Antwort4);
             Antwort4.setText(frage.get("antwort4"));
-            if (Antwort4.getText().length()>30) Antwort4.setTextSize(8);
+
 
 
             //Log.d("APP_NEUESSPIEL", cat1 + cat2);

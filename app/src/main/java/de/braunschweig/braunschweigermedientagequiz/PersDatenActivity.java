@@ -68,7 +68,21 @@ public class PersDatenActivity extends Activity {
         new GetBenutzerDetails().execute();
 
         setDatenAendernButtonClickListener();
+
+        /** Step back */
+        Button abbrechen = (Button) findViewById(R.id.buttonbackpers);
+        abbrechen.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                Intent myIntent = new Intent(view.getContext(),
+                        MainMenuActivity.class);
+                //Benutzer ID an die nächste Activity übermitteln
+                myIntent.putExtra(TAG_BID, bid);
+                startActivityForResult(myIntent, 0);
+            }
+        });
     }
+
+
 
 
     private void setDatenAendernButtonClickListener() {
@@ -80,6 +94,7 @@ public class PersDatenActivity extends Activity {
             }
         });
     }
+
 
     /**
      * Background Async Task to get user data
@@ -229,10 +244,10 @@ public class PersDatenActivity extends Activity {
          * After completing background task Dismiss the progress dialog
          * **/
         protected void onPostExecute(String file_url) {
-            // dismiss the dialog once product uupdated
+            // dismiss the dialog once product updated
             pDialog.dismiss();
         }
     }
-//TODO : Back Button
+
 
 }

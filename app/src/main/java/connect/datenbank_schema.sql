@@ -16,8 +16,10 @@ CREATE TABLE Spiel
 Spiel_ID int NOT NULL AUTO_INCREMENT,
 Benutzer_ID_1 int,
 Benutzer_ID_2 int,
+NextToPlay int,
 PRIMARY KEY (Spiel_ID),
 FOREIGN KEY (Benutzer_ID_1) REFERENCES Benutzer(Benutzer_ID),
+FOREIGN KEY (NextToPlay) REFERENCES Benutzer(Benutzer_ID),
 FOREIGN KEY (Benutzer_ID_2) REFERENCES Benutzer(Benutzer_ID)
 );
 

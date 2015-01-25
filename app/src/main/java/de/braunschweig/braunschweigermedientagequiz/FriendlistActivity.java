@@ -42,6 +42,8 @@ public class FriendlistActivity extends Activity
     ArrayAdapter<String> listadapter;
     ListView friendlistview;
 
+
+
     // Progress Dialog
     private ProgressDialog pDialog;
 
@@ -83,8 +85,8 @@ public class FriendlistActivity extends Activity
         friendlistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Intent Intent = new Intent(getBaseContext(),
-                            NeuesSpielActivity.class);
+                Intent Intent = new Intent(getBaseContext(),
+                        NeuesSpielActivity.class);
                 Intent.putExtra(TAG_BID, bid);
                 startActivityForResult(Intent, 0);
             }
@@ -96,54 +98,54 @@ public class FriendlistActivity extends Activity
         Button eintragen = (Button) findViewById(R.id.buttonaddfriend);
         listadapter = new ArrayAdapter<String>(this,R.layout.simplerow,friendlist);
         eintragen.setOnClickListener(new View.OnClickListener() {
-             public void onClick(View view1) {
-                 addfriend = (EditText) findViewById(R.id.addfriend);
+            public void onClick(View view1) {
+                addfriend = (EditText) findViewById(R.id.addfriend);
 
-                 /** Benutzer existiert nicht in der Datenbank  */
-                 if (select.select_user(addfriend.getText().toString()) == false) {
-                     String msg = "Benutzer unbekannt";
-                     Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
-                 }
-                 /** Selbst adden verboten */
-                 else if(select.self(bid).equals(addfriend.getText().toString()))
-                 {
-                     /** Wenn Benutzer existiert, dann in die Liste schreiben */
-                     String msg = "Das bist du";
-                     Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
-                 }
+                /** Benutzer existiert nicht in der Datenbank  */
+                if (select.select_user(addfriend.getText().toString()) == false) {
+                    String msg = "Benutzer unbekannt";
+                    Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+                }
+                /** Selbst adden verboten */
+                else if(select.self(bid).equals(addfriend.getText().toString()))
+                {
+                    /** Wenn Benutzer existiert, dann in die Liste schreiben */
+                    String msg = "Das bist du";
+                    Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+                }
 
-                 /** Prüfen ob Benutzer schon in Liste vorhanden */
-                 else if(listadapter.getCount()==0)
-                 {
-                     /** Wenn Benutzer existiert, dann in die Liste schreiben */
-                    //TODO Freundschaft in die Db schreiben
-                     String benutzername = ""+addfriend.getText().toString();
-                     listadapter.add(benutzername);
-                     addfriend.setText("");
-                     friendlistview.setAdapter(listadapter);
-                     select.insert_friend(benutzername,bid.toString());
-                     String msg = "Freund hinzugefügt";
-                     Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
-                 }
-                 else if (listadapter.getCount()>0)
-                 {   // Prüfen ob Nutzer bereits in der Friendlist ist
-                     for (int i = 0; i <listadapter.getCount(); i++)
-                         if (addfriend.getText().toString().equals(listadapter.getItem(i))){
-                             String msg = "Freund bereits hinzugefügt";
-                             Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
-                             i=listadapter.getCount();
-                         } else if (i==listadapter.getCount()-1){
-                             String benutzername = ""+addfriend.getText().toString();
-                             listadapter.add(benutzername);
-                             addfriend.setText("");
-                             friendlistview.setAdapter(listadapter);
-                             select.insert_friend(benutzername,bid.toString());
-                             String msg = "Freund hinzugefügt";
-                             Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
-                             i=listadapter.getCount();
-                         }
-                 }
-             }
+                /** Prüfen ob Benutzer schon in Liste vorhanden */
+                else if(listadapter.getCount()==0)
+                {
+                    /** Wenn Benutzer existiert, dann in die Liste schreiben */
+
+                    String benutzername = ""+addfriend.getText().toString();
+                    listadapter.add(benutzername);
+                    addfriend.setText("");
+                    friendlistview.setAdapter(listadapter);
+                    select.insert_friend(benutzername,bid.toString());
+                    String msg = "Freund hinzugefügt";
+                    Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+                }
+                else if (listadapter.getCount()>0)
+                {   // Prüfen ob Nutzer bereits in der Friendlist ist
+                    for (int i = 0; i <listadapter.getCount(); i++)
+                        if (addfriend.getText().toString().equals(listadapter.getItem(i))){
+                            String msg = "Freund bereits hinzugefügt";
+                            Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+                            i=listadapter.getCount();
+                        } else if (i==listadapter.getCount()-1){
+                            String benutzername = ""+addfriend.getText().toString();
+                            listadapter.add(benutzername);
+                            addfriend.setText("");
+                            friendlistview.setAdapter(listadapter);
+                            select.insert_friend(benutzername,bid.toString());
+                            String msg = "Freund hinzugefügt";
+                            Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+                            i=listadapter.getCount();
+                        }
+                }
+            }
         });
 
         /** Step back */

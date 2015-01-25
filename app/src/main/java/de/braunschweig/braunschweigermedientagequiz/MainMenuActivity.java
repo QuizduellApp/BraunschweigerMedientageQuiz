@@ -35,10 +35,8 @@ public class MainMenuActivity extends Activity {
         neuesSpiel.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent myIntent = new Intent(v.getContext(), FriendlistActivity.class);
-
                 //Benutzer ID an nächste Activity senden
                 myIntent.putExtra(TAG_BID, bid);
-
                 startActivityForResult(myIntent, 0);
             }
         });
@@ -49,6 +47,7 @@ public class MainMenuActivity extends Activity {
         offeneSpiele.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent myIntent = new Intent(v.getContext(), OffeneSpieleActivity.class);
+                myIntent.putExtra(TAG_BID, bid);
                 startActivityForResult(myIntent, 0);
             }
         });

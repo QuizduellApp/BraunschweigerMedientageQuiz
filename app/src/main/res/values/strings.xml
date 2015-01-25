@@ -35,6 +35,7 @@
     <!-- PersDatenActivity.class -->
     <string name="title_activity_persdaten">Persönliche Daten</string>
     <string name="button_datenAendern">Daten ändern</string>
+    <string name="button_back">Zurück zum Hauptmenu</string>
 
     <!-- FriendlistActivity.class -->
     <string name="title_activity_friendlist">Freundesliste</string>
