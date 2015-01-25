@@ -14,7 +14,17 @@ $con = $db->connect();
 if (isset($_GET["bid"])) {
     $bid = intval($_GET['bid']);
 
-$query = sprintf("SELECT Benutzer.benutzername FROM Benutzer WHERE Benutzer_ID = (SELECT Benutzer_ID_1 FROM Spiel WHERE NextToPlay ='%d' AND Benutzer_ID_2 ='%d')",
+$query = sprintf("SELECT Benutzer.benutzername
+                  FROM Benutzer
+                  WHERE Benutzer_ID =
+                  (SELECT Benutzer_ID_1
+                  FROM Spiel WHERE NextToPlay ='%d'
+                  AND Benutzer_ID_2 ='%d')
+                  OR
+                  Benutzer_ID =
+                  (SELECT Benutzer_ID_2
+                  FROM Spiel WHERE NextToPlay ='%d'
+                  AND Benutzer_ID_1 ='%d')",
                mysql_real_escape_string($bid, $con));
 
 $result = mysql_query($query);
