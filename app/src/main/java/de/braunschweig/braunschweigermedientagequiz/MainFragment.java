@@ -16,7 +16,9 @@ import java.util.Arrays;
 /**
  * Created by orion on 07/12/14.
  */
+/*
 public class MainFragment extends Fragment {
+
 
     private static final String TAG = "MainFragment";
 
@@ -41,3 +43,5 @@ public class MainFragment extends Fragment {
         }
     }
 }
+
+*/

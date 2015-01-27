@@ -34,7 +34,7 @@
         android:background="@drawable/button_layout"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="80dp"
-        android:textSize="12dp"
+        android:textSize="@dimen/button_text"
         android:textColor="@color/button_text" />
 
 

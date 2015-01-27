@@ -40,6 +40,7 @@ public class FrageActivity extends Activity{
             TextView tvFrage = (TextView) findViewById(R.id.FrageView1);
             tvFrage.setText(frage.get("frage"));
 
+            //if (tvFrage.getText().length()>30) tvFrage.setTextSize(8); // Break nach char 30
 
             // Button Text ändern
             Button Antwort1 = (Button) findViewById(R.id.Antwort1);

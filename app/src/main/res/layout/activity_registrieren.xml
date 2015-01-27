@@ -67,6 +67,7 @@
         android:layout_centerHorizontal="true"
         android:text="Registrieren"
         android:layout_marginTop="10dp"
+        android:textSize="@dimen/button_text"
         android:background="@drawable/button_layout"
         android:layout_gravity="center_horizontal"
         android:textColor="@color/button_text" />
@@ -79,7 +80,7 @@
         android:layout_centerHorizontal="true"
         android:text="Abbrechen"
         android:layout_marginTop="10dp"
-        android:textSize="12dp"
+        android:textSize="@dimen/button_text"
         android:background="@drawable/button_layout"
         android:layout_gravity="center_horizontal"
         android:textColor="@color/button_text" />

@@ -51,7 +51,7 @@
             android:text="Freund hinzufügen"
             android:background="@drawable/button_layout"
             android:id="@+id/buttonaddfriend"
-            android:textSize="12dp"
+            android:textSize="@dimen/button_text"
             android:layout_marginLeft="5dp"
             android:textColor="@color/button_text" />
     </LinearLayout>
@@ -64,6 +64,6 @@
         android:background="@drawable/button_layout"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="80dp"
-        android:textSize="12dp"
+        android:textSize="@dimen/button_text"
         android:textColor="@color/button_text" />
 </LinearLayout>
