@@ -19,7 +19,10 @@ public class NeuesSpielActivity extends Activity{
     private static final String TAG_BID = "benutzerid";
     Map<String, String> kategorie;
     String bid;
+    String gegnerID;
+    String gegnerName;
     Spiel spiel = new Spiel();
+    Select select = new Select();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,15 +31,48 @@ public class NeuesSpielActivity extends Activity{
 
         Intent i = getIntent();
         bid = i.getStringExtra(TAG_BID);
+        gegnerName = i.getStringExtra("gegnerName");
 
-        new Get_Categories().execute();
+        Log.d("GEGNER NAME: ", gegnerName);
+
+        // Neues Spiel in die Datenbank schreiben
+        new SaveNewGame().execute();
+
+        // kategorien laden
+        new GetCategories().execute();
 
         cat1ButtonClickListener();
         cat2ButtonClickListener();
 
     }
 
-    class Get_Categories extends AsyncTask<String, String, String> {
+    class SaveNewGame extends AsyncTask<String, String, String> {
+        /**
+         * Neu gestartetes Spiel abspeichern
+         * */
+        protected String doInBackground(String... params) {
+
+            // updating UI from Background Thread
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    gegnerID = select.getBenutzerIDFromName(gegnerName);
+
+                    if (!bid.isEmpty() && !gegnerID.isEmpty()) {
+
+                        boolean neuesSpiel = spiel.setNeuesSpiel(Integer.parseInt(bid), Integer.parseInt(gegnerID));
+
+                        Log.d("APP Spieler Neues Spiel: ", "Status: "+neuesSpiel+" - "+Integer.parseInt(bid) + Integer.parseInt(gegnerID));
+                    } else {
+                        // TODO Fehlerbehandlung
+                    }
+                }
+            });
+
+            return null;
+        }
+    }
+
+    class GetCategories extends AsyncTask<String, String, String> {
         /**
          * Kategorien ermitteln
          * */

@@ -1,12 +1,23 @@
 package de.braunschweig.braunschweigermedientagequiz;
 
 import android.app.Activity;
+import android.util.Log;
+import android.widget.Toast;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -36,21 +47,57 @@ public class Spiel extends Activity {
     /**
      * Legt ein neues Spiel in der Datenbank
      */
-    public void neuesSpiel(int spieler1, int spieler2){
+    public boolean setNeuesSpiel(int spieler1, int spieler2){
 
+        ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+        nameValuePairs.add(new BasicNameValuePair("spieler1", ""+spieler1));
+        nameValuePairs.add(new BasicNameValuePair("spieler2", ""+spieler2));
+        nameValuePairs.add(new BasicNameValuePair("next_to_play", ""+spieler1));
+
+        Log.d("NEUES SPIEL", "Spieler 1: " + spieler1);
+        Log.d("NEUES SPIEL", "Spieler 2: " + spieler2);
+
+        InputStream is = null;
+        try {
+            HttpClient httpClient = new DefaultHttpClient();
+            HttpPost httpPost = new HttpPost(hosturl+"set_neues_spiel.php");
+            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+            HttpResponse response = httpClient.execute(httpPost);
+
+            HttpEntity entity = response.getEntity();
+            is = entity.getContent();
+        } catch(Exception e){
+            Log.e("Fail 1", e.toString());
+            Toast.makeText(getApplicationContext(), "Invalid IP Address",
+                    Toast.LENGTH_LONG).show();
+        }
+        String line = "";
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is,"iso-8859-1"),8);
+            StringBuilder sb = new StringBuilder();
+
+            line = sb.append(reader.readLine()).toString();
+            is.close();
+
+            if (!line.isEmpty() && line == "true") return true;
+        } catch(Exception e){
+            Log.e("log_tag", "Error converting result "+e.toString());
+        }
+
+        return false;
     }
 
     /**
      * Zeige offene Spiele
      */
-    public void offeneSpiele(int spielerId){
+    public void getOffeneSpiele(int spielerId){
 
     }
 
     /**
      * Ermittelt den Spieler, der am Zug ist
      */
-    public int werIstDran(int spielId){
+    public int getWerIstDran(int spielId){
         int spielerId = 0;
 
         return spielerId;
@@ -95,15 +142,6 @@ public class Spiel extends Activity {
     }
 
     /**
-     * Kategorie speichern
-     */
-    public boolean setKategorie(int spielId, int kategorieId){
-
-
-        return true;
-    }
-
-    /**
      * Frage auswählen
      */
     public Map<String, String> getFrage(int kategorieId){
@@ -141,6 +179,15 @@ public class Spiel extends Activity {
         }
 
         return frage;
+    }
+
+    /**
+     * Kategorie speichern
+     */
+    public boolean setKategorie(int spielId, int kategorieId){
+
+
+        return true;
     }
 
     /**

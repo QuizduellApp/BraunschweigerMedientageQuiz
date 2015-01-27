@@ -199,7 +199,9 @@ public class Select extends Activity{
         return result;
     }
 
-
+    /*
+    Returns BenutzerID mit Passwortüberprüfung
+     */
     public String getBenutzerID(String user, String passwort) {
 
         ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
@@ -239,6 +241,43 @@ public class Select extends Activity{
         return line;
     }
 
+    /*
+    Returns BenutzerID eines bestimmten Benutzernamens
+     */
+    public String getBenutzerIDFromName(String user) {
+        ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+        nameValuePairs.add(new BasicNameValuePair("user", user));
+
+        try {
+            HttpClient httpClient = new DefaultHttpClient();
+            HttpPost httpPost = new HttpPost(hosturl+"get_benutzerid_from_name.php");
+            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+            HttpResponse response = httpClient.execute(httpPost);
+
+            HttpEntity entity = response.getEntity();
+            is = entity.getContent();
+        } catch (Exception e) {
+            Log.e("Fail 1", e.toString());
+            Toast.makeText(getApplicationContext(), "Invalid IP Address",
+                    Toast.LENGTH_LONG).show();
+        }
+
+        String line = null;
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is, "iso-8859-1"), 8);
+            StringBuilder sb = new StringBuilder();
+            line = sb.append(reader.readLine()).toString();
+            is.close();
+        } catch (Exception e) {
+            Log.e("log_tag", "Error converting result " + e.toString());
+        }
+        if (!line.isEmpty()) {
+            return line;
+        } else {
+            return "";
+        }
+    }
+
     public String self(String bid) {
 
         ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
@@ -254,10 +293,6 @@ public class Select extends Activity{
             HttpEntity entity = response.getEntity();
 
             is = entity.getContent();
-
-
-
-
         }
         catch(Exception e)
         {

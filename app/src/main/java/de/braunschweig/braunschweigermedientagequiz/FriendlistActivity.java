@@ -81,13 +81,14 @@ public class FriendlistActivity extends Activity
 
 
 
-        // Item Clickable
+        // Neues Spiel starten
         friendlistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent Intent = new Intent(getBaseContext(),
                         NeuesSpielActivity.class);
                 Intent.putExtra(TAG_BID, bid);
+                Intent.putExtra("gegnerName", listadapter.getItem(position));
                 startActivityForResult(Intent, 0);
             }
         });
@@ -114,7 +115,7 @@ public class FriendlistActivity extends Activity
                     Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
                 }
 
-                /** Prüfen ob Benutzer schon in Liste vorhanden */
+                /** Prüfen ob Benutzer schon in der Liste vorhanden */
                 else if(listadapter.getCount()==0)
                 {
                     /** Wenn Benutzer existiert, dann in die Liste schreiben */
