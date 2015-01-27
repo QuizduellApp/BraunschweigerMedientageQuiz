@@ -1,7 +1,10 @@
 package de.braunschweig.braunschweigermedientagequiz;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,6 +23,7 @@ public class FrageActivity extends Activity{
     Map<String, String> frage;
     String bid;
     Spiel spiel = new Spiel();
+    boolean frageBeantwortet = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,13 +69,18 @@ public class FrageActivity extends Activity{
             // TODO Fehlerbehandlung
         }
 
-        //new Get_Question().execute(); //Frage laden
+        //new GetQuestion().execute(); //Frage laden
 
         Antwort1ButtonClickListener();
+        Antwort2ButtonClickListener();
+        Antwort3ButtonClickListener();
+        Antwort4ButtonClickListener();
+
     }
 
     // Fragen laden Klasse
-    class Get_Question  extends AsyncTask<String, String, String> {
+    // TODO im Moment nicht benötigt
+    class GetQuestion  extends AsyncTask<String, String, String> {
         protected String doInBackground(String... params) {
 
             frage =  spiel.getFrage(Integer.parseInt(cat_id));
@@ -104,36 +113,65 @@ public class FrageActivity extends Activity{
     }
 
     // Antwort in Datenbank schreiben
-    class Save_Answer extends AsyncTask<String, String, String> {
+    class SaveAnswer extends AsyncTask<String, String, String> {
+        int benutzerAntwortNo;
+        public SaveAnswer(int benutzerAntwort){
+            super();
+            benutzerAntwortNo = benutzerAntwort;
+        }
         protected String doInBackground(String... params) {
+
+            // Speichern der Benutzerantwort
+            //benutzerAntwortNo;
+
             return null; // Evtl. richtige Antwort returnen?
         }
     }
 
+    private void evaluateAnswer(int benutzerAntwortNo){
+        if (!frage.isEmpty() && !frageBeantwortet) {
+            // Frage in die Datenbank schreiben
+            new SaveAnswer(benutzerAntwortNo).execute();
 
-    // Wenn auf ein Button geklickt wird, dann die richtige Antwort Grün färben, 4 Sekunden warten, dann nächste Frage holen?!
+            // Benutzer Antwort mit richtiger Antwort vergleichen
+            if (Integer.parseInt(frage.get("richtige_antwort")) == benutzerAntwortNo) {
+                frageBeantwortet = true;
 
-    /*private void Antwort1ButtonClickListener() {
-        Button Antwort1 = (Button) findViewById(R.id.Antwort1);
-        Antwort1.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent myIntent = new Intent(v.getContext(), FrageActivity.class);
-                new Save_Answer().execute();
-                startActivityForResult(myIntent, 0);
+                // Buttons einfärben, je nach richtiger oder falscher Antwort
+                int resID = getResources().getIdentifier("Antwort"+benutzerAntwortNo, "id", "de.braunschweig.braunschweigermedientagequiz");
+                Button button = (Button) findViewById(resID);
+                button.setBackgroundColor(Color.GREEN);
+
+                showDialogMessage();
+
+            } else {
+                frageBeantwortet = true;
+                // Falsche Antwort Button einfärben
+                int resID = getResources().getIdentifier("Antwort"+benutzerAntwortNo, "id", "de.braunschweig.braunschweigermedientagequiz");
+                Button button = (Button) findViewById(resID);
+                button.setBackgroundColor(Color.RED);
             }
-        });
-    }*/
+        }
+    }
+
+    private void showDialogMessage() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Sie haben die Frage richtig beantwortet!")
+                .setCancelable(false)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        //do things
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
 
     private void Antwort1ButtonClickListener() {
-
         Button Antwort1 = (Button) findViewById(R.id.Antwort1);
         Antwort1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent myIntent = new Intent(v.getContext(), FrageActivity.class);
-                if (!frage.isEmpty()) {
-                    myIntent.putExtra("cat_id", frage.get("frage"));
-                }
-                startActivityForResult(myIntent, 0);
+                evaluateAnswer(1);
             }
         });
     }
@@ -142,9 +180,7 @@ public class FrageActivity extends Activity{
         Button Antwort2 = (Button) findViewById(R.id.Antwort2);
         Antwort2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent myIntent = new Intent(v.getContext(), FrageActivity.class);
-                new Save_Answer().execute();
-                startActivityForResult(myIntent, 0);
+                evaluateAnswer(2);
             }
         });
     }
@@ -153,9 +189,7 @@ public class FrageActivity extends Activity{
         Button Antwort3 = (Button) findViewById(R.id.Antwort3);
         Antwort3.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent myIntent = new Intent(v.getContext(), FrageActivity.class);
-                new Save_Answer().execute();
-                startActivityForResult(myIntent, 0);
+                evaluateAnswer(3);
             }
         });
     }
@@ -164,9 +198,7 @@ public class FrageActivity extends Activity{
         Button Antwort4 = (Button) findViewById(R.id.Antwort4);
         Antwort4.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent myIntent = new Intent(v.getContext(), FrageActivity.class);
-                new Save_Answer().execute();
-                startActivityForResult(myIntent, 0);
+                evaluateAnswer(4);
             }
         });
     }

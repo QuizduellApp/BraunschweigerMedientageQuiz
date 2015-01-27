@@ -1,6 +1,8 @@
 package de.braunschweig.braunschweigermedientagequiz;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -67,6 +69,7 @@ public class NeuesSpielActivity extends Activity{
         }
     }
 
+
     private void cat1ButtonClickListener() {
 
         Button cat1Button = (Button) findViewById(R.id.cat1);
@@ -98,6 +101,7 @@ public class NeuesSpielActivity extends Activity{
             }
         });
     }
+
 }
 
 

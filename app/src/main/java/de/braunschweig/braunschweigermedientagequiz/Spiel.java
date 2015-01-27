@@ -131,6 +131,7 @@ public class Spiel extends Activity {
                 frage.put("antwort2",json.getString("Antwort_2"));
                 frage.put("antwort3",json.getString("Antwort_3"));
                 frage.put("antwort4",json.getString("Antwort_4"));
+                frage.put("richtige_antwort",json.getString("Richtige_Antwort"));
 
             } else {
                 // TODO Fehlerbehandlung
