@@ -22,6 +22,7 @@ public class FrageActivity extends Activity{
     private static final String TAG_BID = "benutzerid";
     Map<String, String> frage;
     String bid;
+    int spiel_id; // Aktuelles Spiel
     Spiel spiel = new Spiel();
     boolean frageBeantwortet = false;
 
@@ -32,6 +33,7 @@ public class FrageActivity extends Activity{
 
         // Ausgewählte Kategorie Speichern
         Intent i = getIntent();
+        spiel_id = i.getIntExtra("spiel_id", 0);
         cat_id = i.getStringExtra("cat_id");
         bid = i.getStringExtra(TAG_BID);
 
@@ -50,19 +52,14 @@ public class FrageActivity extends Activity{
             Button Antwort1 = (Button) findViewById(R.id.Antwort1);
             Antwort1.setText(frage.get("antwort1"));
 
-
             Button Antwort2 = (Button) findViewById(R.id.Antwort2);
             Antwort2.setText(frage.get("antwort2"));
-
 
             Button Antwort3 = (Button) findViewById(R.id.Antwort3);
             Antwort3.setText(frage.get("antwort3"));
 
-
             Button Antwort4 = (Button) findViewById(R.id.Antwort4);
             Antwort4.setText(frage.get("antwort4"));
-
-
 
             //Log.d("APP_NEUESSPIEL", cat1 + cat2);
         } else {
@@ -70,12 +67,10 @@ public class FrageActivity extends Activity{
         }
 
         //new GetQuestion().execute(); //Frage laden
-
         Antwort1ButtonClickListener();
         Antwort2ButtonClickListener();
         Antwort3ButtonClickListener();
         Antwort4ButtonClickListener();
-
     }
 
     // Fragen laden Klasse

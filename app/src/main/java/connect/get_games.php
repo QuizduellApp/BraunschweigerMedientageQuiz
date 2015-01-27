@@ -19,14 +19,18 @@ $query = sprintf("SELECT Benutzer.benutzername
                   WHERE Benutzer_ID =
                   (SELECT Benutzer_ID_1
                   FROM Spiel WHERE NextToPlay ='%d'
-                  AND Benutzer_ID_2 ='%d')
+                  AND Benutzer_ID_2 ='%d' LIMIT 1)
                   OR
                   Benutzer_ID =
                   (SELECT Benutzer_ID_2
                   FROM Spiel WHERE NextToPlay ='%d'
-                  AND Benutzer_ID_1 ='%d')",
-               mysql_real_escape_string($bid, $con));
-
+                  AND Benutzer_ID_1 ='%d' LIMIT 1)",
+               mysql_real_escape_string($bid, $con),
+               mysql_real_escape_string($bid, $con),
+               mysql_real_escape_string($bid, $con),
+               mysql_real_escape_string($bid, $con)
+               );
+file_put_contents("get_games_log.txt",$query);
 $result = mysql_query($query);
 
 if (!empty($result)) {
@@ -36,19 +40,15 @@ if (!empty($result)) {
 $benutzer = array();    
 $response["benutzer"] = array();
 while($benutzer = mysql_fetch_array($result)) {
-
-  $benutzer["benutzername"] = $result["benutzername"];
-
-  $response["success"] = 1;
-
-array_push($response["benutzer"], $benutzer);
+    $response["success"] = 1;
+    array_push($response["benutzer"], $benutzer);
 }
             // echoing JSON response
             echo json_encode($response);
         } else {
             // no benutzer found
             $response["success"] = 0;
-            $response["message"] = "No benutzer found";
+            $response["message"] = "No games found";
 
             // echo no users JSON
             echo json_encode($response);
@@ -56,7 +56,7 @@ array_push($response["benutzer"], $benutzer);
     } else {
         // no benutzer found
         $response["success"] = 0;
-        $response["message"] = "No benutzer found";
+        $response["message"] = "No games found";
 
         // echo no users JSON
         echo json_encode($response);
@@ -69,8 +69,6 @@ array_push($response["benutzer"], $benutzer);
     // echoing JSON response
     echo json_encode($response);
 }
-
-
 
 $db->close();
 ?>

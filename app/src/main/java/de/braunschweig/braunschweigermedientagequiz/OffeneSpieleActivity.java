@@ -54,15 +54,20 @@ public class OffeneSpieleActivity extends Activity{
         // getting user details from intent
         Intent i = getIntent();
 
+        // Spiele Liste zuweisen
+        ArrayList<String> gamesList = new ArrayList<String>();
+        listadapter = new ArrayAdapter<String>(this,R.layout.simplerow,gamesList);
+
         // getting user id (pid) from intent
         bid = i.getStringExtra(TAG_BID);
         new GetOpenGames().execute();
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
+
         //* Layout setzen */
         setContentView(R.layout.activity_opengames);
-        friendlistview = (ListView) findViewById(R.id.GamesListView);
+        friendlistview = (ListView) findViewById(R.id.gamesListView);
 
         // Item Clickable
         friendlistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -130,7 +135,7 @@ public class OffeneSpieleActivity extends Activity{
                                 Log.d("Spiel gegen: ", freund);
 
                                 // Überprüfen, ob Benutzer (Freund) schon in der Liste
-                                boolean friendExists = false;
+                                /*boolean friendExists = false;
                                 for (int j = 0; j < listadapter.getCount(); j++){
                                     if (freund.equals(listadapter.getItem(j))) {
                                         friendExists = true;
@@ -138,7 +143,9 @@ public class OffeneSpieleActivity extends Activity{
                                 }
                                 if (!friendExists) {
                                     listadapter.add(freund);
-                                }
+                                } TODO Überprüfung auf Duplikate einfügen*/
+
+                                listadapter.add(freund);
                             }
                             friendlistview.setAdapter(listadapter);
                         }else{

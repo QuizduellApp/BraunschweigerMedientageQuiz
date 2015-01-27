@@ -21,8 +21,10 @@ public class NeuesSpielActivity extends Activity{
     String bid;
     String gegnerID;
     String gegnerName;
+    int neuesSpielID;
     Spiel spiel = new Spiel();
     Select select = new Select();
+    boolean asyncTaskFinished = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +45,6 @@ public class NeuesSpielActivity extends Activity{
 
         cat1ButtonClickListener();
         cat2ButtonClickListener();
-
     }
 
     class SaveNewGame extends AsyncTask<String, String, String> {
@@ -56,15 +57,22 @@ public class NeuesSpielActivity extends Activity{
             runOnUiThread(new Runnable() {
                 public void run() {
                     gegnerID = select.getBenutzerIDFromName(gegnerName);
+                    int spieler1 = Integer.parseInt(bid);
+                    int spieler2 = Integer.parseInt(gegnerID);
 
                     if (!bid.isEmpty() && !gegnerID.isEmpty()) {
+                        boolean neuesSpiel = spiel.setNeuesSpiel(spieler1, spieler2);
+                        // TODO Fehlerbehandlung, wenn neues Spiel nicht angelegt werden konnte
 
-                        boolean neuesSpiel = spiel.setNeuesSpiel(Integer.parseInt(bid), Integer.parseInt(gegnerID));
-
-                        Log.d("APP Spieler Neues Spiel: ", "Status: "+neuesSpiel+" - "+Integer.parseInt(bid) + Integer.parseInt(gegnerID));
+                        if (neuesSpiel) {
+                            neuesSpielID = spiel.getSpielId(spieler1, spieler2);
+                            Log.d("NEUES SPIEL ID: ", ""+neuesSpielID);
+                        }
+                        Log.d("APP Spieler Neues Spiel: ", "Status: "+neuesSpiel+" - "+spieler1 + spieler2);
                     } else {
                         // TODO Fehlerbehandlung
                     }
+                    asyncTaskFinished = true;
                 }
             });
 
@@ -105,14 +113,14 @@ public class NeuesSpielActivity extends Activity{
         }
     }
 
-
     private void cat1ButtonClickListener() {
-
         Button cat1Button = (Button) findViewById(R.id.cat1);
         cat1Button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                if (!asyncTaskFinished) return;
                 Intent myIntent = new Intent(v.getContext(), FrageActivity.class);
                 if (!kategorie.isEmpty()) {
+                    myIntent.putExtra("spiel_id", neuesSpielID);
                     myIntent.putExtra("cat_id", kategorie.get("cat1_id"));
                     myIntent.putExtra("cat_text", kategorie.get("cat1"));
                     myIntent.putExtra(TAG_BID, bid);
@@ -123,12 +131,13 @@ public class NeuesSpielActivity extends Activity{
     }
 
     private void cat2ButtonClickListener() {
-
         Button cat2Button = (Button) findViewById(R.id.cat2);
         cat2Button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                if (!asyncTaskFinished) return;
                 Intent myIntent = new Intent(v.getContext(), FrageActivity.class);
                 if (!kategorie.isEmpty()) {
+                    myIntent.putExtra("spiel_id", neuesSpielID);
                     myIntent.putExtra("cat_id", kategorie.get("cat2_id"));
                     myIntent.putExtra("cat_text", kategorie.get("cat2"));
                     myIntent.putExtra(TAG_BID, bid);
@@ -137,7 +146,6 @@ public class NeuesSpielActivity extends Activity{
             }
         });
     }
-
 }
 
 

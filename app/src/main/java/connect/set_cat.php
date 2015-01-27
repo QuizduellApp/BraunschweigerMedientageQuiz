@@ -1,4 +1,6 @@
 <?php
+
+// TODO Umändern, dass die Kategorie gesetzt wird. Im Moment Kopie von Set_Neues_Spiel
 	// Datenbankverbindungsklasse einbinden
     require_once(dirname(__FILE__).'/db_connect.php');
 
@@ -6,32 +8,29 @@
     $db = new DB_CONNECT();
     $con = $db->connect();
 
-    $query = sprintf("SELECT benutzer_id FROM Benutzer WHERE benutzername='%s'",
-                mysql_real_escape_string($_REQUEST['name'], $con));
+    $query = sprintf("SELECT Spiel_ID FROM Spiel WHERE Spiel_ID='%s'",
+                mysql_real_escape_string($_REQUEST['spiel_id'], $con));
 
     $result = mysql_query($query);
+
     $data = mysql_fetch_array($result);
 
-// TODO UMÄNDERN
-    if (!empty($data)){
-        $query = sprintf("INSERT INTO Freundesliste VALUES(0,'%s','%s')",
-                mysql_real_escape_string($_REQUEST['id'], $con),
-                mysql_real_escape_string($data['benutzer_id'], $con));
+    //file_put_contents("set_cat_log.txt",$data);
+
+    if ($data){
+        $query = sprintf("INSERT INTO Runde VALUES(0,'%s',0,'%s',1,1,1)", // TODO IDs der Fragen müssen richtig eingetragen werden
+                mysql_real_escape_string($_REQUEST['spiel_id'], $con),
+                mysql_real_escape_string($_REQUEST['kategorie_id'], $con)
+                );
         $result = mysql_query($query);
 
-        $query2 = sprintf("INSERT INTO Freundesliste VALUES(0,'%s','%s')",
-                mysql_real_escape_string($data['benutzer_id'], $con),
-                mysql_real_escape_string($_REQUEST['id'], $con));
-        $result2 = mysql_query($query2);
-
-        if (!empty($result) && !empty($result)) {
-            file_put_contents("inser_friend_log.txt",$query." - ".$query2);
+        if (!empty($result)) {
+            file_put_contents("set_cat_log.txt",$query);
             echo "true";
         } else {
-            file_put_contents("inser_friend_log.txt",$query." - ".$query2);
+            //file_put_contents("set_cat_log.txt","false");
             echo "false";
         }
-
     }
 	$db->close();
 ?>

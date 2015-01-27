@@ -30,6 +30,10 @@ public class Spiel extends Activity {
     private static final String hosturl = MyApplication.get().getString(R.string.webserver);
     private static final String url_get_cat = hosturl+"get_cat.php";
     private static final String url_get_frage = hosturl+"get_frage.php";
+    private static final String url_get_spiel_id = hosturl+"get_spiel_id.php";
+    private static final String url_set_neues_spiel = hosturl+"set_neues_spiel.php";
+    private static final String url_set_cat = hosturl+"set_cat.php";
+
 
     int bid;
 
@@ -39,28 +43,18 @@ public class Spiel extends Activity {
     JSONParser jsonParser = new JSONParser();
 
 
-
     public void setBid(int bid) {
         this.bid = bid;
     }
 
-    /**
-     * Legt ein neues Spiel in der Datenbank
+    /*
+    Generalisierter httpRequest
      */
-    public boolean setNeuesSpiel(int spieler1, int spieler2){
-
-        ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-        nameValuePairs.add(new BasicNameValuePair("spieler1", ""+spieler1));
-        nameValuePairs.add(new BasicNameValuePair("spieler2", ""+spieler2));
-        nameValuePairs.add(new BasicNameValuePair("next_to_play", ""+spieler1));
-
-        Log.d("NEUES SPIEL", "Spieler 1: " + spieler1);
-        Log.d("NEUES SPIEL", "Spieler 2: " + spieler2);
-
+    private String httpRequest(ArrayList<NameValuePair> nameValuePairs, String requestUrl) {
         InputStream is = null;
         try {
             HttpClient httpClient = new DefaultHttpClient();
-            HttpPost httpPost = new HttpPost(hosturl+"set_neues_spiel.php");
+            HttpPost httpPost = new HttpPost(requestUrl);
             httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
             HttpResponse response = httpClient.execute(httpPost);
 
@@ -78,13 +72,31 @@ public class Spiel extends Activity {
 
             line = sb.append(reader.readLine()).toString();
             is.close();
-
-            if (!line.isEmpty() && line == "true") return true;
         } catch(Exception e){
             Log.e("log_tag", "Error converting result "+e.toString());
         }
+        return line;
+    }
 
-        return false;
+    /**
+     * Legt ein neues Spiel in der Datenbank an
+     */
+    public boolean setNeuesSpiel(int spieler1, int spieler2){
+        ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+        nameValuePairs.add(new BasicNameValuePair("spieler1", ""+spieler1));
+        nameValuePairs.add(new BasicNameValuePair("spieler2", ""+spieler2));
+        nameValuePairs.add(new BasicNameValuePair("next_to_play", ""+spieler1));
+
+        Log.d("NEUES SPIEL", "Spieler 1: " + spieler1);
+        Log.d("NEUES SPIEL", "Spieler 2: " + spieler2);
+
+        String returnResult = httpRequest(nameValuePairs,url_set_neues_spiel);
+
+        if (returnResult.equals("true")) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -97,11 +109,45 @@ public class Spiel extends Activity {
     /**
      * Ermittelt den Spieler, der am Zug ist
      */
+    public int getSpielId(int spieler1, int spieler2){
+        int spielId = 0;
+
+        // Building Parameters
+        List<NameValuePair> params = new ArrayList<NameValuePair>();
+        params.add(new BasicNameValuePair("spieler1", ""+spieler1));
+        params.add(new BasicNameValuePair("spieler2", ""+spieler2));
+
+        try {
+            // JSON Request um Spiel ID zu ermitteln
+            JSONObject json = jsonParser.makeHttpRequest(url_get_spiel_id, "GET", params);
+
+            // json success tag
+            int success;
+            success = json.getInt(TAG_SUCCESS);
+
+            if (success == 1) {
+                // Spiel ID sichern
+                spielId = Integer.parseInt(json.getString("Spiel_ID"));
+            } else {
+                // TODO Fehlerbehandlung
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return spielId;
+    }
+
+    /**
+     * Ermittelt den Spieler, der am Zug ist
+     */
     public int getWerIstDran(int spielId){
         int spielerId = 0;
 
         return spielerId;
     }
+
+
 
     /**
      * Kategorie auswählen
@@ -185,9 +231,20 @@ public class Spiel extends Activity {
      * Kategorie speichern
      */
     public boolean setKategorie(int spielId, int kategorieId){
+        ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+        nameValuePairs.add(new BasicNameValuePair("spiel_id", ""+spielId));
+        nameValuePairs.add(new BasicNameValuePair("kategorie_id", ""+kategorieId));
 
+        //Log.d("NEUES SPIEL", "Spieler 1: " + spieler1);
+        //Log.d("NEUES SPIEL", "Spieler 2: " + spieler2);
 
-        return true;
+        String returnResult = httpRequest(nameValuePairs,url_set_cat);
+
+        if (returnResult.equals("true")) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
