@@ -2,6 +2,7 @@ package de.braunschweig.braunschweigermedientagequiz;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -137,7 +138,7 @@ public class FrageActivity extends Activity{
                 Button button = (Button) findViewById(resID);
                 button.setBackgroundColor(Color.GREEN);
 
-                showDialogMessage();
+                showDialogRightAnswer();
 
             } else {
                 frageBeantwortet = true;
@@ -145,17 +146,38 @@ public class FrageActivity extends Activity{
                 int resID = getResources().getIdentifier("Antwort"+benutzerAntwortNo, "id", "de.braunschweig.braunschweigermedientagequiz");
                 Button button = (Button) findViewById(resID);
                 button.setBackgroundColor(Color.RED);
+
+                showDialogWrongAnswer();
             }
         }
     }
 
-    private void showDialogMessage() {
+    private void showDialogRightAnswer() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Sie haben die Frage richtig beantwortet!")
                 .setCancelable(false)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        //do things
+                        Intent myIntent = new Intent(((Dialog) dialog).getContext(), MainMenuActivity.class);
+                        myIntent.putExtra(TAG_BID,bid);
+                        startActivity(myIntent);
+
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
+
+    }
+    private void showDialogWrongAnswer() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Sie haben die Frage leider falsch beantwortet!")
+                .setCancelable(false)
+                .setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Intent myIntent = new Intent(((Dialog) dialog).getContext(), MainMenuActivity.class);
+                        myIntent.putExtra(TAG_BID,bid);
+                        startActivity(myIntent);
+
                     }
                 });
         AlertDialog alert = builder.create();
