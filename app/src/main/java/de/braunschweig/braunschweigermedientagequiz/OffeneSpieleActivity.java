@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -77,6 +78,18 @@ public class OffeneSpieleActivity extends Activity{
                         FrageActivity.class);
                 Intent.putExtra(TAG_BID, bid);
                 startActivityForResult(Intent, 0);
+            }
+        });
+
+        /** Step back */
+        Button abbrechen = (Button) findViewById(R.id.buttonstepback);
+        abbrechen.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                Intent myIntent = new Intent(view.getContext(),
+                        MainMenuActivity.class);
+                //Benutzer ID an die nächste Activity übermitteln
+                myIntent.putExtra(TAG_BID, bid);
+                startActivityForResult(myIntent, 0);
             }
         });
 
