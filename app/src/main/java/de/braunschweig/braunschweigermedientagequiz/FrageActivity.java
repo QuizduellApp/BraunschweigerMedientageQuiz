@@ -136,7 +136,7 @@ public class FrageActivity extends Activity{
                 // Buttons einfärben, je nach richtiger oder falscher Antwort
                 int resID = getResources().getIdentifier("Antwort"+benutzerAntwortNo, "id", "de.braunschweig.braunschweigermedientagequiz");
                 Button button = (Button) findViewById(resID);
-                button.setBackgroundColor(Color.GREEN);
+                button.setBackground( getResources().getDrawable(R.drawable.button_wronganswer));
 
                 showDialogRightAnswer();
 
@@ -145,7 +145,7 @@ public class FrageActivity extends Activity{
                 // Falsche Antwort Button einfärben
                 int resID = getResources().getIdentifier("Antwort"+benutzerAntwortNo, "id", "de.braunschweig.braunschweigermedientagequiz");
                 Button button = (Button) findViewById(resID);
-                button.setBackgroundColor(Color.RED);
+                button.setBackground( getResources().getDrawable(R.drawable.button_rightanswer));
 
                 showDialogWrongAnswer();
             }
