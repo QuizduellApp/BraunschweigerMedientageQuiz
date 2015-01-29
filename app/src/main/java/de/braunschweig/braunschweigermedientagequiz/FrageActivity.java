@@ -76,7 +76,7 @@ public class FrageActivity extends Activity{
 
     // Fragen laden Klasse
     // TODO im Moment nicht benötigt
-    class GetQuestion  extends AsyncTask<String, String, String> {
+    /*class GetQuestion  extends AsyncTask<String, String, String> {
         protected String doInBackground(String... params) {
 
             frage =  spiel.getFrage(Integer.parseInt(cat_id));
@@ -106,7 +106,7 @@ public class FrageActivity extends Activity{
             }
             return null; // Evtl. richtige Antwort returnen? Und dann mit Nutzer Antwort vergleichen
         }
-    }
+    }*/
 
     // Antwort in Datenbank schreiben
     class SaveAnswer extends AsyncTask<String, String, String> {

@@ -23,7 +23,7 @@ if (isset($_GET["kategorie_id"])) {
 
     $result = mysql_query($query);
 
-    file_put_contents("get_frage_log.txt",$query." - ".$_GET['kategorie_id']);
+    file_put_contents("get_frage_log.txt",$query);
 
     if (!empty($result)) {
         // check for empty result

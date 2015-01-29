@@ -31,6 +31,7 @@ public class NeuesSpielActivity extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_neues_spiel_kategorie);
 
+        // Übergebene Daten Ändern
         Intent i = getIntent();
         bid = i.getStringExtra(TAG_BID);
         gegnerName = i.getStringExtra("gegnerName");
@@ -40,7 +41,10 @@ public class NeuesSpielActivity extends Activity{
         // Neues Spiel in die Datenbank schreiben
         new SaveNewGame().execute();
 
-        // kategorien laden
+        // Neue Runde anlegen mit zufälliger Kategorie und zufälligen Fragen
+        //new SetRound().execute(); zu früh, Benutzer muss Button erst klicken
+
+        // Kategorie Namen laden
         new GetCategories().execute();
 
         cat1ButtonClickListener();
@@ -79,6 +83,26 @@ public class NeuesSpielActivity extends Activity{
             return null;
         }
     }
+
+
+    class SetRound extends AsyncTask<String, String, String> {
+        /**
+         * Neue Runde mit zufälligen Fragen und Kategorie anlegen
+         * */
+        protected String doInBackground(String... params) {
+
+            // updating UI from Background Thread
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    // TODO Hinweis einblenden, dass die Runde gespeichert und geladen wird
+                    int i = 0;
+                }
+            });
+
+            return null;
+        }
+    }
+
 
     class GetCategories extends AsyncTask<String, String, String> {
         /**
@@ -120,10 +144,12 @@ public class NeuesSpielActivity extends Activity{
                 if (!asyncTaskFinished) return;
                 Intent myIntent = new Intent(v.getContext(), FrageActivity.class);
                 if (!kategorie.isEmpty()) {
+                    new SetRound().execute();
                     myIntent.putExtra("spiel_id", neuesSpielID);
                     myIntent.putExtra("cat_id", kategorie.get("cat1_id"));
                     myIntent.putExtra("cat_text", kategorie.get("cat1"));
                     myIntent.putExtra(TAG_BID, bid);
+                    //myIntent.putExtra("spiel",spiel);
                 }
                 startActivityForResult(myIntent, 0);
             }

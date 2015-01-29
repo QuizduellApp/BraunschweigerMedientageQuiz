@@ -34,7 +34,6 @@ public class Spiel extends Activity {
     private static final String url_set_neues_spiel = hosturl+"set_neues_spiel.php";
     private static final String url_set_cat = hosturl+"set_cat.php";
 
-
     int bid;
 
     private static final String TAG_SUCCESS = "success";
@@ -148,9 +147,9 @@ public class Spiel extends Activity {
     }
 
 
-
     /**
      * Kategorie auswählen
+     * TODO Umändern auf das reine zurückgeben der Kategorie Namen
      */
     public Map<String, String> getKategorie(int spielerId){
         Map<String, String> kategorien = new HashMap<>();
@@ -189,6 +188,7 @@ public class Spiel extends Activity {
 
     /**
      * Frage auswählen
+     * TODO Umändern auf das reine zurückgeben der Kategorie Namen
      */
     public Map<String, String> getFrage(int kategorieId){
         Map<String, String> frage = new HashMap<>();
@@ -200,13 +200,21 @@ public class Spiel extends Activity {
         try {
             // getting category data by making HTTP request
             // Note that user data url will use GET request
+
             JSONObject json = jsonParser.makeHttpRequest(url_get_frage, "GET", params);
 
             // json success tag
             int success;
             success = json.getInt(TAG_SUCCESS);
 
+            Log.d("JSON URL: ", url_get_frage);
+            Log.d("JSON PARAMS: ", params.toString());
+
+            Log.d("JSON RESPONSE: ",json.toString());
+
+
             if (success == 1) {
+
                 // Frage mit Antworten in der Map speichern
                 frage.put("frage_id",json.getString("Frage_ID"));
                 frage.put("cat_id",json.getString("Kategorie_ID"));
@@ -247,14 +255,6 @@ public class Spiel extends Activity {
         }
     }
 
-    /**
-     * Frage speichern
-     */
-    public boolean setFrage(int spielId, int frageId){
-
-
-        return true;
-    }
 
     /**
      * Antwort zu einer Frage speichern
