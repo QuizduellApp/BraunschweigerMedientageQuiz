@@ -8,7 +8,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Gegen folgende Freunde hast du noch offene Spiele:"
+        android:text="@string/playagainst"
         android:id="@+id/Text_explain"
         android:layout_gravity="center_horizontal"
         android:layout_marginLeft="20dp"
@@ -29,7 +29,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Zum Hauptmenü"
+        android:text="@string/stepback"
         android:id="@+id/buttonstepback"
         android:background="@drawable/button_layout"
         android:layout_gravity="center_horizontal"

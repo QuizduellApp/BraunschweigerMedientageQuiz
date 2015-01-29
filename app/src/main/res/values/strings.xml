@@ -4,6 +4,9 @@
     <!-- Settings -->
     <string name="webserver">http://androidlab.besaba.com/</string>
 
+    <!-- General -->
+    <string name="stepback">Zum Hauptmenü</string>
+
     <!-- Facebook SDK -->
     <string name="facebook_app_id">679617708822117</string>
 
@@ -35,21 +38,34 @@
     <!-- PersDatenActivity.class -->
     <string name="title_activity_persdaten">Persönliche Daten</string>
     <string name="button_datenAendern">Daten ändern</string>
-    <string name="button_back">Zurück zum Hauptmenu</string>
+    <string name="button_password">Passwort wiederholen</string>
+    <string name="password">Neues Passwort</string>
 
     <!-- FriendlistActivity.class -->
     <string name="title_activity_friendlist">Freundesliste</string>
     <string name="title_activity_neuesspiel">Spielen</string>
+    <string name="headline">Fordere einen Freund zum Duell heraus!</string>
+    <string name="addfriend">Freund hinzufügen</string>
+
 
     <!-- OffeneSpieleActivity.class -->
     <string name="button_cat1">Kategorie1</string>
     <string name="button_cat2">Kategorie2</string>
+    <string name="playagainst">Gegen folgende Freunde hast du noch offene Spiele:</string>
 
     <!-- NeuesSpielActivity.class -->
     <string name="title_activity_offenespiele">Offene Spiele</string>
+    <string name="choosecat">  Bitte wähle eine Kategorie  </string>
+
 
     <!-- FrageActivity.class -->
     <string name="title_activity_frage">Frage beantworten</string>
+    <string name="Antwort1">Antwort1</string>
+    <string name="Antwort2">Antwort2</string>
+    <string name="Antwort3">Antwort3</string>
+    <string name="Antwort4">Antwort4</string>
+    <string name="Frage">Frage</string>
+
 
     <!-- HighscoreActivity.class -->
     <string name="title_activity_highscore">Highscore</string>
