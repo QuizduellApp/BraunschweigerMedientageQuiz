@@ -1,8 +1,7 @@
 package de.braunschweig.braunschweigermedientagequiz;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -25,6 +24,8 @@ public class NeuesSpielActivity extends Activity{
     Spiel spiel = new Spiel();
     Select select = new Select();
     boolean asyncTaskFinished = false;
+    // Progress Dialog
+    private ProgressDialog pDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +106,20 @@ public class NeuesSpielActivity extends Activity{
 
 
     class GetCategories extends AsyncTask<String, String, String> {
+
+        /**
+         * Before starting background thread Show Progress Dialog
+         * */
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pDialog = new ProgressDialog(NeuesSpielActivity.this);
+            pDialog.setMessage("Kategorie wird geladen...");
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(true);
+            pDialog.show();
+        }
+
         /**
          * Kategorien ermitteln
          * */
@@ -134,6 +149,14 @@ public class NeuesSpielActivity extends Activity{
             });
 
             return null;
+        }
+
+        /**
+         * After completing background task Dismiss the progress dialog
+         * **/
+        protected void onPostExecute(String file_url) {
+            // dismiss the dialog once got all data
+            pDialog.dismiss();
         }
     }
 

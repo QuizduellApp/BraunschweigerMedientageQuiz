@@ -51,7 +51,7 @@ public class Select extends Activity{
         catch(Exception e)
         {
             Log.e("Fail 1", e.toString());
-            Toast.makeText(getApplicationContext(), "Invalid IP Address",
+            Toast.makeText(MyApplication.get().getApplicationContext(), "Invalid IP Address",
                     Toast.LENGTH_LONG).show();
         }
 
@@ -107,7 +107,7 @@ public class Select extends Activity{
         catch(Exception e)
         {
             Log.e("Fail 1", e.toString());
-            Toast.makeText(getApplicationContext(), "Invalid IP Address",
+            Toast.makeText(MyApplication.get().getApplicationContext(), "Invalid IP Address",
                     Toast.LENGTH_LONG).show();
         }
 
@@ -140,9 +140,8 @@ public class Select extends Activity{
     }
 
 
-    public boolean select_login(Context context, String user, String passwort)
+    public boolean select_login(String user, String passwort)
     {
-
         ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 
         nameValuePairs.add(new BasicNameValuePair("user",user));
@@ -166,7 +165,7 @@ public class Select extends Activity{
         catch(Exception e)
         {
             Log.e("Fail 1", e.toString());
-            Toast.makeText(getApplicationContext(), "Invalid IP Address",
+            Toast.makeText(MyApplication.get().getApplicationContext(), "Invalid IP Address",
                     Toast.LENGTH_LONG).show();
         }
 
@@ -221,11 +220,11 @@ public class Select extends Activity{
 
         } catch (Exception e) {
             Log.e("Fail 1", e.toString());
-            Toast.makeText(getApplicationContext(), "Invalid IP Address",
+            Toast.makeText(MyApplication.get().getApplicationContext(), "Invalid IP Address",
                     Toast.LENGTH_LONG).show();
         }
 
-        String line = null;
+        String line = "";
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(is, "iso-8859-1"), 8);
             StringBuilder sb = new StringBuilder();
@@ -258,7 +257,7 @@ public class Select extends Activity{
             is = entity.getContent();
         } catch (Exception e) {
             Log.e("Fail 1", e.toString());
-            Toast.makeText(getApplicationContext(), "Invalid IP Address",
+            Toast.makeText(MyApplication.get().getApplicationContext(), "Invalid IP Address",
                     Toast.LENGTH_LONG).show();
         }
 
@@ -297,7 +296,7 @@ public class Select extends Activity{
         catch(Exception e)
         {
             Log.e("Fail 1", e.toString());
-            Toast.makeText(getApplicationContext(), "Invalid IP Address",
+            Toast.makeText(MyApplication.get().getApplicationContext(), "Invalid IP Address",
                     Toast.LENGTH_LONG).show();
         }
 
@@ -341,7 +340,7 @@ public class Select extends Activity{
         catch(Exception e)
         {
             Log.e("Fail 1", e.toString());
-            Toast.makeText(getApplicationContext(), "Invalid IP Address",
+            Toast.makeText(MyApplication.get().getApplicationContext(), "Invalid IP Address",
                     Toast.LENGTH_LONG).show();
         }
     }

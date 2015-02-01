@@ -38,16 +38,16 @@ public class FrageActivity extends Activity{
         cat_id = i.getStringExtra("cat_id");
         bid = i.getStringExtra(TAG_BID);
 
+        // Logging
         Log.d("Gewählte Kategorie",cat_id);
 
+        // Frage zufällig aufgrund der Kategorie ID auswählen
         frage =  spiel.getFrage(Integer.parseInt(cat_id));
 
         if (!frage.isEmpty()) {
             // Frage schreiben
             TextView tvFrage = (TextView) findViewById(R.id.FrageView1);
             tvFrage.setText(frage.get("frage"));
-
-            //if (tvFrage.getText().length()>30) tvFrage.setTextSize(8); // Break nach char 30
 
             // Button Text ändern
             Button Antwort1 = (Button) findViewById(R.id.Antwort1);
@@ -67,46 +67,11 @@ public class FrageActivity extends Activity{
             // TODO Fehlerbehandlung
         }
 
-        //new GetQuestion().execute(); //Frage laden
         Antwort1ButtonClickListener();
         Antwort2ButtonClickListener();
         Antwort3ButtonClickListener();
         Antwort4ButtonClickListener();
     }
-
-    // Fragen laden Klasse
-    // TODO im Moment nicht benötigt
-    /*class GetQuestion  extends AsyncTask<String, String, String> {
-        protected String doInBackground(String... params) {
-
-            frage =  spiel.getFrage(Integer.parseInt(cat_id));
-
-            if (!frage.isEmpty()) {
-                // Frage schreiben
-                TextView tvFrage = (TextView) findViewById(R.id.FrageView1);
-                tvFrage.setText(frage.get("frage"));
-
-                // Button Text ändern
-                Button Antwort1 = (Button) findViewById(R.id.Antwort1);
-                Antwort1.setText(frage.get("antwort1"));
-
-                Button Antwort2 = (Button) findViewById(R.id.Antwort2);
-                Antwort2.setText(frage.get("antwort2"));
-
-                Button Antwort3 = (Button) findViewById(R.id.Antwort3);
-                Antwort3.setText(frage.get("antwort3"));
-
-                Button Antwort4 = (Button) findViewById(R.id.Antwort4);
-                Antwort4.setText(frage.get("antwort4"));
-
-
-                //Log.d("APP_NEUESSPIEL", cat1 + cat2);
-            } else {
-                // TODO Fehlerbehandlung
-            }
-            return null; // Evtl. richtige Antwort returnen? Und dann mit Nutzer Antwort vergleichen
-        }
-    }*/
 
     // Antwort in Datenbank schreiben
     class SaveAnswer extends AsyncTask<String, String, String> {

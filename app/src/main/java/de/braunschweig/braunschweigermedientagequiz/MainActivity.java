@@ -33,7 +33,6 @@ public class MainActivity extends FragmentActivity {
 
         setContentView(R.layout.activity_main);
 
-        Log.i("APP","TESTEN");
         String hosturl = this.getString(R.string.webserver);
         Log.i("APP", "HOSTURL: "+hosturl);
 
@@ -80,26 +79,28 @@ public class MainActivity extends FragmentActivity {
                 if( editUsername.length() == 0 || editPassword.length() == 0 ) {
                     Toast.makeText(MainActivity.this, "Bitte fuellen Sie alle Felder aus!", Toast.LENGTH_LONG).show();
 
-                } else if(select.select_login(getApplicationContext(), editUsername.getText().toString(),editPassword.getText().toString())==false) {
+                } else if(select.select_login(editUsername.getText().toString(),editPassword.getText().toString())==false) {
                     String msg = "Benutzerdaten sind inkorrekt";
                     Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
                     editUsername.setText("");
                     editPassword.setText("");
 
-
-
-                } else if(select.select_login(getApplicationContext(),editUsername.getText().toString(),editPassword.getText().toString())==true) {
+                } else if(select.select_login(editUsername.getText().toString(),editPassword.getText().toString())==true) {
 
                     //ID des angemeldeten Benutzers ermitteln
-                    String bid = select.getBenutzerID(editUsername.getText().toString(),editPassword.getText().toString());
+                    String bid = select.getBenutzerID(editUsername.getText().toString(),editPassword.getText().toString()); // TODO kann in select_login integriert werden
 
-                    Intent myIntent = new Intent(view.getContext(),
-                            MainMenuActivity.class);
-
-                    //Benutzer ID an die nächste Activity übermitteln
-                    myIntent.putExtra(TAG_BID, bid);
-
-                    startActivityForResult(myIntent, 0);
+                    // BID überprüfen
+                    if (!bid.isEmpty()) {
+                        Intent myIntent = new Intent(view.getContext(),
+                                MainMenuActivity.class);
+                        //Benutzer ID an die nächste Activity übermitteln
+                        myIntent.putExtra(TAG_BID, bid);
+                        startActivityForResult(myIntent, 0);
+                    } else {
+                        // Keine BID zurück erhalten
+                        Toast.makeText(getApplicationContext(), "Konnte BenutzerID nicht abrufen!", Toast.LENGTH_LONG).show();
+                    }
                 }
             }
 
