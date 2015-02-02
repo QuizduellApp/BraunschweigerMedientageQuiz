@@ -45,7 +45,7 @@ public class OffeneSpieleActivity extends Activity{
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_BID = "benutzerid";
     private static final String TAG_USER = "benutzer";
-    private static final String TAG_NAME = "benutzername";
+    private static final String TAG_NAME = "Benutzername";
     private static final String TAG_GAME = "Spiel_ID";
 
     // SELECT Strings for HTTP Request
