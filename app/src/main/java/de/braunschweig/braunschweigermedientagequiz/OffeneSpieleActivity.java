@@ -28,7 +28,6 @@ import java.util.List;
  *
  */
 public class OffeneSpieleActivity extends Activity{
-    EditText games;
     String bid;
     private static final String hosturl = MyApplication.get().getString(R.string.webserver);
 
@@ -56,14 +55,17 @@ public class OffeneSpieleActivity extends Activity{
         super.onCreate(savedInstanceState);
         // getting user details from intent
         Intent i = getIntent();
+        new GetOpenGames().execute();
 
         // Spiele Liste zuweisen
         ArrayList<String> gamesList = new ArrayList<String>();
         benutzer = new ArrayAdapter<String>(this,R.layout.simplerow,gamesList);
+        ArrayList<String> gamesidList = new ArrayList<String>();
+        spiele = new ArrayAdapter<String>(this,R.layout.simplerow,gamesidList);
 
         // getting user id (pid) from intent
         bid = i.getStringExtra(TAG_BID);
-        new GetOpenGames().execute();
+
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -76,10 +78,15 @@ public class OffeneSpieleActivity extends Activity{
         friendlistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent Intent = new Intent(getBaseContext(),
+                Intent intent = new Intent(getBaseContext(),
                         FrageActivity.class);
-                Intent.putExtra(TAG_BID, bid);
-                startActivityForResult(Intent, 0);
+                Bundle extras = new Bundle();
+                String spiel = (String) spiele.getItem(position);
+                extras.putString("TAG_BID",bid);
+                extras.putString("TAG_GAME",spiel);
+                extras.putString("TAG_CAT","1");
+                intent.putExtras(extras);
+                startActivity(intent);
             }
         });
 
@@ -131,14 +138,14 @@ public class OffeneSpieleActivity extends Activity{
                         // getting user data by making HTTP request
                         // Note that user data url will use GET request
                         JSONObject json = jsonParser.makeHttpRequest(hosturl+"get_games.php", "GET", params);
-
+                        Log.d("User Data", json.toString());
                         // json success tag
                         success = json.getInt(TAG_SUCCESS);
                         if (success == 1) {
                             // successfully received user data
                             JSONArray friends = json.getJSONArray(TAG_USER);
                             Log.d("APP_Games", friends.toString());
-
+                            Log.d("Freunde", String.valueOf(friends.length()));
                             int lengthJsonArr = friends.length();
 
                             for(int i=0; i < lengthJsonArr; i++) {
@@ -150,20 +157,17 @@ public class OffeneSpieleActivity extends Activity{
                                 String freund = spiel_ID_child.optString(TAG_NAME);
                                 Log.d("Spiel gegen: ", freund);
                                 Log.d("Spiel_ID: ", game_id);
-
-                                // Überprüfen, ob Benutzer (Freund) schon in der Liste
-                                /*boolean friendExists = false;
-                                for (int j = 0; j < listadapter.getCount(); j++){
-                                    if (freund.equals(listadapter.getItem(j))) {
+                                boolean friendExists = false;
+                                for (int j = 0; j < benutzer.getCount(); j++){
+                                    if (freund.equals(benutzer.getItem(j))) {
                                         friendExists = true;
                                     }
                                 }
                                 if (!friendExists) {
-                                    listadapter.add(freund);
-                                } TODO Überprüfung auf Duplikate einfügen*/
+                                    benutzer.add(freund);
+                                    spiele.add(game_id);
+                                }
 
-                                benutzer.add(freund);
-                                spiele.add(game_id);
                             }
                             friendlistview.setAdapter(benutzer);
                         }else{

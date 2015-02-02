@@ -21,6 +21,9 @@ import java.util.Map;
 public class FrageActivity extends Activity{
     String cat_id; // Geerbt von Kategorie_Activity, Kategorien_id
     private static final String TAG_BID = "benutzerid";
+    private static final String TAG_GAME = "spiel";
+
+
     Map<String, String> frage;
     String bid;
     int spiel_id; // Aktuelles Spiel
@@ -34,9 +37,12 @@ public class FrageActivity extends Activity{
 
         // Ausgewählte Kategorie Speichern
         Intent i = getIntent();
-        spiel_id = i.getIntExtra("spiel_id", 0);
-        cat_id = i.getStringExtra("cat_id");
-        bid = i.getStringExtra(TAG_BID);
+        Bundle extras = i.getExtras();
+        String spiel_id_string = extras.getString("TAG_GAME");
+        spiel_id = Integer.parseInt(spiel_id_string);
+        bid = extras.getString("TAG_BID");
+        cat_id = extras.getString("TAG_CAT");
+
 
         // Logging
         Log.d("Gewählte Kategorie",cat_id);

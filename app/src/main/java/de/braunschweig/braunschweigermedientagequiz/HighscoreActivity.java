@@ -55,6 +55,7 @@ public class HighscoreActivity extends Activity {
         super.onCreate(savedInstanceState);
         // getting user details from intent
         Intent i = getIntent();
+        new GetHighscores().execute();
 
         // Spiele Liste zuweisen
         ArrayList<String> userList = new ArrayList<String>();
@@ -65,7 +66,7 @@ public class HighscoreActivity extends Activity {
 
         // getting user id (pid) from intent
         bid = i.getStringExtra(TAG_BID);
-        new GetHighscores().execute();
+
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -137,8 +138,8 @@ public class HighscoreActivity extends Activity {
                                 JSONObject JSONchild = points.getJSONObject(i);
 
                                 // Benutzer und den Highscore ermitteln
-                                String username = JSONchild.optString(TAG_NAME);
-                                String punkte = JSONchild.optString(TAG_SCORE);
+                                String username = JSONchild.getString(TAG_NAME);
+                                String punkte = JSONchild.getString(TAG_SCORE);
                                 Log.d("Benutzername: ", username);
                                 Log.d("Highscore: ", punkte);
 

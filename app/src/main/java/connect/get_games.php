@@ -14,14 +14,14 @@ $con = $db->connect();
 if (isset($_GET["bid"])) {
     $bid = intval($_GET['bid']);
 
-$query = sprintf("SELECT Spiel_ID, Benutzername
+$query = sprintf("SELECT Spiel.Spiel_ID, Benutzer.Benutzername
                   FROM Spiel, Benutzer
-                  WHERE NextToPlay='%d'
-                  AND Benutzer_ID_1 = '%d'
+                  WHERE Spiel.NextToPlay='%d'
+                  AND Spiel.Benutzer_ID_1 = '%d'
                   AND Benutzer.benutzer_ID = Spiel.Benutzer_ID_2
                   OR
-                  NextToPlay='%d'
-                  AND Benutzer_ID_2 = '%d'
+                  Spiel.NextToPlay='%d'
+                  AND Spiel.Benutzer_ID_2 = '%d'
                   AND Benutzer.benutzer_ID = Spiel.Benutzer_ID_1",
                mysql_real_escape_string($bid, $con),
                mysql_real_escape_string($bid, $con),

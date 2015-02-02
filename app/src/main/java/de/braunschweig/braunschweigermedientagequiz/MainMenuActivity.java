@@ -58,6 +58,7 @@ public class MainMenuActivity extends Activity {
         highscore.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent myIntent = new Intent(v.getContext(), HighscoreActivity.class);
+                myIntent.putExtra(TAG_BID, bid);
                 startActivityForResult(myIntent, 0);
             }
         });
