@@ -32,7 +32,7 @@ public class OffeneSpieleActivity extends Activity{
     String bid;
     private static final String hosturl = MyApplication.get().getString(R.string.webserver);
 
-    ArrayAdapter<String> listadapter;
+    ArrayAdapter<String> benutzer;
     ArrayAdapter<String> spiele;
     ListView friendlistview;
 
@@ -59,7 +59,7 @@ public class OffeneSpieleActivity extends Activity{
 
         // Spiele Liste zuweisen
         ArrayList<String> gamesList = new ArrayList<String>();
-        listadapter = new ArrayAdapter<String>(this,R.layout.simplerow,gamesList);
+        benutzer = new ArrayAdapter<String>(this,R.layout.simplerow,gamesList);
 
         // getting user id (pid) from intent
         bid = i.getStringExtra(TAG_BID);
@@ -162,10 +162,10 @@ public class OffeneSpieleActivity extends Activity{
                                     listadapter.add(freund);
                                 } TODO Überprüfung auf Duplikate einfügen*/
 
-                                listadapter.add(freund);
+                                benutzer.add(freund);
                                 spiele.add(game_id);
                             }
-                            friendlistview.setAdapter(listadapter);
+                            friendlistview.setAdapter(benutzer);
                         }else{
                             // user with bid not found
                         }

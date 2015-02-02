@@ -69,6 +69,7 @@
 
     <!-- HighscoreActivity.class -->
     <string name="title_activity_highscore">Highscore</string>
+    <string name="highscore">  Hier findest du die Top 10 Spieler  </string>
 
     <!-- Select.class -->
     <string name="title_select">Select</string>
