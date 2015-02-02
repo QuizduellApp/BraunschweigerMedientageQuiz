@@ -165,16 +165,16 @@ public class NeuesSpielActivity extends Activity{
         cat1Button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (!asyncTaskFinished) return;
-                Intent myIntent = new Intent(v.getContext(), FrageActivity.class);
+                Intent intent = new Intent(v.getContext(), FrageActivity.class);
                 if (!kategorie.isEmpty()) {
                     new SetRound().execute();
-                    myIntent.putExtra("spiel_id", neuesSpielID);
-                    myIntent.putExtra("cat_id", kategorie.get("cat1_id"));
-                    myIntent.putExtra("cat_text", kategorie.get("cat1"));
-                    myIntent.putExtra(TAG_BID, bid);
-                    //myIntent.putExtra("spiel",spiel);
+                    Bundle extras = new Bundle();
+                    extras.putString("TAG_BID",bid);
+                    extras.putString("TAG_GAME","1");
+                    extras.putString("TAG_CAT",kategorie.get("cat2_id"));
+                    intent.putExtras(extras);
                 }
-                startActivityForResult(myIntent, 0);
+                startActivity(intent);
             }
         });
     }
@@ -184,14 +184,15 @@ public class NeuesSpielActivity extends Activity{
         cat2Button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (!asyncTaskFinished) return;
-                Intent myIntent = new Intent(v.getContext(), FrageActivity.class);
+                Intent intent = new Intent(v.getContext(), FrageActivity.class);
                 if (!kategorie.isEmpty()) {
-                    myIntent.putExtra("spiel_id", neuesSpielID);
-                    myIntent.putExtra("cat_id", kategorie.get("cat2_id"));
-                    myIntent.putExtra("cat_text", kategorie.get("cat2"));
-                    myIntent.putExtra(TAG_BID, bid);
+                    Bundle extras = new Bundle();
+                    extras.putString("TAG_BID",bid);
+                    extras.putString("TAG_GAME","1");
+                    extras.putString("TAG_CAT",kategorie.get("cat2_id"));
+                    intent.putExtras(extras);
                 }
-                startActivityForResult(myIntent, 0);
+                startActivity(intent);
             }
         });
     }
