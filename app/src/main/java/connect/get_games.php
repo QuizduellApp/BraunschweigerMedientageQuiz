@@ -34,10 +34,6 @@ $result = mysql_query($query);
 if (!empty($result)) {
         // check for empty result
         if (mysql_num_rows($result) > 0) {
-            //$benutzer = array();
-            //$benutzer["Spiel_ID"] = $result["Spiel_ID"];
-            //$benutzer["Benutzername"] = $result["Benutzername"];
-
             $response["benutzer"] = array();
             while($benutzer = mysql_fetch_assoc($result)) {
                 $response["success"] = 1;

@@ -44,8 +44,8 @@ public class HighscoreActivity extends Activity {
     // JSON Node names
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_BID = "benutzerid";
-    private static final String TAG_NAME = "benutzername";
-    private static final String TAG_SCORE = "score";
+    private static final String TAG_NAME = "Benutzername";
+    private static final String TAG_SCORE = "Highscore";
 
     // SELECT Strings for HTTP Request
     Select select = new Select();

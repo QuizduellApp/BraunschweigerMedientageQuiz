@@ -14,24 +14,22 @@ $con = $db->connect();
 if (isset($_GET["bid"])) {
     $bid = intval($_GET['bid']);
 
-$query = sprintf("
-SELECT Benutzername, Highscore
-FROM Benutzer
-GROUP BY Highscore DESC LIMIT 10)",
-               );
+$query = "SELECT Benutzername, Highscore
+          FROM Benutzer
+          GROUP BY Highscore DESC
+          LIMIT 10";
 file_put_contents("get_highscore_log.txt",$query);
 $result = mysql_query($query);
 
 if (!empty($result)) {
         // check for empty result
         if (mysql_num_rows($result) > 0) {
-            $score = array();
-            $score["Benutzername"] = $result["Benutzername"];
-            $score["Highscore"] = $result["Highscore"];
-                while($score = mysql_fetch_array($result)) {
+
+            $response["score"] = array();
+            while($score = mysql_fetch_assoc($result)) {
                 $response["success"] = 1;
                 array_push($response["score"], $score);
-                }
+            }
             // echoing JSON response
             echo json_encode($response);
         } else {
