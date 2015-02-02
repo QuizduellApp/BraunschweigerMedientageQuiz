@@ -14,17 +14,15 @@ $con = $db->connect();
 if (isset($_GET["bid"])) {
     $bid = intval($_GET['bid']);
 
-$query = sprintf("SELECT Benutzer.benutzername
-                  FROM Benutzer
-                  WHERE Benutzer_ID IN
-                  (SELECT Benutzer_ID_1
-                  FROM Spiel WHERE NextToPlay ='%d'
-                  AND Benutzer_ID_2 ='%d')
+$query = sprintf("SELECT Spiel_ID, Benutzername
+                  FROM Spiel, Benutzer
+                  WHERE NextToPlay='%d'
+                  AND Benutzer_ID_1 = '%d'
+                  AND Benutzer.benutzer_ID = Spiel.Benutzer_ID_2
                   OR
-                  Benutzer_ID IN
-                  (SELECT Benutzer_ID_2
-                  FROM Spiel WHERE NextToPlay ='%d'
-                  AND Benutzer_ID_1 ='%d')",
+                  NextToPlay='%d'
+                  AND Benutzer_ID_2 = '%d'
+                  AND Benutzer.benutzer_ID = Spiel.Benutzer_ID_1)",
                mysql_real_escape_string($bid, $con),
                mysql_real_escape_string($bid, $con),
                mysql_real_escape_string($bid, $con),
@@ -36,13 +34,13 @@ $result = mysql_query($query);
 if (!empty($result)) {
         // check for empty result
         if (mysql_num_rows($result) > 0) {
-
-$benutzer = array();    
-$response["benutzer"] = array();
-while($benutzer = mysql_fetch_array($result)) {
-    $response["success"] = 1;
-    array_push($response["benutzer"], $benutzer);
-}
+            $benutzer = array();
+            $benutzer["Spiel_ID"] = $result["Spiel_ID"];
+            $benutzer["Benutzername"] = $result["Benutzername"];
+                while($benutzer = mysql_fetch_array($result)) {
+                $response["success"] = 1;
+                array_push($response["benutzer"], $benutzer);
+                }
             // echoing JSON response
             echo json_encode($response);
         } else {

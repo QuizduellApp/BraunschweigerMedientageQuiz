@@ -33,6 +33,7 @@ public class OffeneSpieleActivity extends Activity{
     private static final String hosturl = MyApplication.get().getString(R.string.webserver);
 
     ArrayAdapter<String> listadapter;
+    ArrayAdapter<String> spiele;
     ListView friendlistview;
 
     // Progress Dialog
@@ -45,6 +46,7 @@ public class OffeneSpieleActivity extends Activity{
     private static final String TAG_BID = "benutzerid";
     private static final String TAG_USER = "benutzer";
     private static final String TAG_NAME = "benutzername";
+    private static final String TAG_GAME = "Spiel_ID";
 
     // SELECT Strings for HTTP Request
     Select select = new Select();
@@ -134,18 +136,20 @@ public class OffeneSpieleActivity extends Activity{
                         success = json.getInt(TAG_SUCCESS);
                         if (success == 1) {
                             // successfully received user data
-                            JSONArray userObj = json.getJSONArray(TAG_USER);  // JSON Array
-                            Log.d("APP_Games", userObj.toString());
+                            JSONArray friends = json.getJSONArray(TAG_USER);
+                            Log.d("APP_Games", friends.toString());
 
-                            int lengthJsonArr = userObj.length();
+                            int lengthJsonArr = friends.length();
 
                             for(int i=0; i < lengthJsonArr; i++) {
                                 // Get Objekt für jedes Spiel
-                                JSONObject jsonChildNode = userObj.getJSONObject(i);
+                                JSONObject spiel_ID_child = friends.getJSONObject(i);
 
-                                // Name des Freundes ermitteln
-                                String freund = jsonChildNode.optString(TAG_NAME);
+                                // Name des Freundes und der Spiel_ID ermitteln
+                                String game_id = spiel_ID_child.optString(TAG_GAME);
+                                String freund = spiel_ID_child.optString(TAG_NAME);
                                 Log.d("Spiel gegen: ", freund);
+                                Log.d("Spiel_ID: ", game_id);
 
                                 // Überprüfen, ob Benutzer (Freund) schon in der Liste
                                 /*boolean friendExists = false;
@@ -159,6 +163,7 @@ public class OffeneSpieleActivity extends Activity{
                                 } TODO Überprüfung auf Duplikate einfügen*/
 
                                 listadapter.add(freund);
+                                spiele.add(game_id);
                             }
                             friendlistview.setAdapter(listadapter);
                         }else{
