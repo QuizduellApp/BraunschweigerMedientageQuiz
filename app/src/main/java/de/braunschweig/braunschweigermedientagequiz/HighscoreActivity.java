@@ -45,7 +45,8 @@ public class HighscoreActivity extends Activity {
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_BID = "benutzerid";
     private static final String TAG_NAME = "Benutzername";
-    private static final String TAG_SCORE = "Highscore";
+    private static final String TAG_SCORE = "score";
+    private static final String TAG_HIGHSCORE = "Highscore";
 
     // SELECT Strings for HTTP Request
     Select select = new Select();
@@ -139,7 +140,7 @@ public class HighscoreActivity extends Activity {
 
                                 // Benutzer und den Highscore ermitteln
                                 String username = JSONchild.getString(TAG_NAME);
-                                String punkte = JSONchild.getString(TAG_SCORE);
+                                String punkte = JSONchild.getString(TAG_HIGHSCORE);
                                 Log.d("Benutzername: ", username);
                                 Log.d("Highscore: ", punkte);
 
