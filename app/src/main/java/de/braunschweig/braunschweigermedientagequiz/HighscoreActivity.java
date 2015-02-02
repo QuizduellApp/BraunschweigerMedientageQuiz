@@ -7,13 +7,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 
 import org.apache.http.NameValuePair;
@@ -22,14 +18,16 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class HighscoreActivity extends Activity {
-    String bid;
     private static final String hosturl = MyApplication.get().getString(R.string.webserver);
+
+    // Datenobjekt der Benutzerdetails
+    SpielData spielData;
+    private static final String TAG_SPIEL_DATA = "spielData";
 
     ArrayAdapter<String> user;
     ArrayAdapter<String> score;
@@ -43,49 +41,44 @@ public class HighscoreActivity extends Activity {
     JSONParser jsonParser = new JSONParser();
     // JSON Node names
     private static final String TAG_SUCCESS = "success";
-    private static final String TAG_BID = "benutzerid";
     private static final String TAG_NAME = "Benutzername";
     private static final String TAG_SCORE = "score";
     private static final String TAG_HIGHSCORE = "Highscore";
 
-    // SELECT Strings for HTTP Request
-    Select select = new Select();
-    InputStream is = null;
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // getting user details from intent
+
+        //Benutzer Daten übernehmen
         Intent i = getIntent();
+        spielData = (SpielData) i.getSerializableExtra("spielData");
+
+        // Highscore Liste im Hintergrund ermitteln
         new GetHighscores().execute();
 
-        // Spiele Liste zuweisen
+        // Highscore Liste zuweisen
         ArrayList<String> userList = new ArrayList<String>();
         user = new ArrayAdapter<String>(this,R.layout.simplerow,userList);
 
         ArrayList<String> scoreList = new ArrayList<String>();
         score = new ArrayAdapter<String>(this,R.layout.simplerow,scoreList);
 
-        // getting user id (pid) from intent
-        bid = i.getStringExtra(TAG_BID);
-
-
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        //* Layout setzen */
+        // Layout setzen
         setContentView(R.layout.activity_highscore);
         userlistview = (ListView) findViewById(R.id.listView_user);
         scoreListview = (ListView) findViewById(R.id.listView_score);
 
-        /** Step back */
+        // Button zurück
         Button abbrechen = (Button) findViewById(R.id.buttonstepback);
         abbrechen.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Intent myIntent = new Intent(view.getContext(),
+                Intent intent = new Intent(view.getContext(),
                         MainMenuActivity.class);
-                //Benutzer ID an die nächste Activity übermitteln
-                myIntent.putExtra(TAG_BID, bid);
-                startActivityForResult(myIntent, 0);
+                //Benutzer Daten an nächste Activity senden
+                intent.putExtra(TAG_SPIEL_DATA, spielData);
+                startActivityForResult(intent, 0);
             }
         });
 
@@ -94,9 +87,7 @@ public class HighscoreActivity extends Activity {
     /** Highscores laden */
     class GetHighscores extends AsyncTask<String, String, String> {
 
-        /**
-         * Before starting background thread Show Progress Dialog
-         * */
+        // Fortschrittsdialog einblenden
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -107,11 +98,8 @@ public class HighscoreActivity extends Activity {
             pDialog.show();
         }
 
-        /**
-         * Highscore laden
-         * */
+        // Highscore im Hintergrund laden
         protected String doInBackground(String... params) {
-
             // updating UI from Background Thread
             runOnUiThread(new Runnable() {
                 public void run() {
@@ -120,7 +108,7 @@ public class HighscoreActivity extends Activity {
                     try {
                         // Building Parameters
                         List<NameValuePair> params = new ArrayList<NameValuePair>();
-                        params.add(new BasicNameValuePair("bid", bid));
+                        params.add(new BasicNameValuePair("bid", ""+spielData.getBenutzerId()));
 
                         // getting user data by making HTTP request
                         // Note that user data url will use GET request
@@ -160,9 +148,8 @@ public class HighscoreActivity extends Activity {
 
             return null;
         }
-        /**
-         * After completing background task Dismiss the progress dialog
-         * **/
+
+        // Dialog schließen nach Beendigung des Hintergrundtasks
         protected void onPostExecute(String file_url) {
             // dismiss the dialog once got all data
             pDialog.dismiss();

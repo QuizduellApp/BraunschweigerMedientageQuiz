@@ -27,19 +27,16 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
 /**
- * Created by Dennis on 18.11.14.
+ * Registriert einen neuen Benutzer in der Datenbank
  */
 public class Registrieren extends Activity
 {
-
-
     EditText editUsername;
     EditText editFirstName;
     EditText editLastName;
     EditText editEmail;
     EditText editPassword;
     EditText editPWiederholung;
-
 
     // SELECT Strings for HTTP Request
     Select select = new Select();
@@ -48,12 +45,10 @@ public class Registrieren extends Activity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
         setContentView(R.layout.activity_registrieren);
-
 
         Button eintragen = (Button) findViewById(R.id.buttonEintragen);
         eintragen.setOnClickListener(new View.OnClickListener() {
@@ -65,10 +60,7 @@ public class Registrieren extends Activity
                 editPassword = (EditText) findViewById(R.id.editPassword);
                 editPWiederholung = (EditText) findViewById(R.id.editPasswordAgain);
 
-
-                /**
-                 * Fehlermeldung falls nicht alle Felder ausgefuellt sind!
-                 **/
+                //Fehlermeldung falls nicht alle Felder ausgefuellt sind!
                 if ( editUsername.length() == 0
                         || editFirstName.length() == 0
                         || editLastName.length() == 0
@@ -80,34 +72,25 @@ public class Registrieren extends Activity
 
                     // Falls der Benutzer schon existiert
                 }
-                else if (select.select_user(editUsername.getText().toString())==true)
-
-                {String msg = "Benutzer existiert bereits";
-                   Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+                else if (select.select_user(editUsername.getText().toString())==true) {
+                    String msg = "Benutzer existiert bereits";
+                    Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
                     editUsername.setText("");
                     editPassword.setText("");
                     editPWiederholung.setText("");
-                }
-
-                else if (select.select_mail(editEmail.getText().toString())==true)
-
-                {String msg = "Emailadresse bereits registriert";
+                } else if (select.select_mail(editEmail.getText().toString())==true) {
+                    String msg = "Emailadresse bereits registriert";
                     Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
                     editEmail.setText("");
                     editPassword.setText("");
                     editPWiederholung.setText("");
-                }
-
-                // Zum Passwort vergleichen
-                else if (!editPassword.getText().toString().equals(editPWiederholung.getText().toString()))
-                {String msg = "Passwörter stimmen nicht überein";
+                } else if (!editPassword.getText().toString().equals(editPWiederholung.getText().toString())) {
+                    // Zum Passwort vergleichen
+                    String msg = "Passwörter stimmen nicht überein";
                     Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
                     editPassword.setText("");
                     editPWiederholung.setText("");
-
-                }
-
-            else {
+                } else {
                     String benutzer_id = "0";
                     String benutzername = ""+editUsername.getText().toString();
                     String vorname = ""+editFirstName.getText().toString();
@@ -138,42 +121,30 @@ public class Registrieren extends Activity
 
                         is = entity.getContent();
 
-
                         String msg = "Benutzer erfolgreich registriert";
                         Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
                         Intent myIntent = new Intent(view1.getContext(),
                                 MainActivity.class);
                         startActivityForResult(myIntent, 0);
 
-                    }
-                    catch(ClientProtocolException e)
-                    {
+                    } catch(ClientProtocolException e) {
                         Log.e("ClientProtocol", "Log_tag");
                         e.printStackTrace();
-                    }catch (IOException e)
-                    {
+                    } catch (IOException e) {
                         Log.e("Log_tag","IOException");
                         e.printStackTrace();
                     }
-
                 }
-
             }
-
         });
 
-
-          Button abbrechen = (Button) findViewById(R.id.buttonAbbrechen);
-         abbrechen.setOnClickListener(new View.OnClickListener() {
-         public void onClick(View view) {
-         Intent myIntent = new Intent(view.getContext(),
-         MainActivity.class);
-         startActivityForResult(myIntent, 0);
-         }
-         });
-
-
-
+        Button abbrechen = (Button) findViewById(R.id.buttonAbbrechen);
+        abbrechen.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(),
+                MainActivity.class);
+                startActivityForResult(intent, 0);
+            }
+        });
     }
-
 }

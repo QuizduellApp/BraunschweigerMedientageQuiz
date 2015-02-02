@@ -17,24 +17,27 @@ import java.util.Map;
 public class NeuesSpielActivity extends Activity{
     private static final String TAG_BID = "benutzerid";
     Map<String, String> kategorie;
-    String bid;
+
+    // Datenobjekt der Benutzerdetails
+    SpielData spielData;
+    private static final String TAG_SPIEL_DATA = "spielData";
+
     String gegnerID;
     String gegnerName;
-    int neuesSpielID;
+    //int neuesSpielID;
     Spiel spiel = new Spiel();
     Select select = new Select();
     boolean asyncTaskFinished = false;
-    // Progress Dialog
-    private ProgressDialog pDialog;
+    private ProgressDialog pDialog; // Dialoganzeige
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_neues_spiel_kategorie);
 
-        // Übergebene Daten Ändern
+        // Übergebene Daten
         Intent i = getIntent();
-        bid = i.getStringExtra(TAG_BID);
+        spielData = (SpielData) i.getSerializableExtra(TAG_SPIEL_DATA);
         gegnerName = i.getStringExtra("gegnerName");
 
         Log.d("GEGNER NAME: ", gegnerName);
@@ -42,41 +45,61 @@ public class NeuesSpielActivity extends Activity{
         // Neues Spiel in die Datenbank schreiben
         new SaveNewGame().execute();
 
-        // Neue Runde anlegen mit zufälliger Kategorie und zufälligen Fragen
-        //new SetRound().execute(); zu früh, Benutzer muss Button erst klicken
-
         // Kategorie Namen laden
-        new GetCategories().execute();
+        //new GetCategories().execute();
+        kategorienLaden();
 
+
+        // Klick auf den Button.
+        // Hier wird auch die Runde angelegt und mit zufälligen Fragen zur gewählten Kategorie befüllt.
         cat1ButtonClickListener();
         cat2ButtonClickListener();
     }
 
-    class SaveNewGame extends AsyncTask<String, String, String> {
-        /**
-         * Neu gestartetes Spiel abspeichern
-         * */
-        protected String doInBackground(String... params) {
+    // Kategorien laden
+    private boolean kategorienLaden() {
+        kategorie =  spiel.getKategorie(spielData.getBenutzerId());
 
+        if (!kategorie.isEmpty()) {
+            String cat1 = kategorie.get("cat1");
+            String cat2 = kategorie.get("cat2");
+
+            // Button Text ändern
+            Button button = (Button) findViewById(R.id.cat1);
+            button.setText(cat1);
+
+            Button button2 = (Button) findViewById(R.id.cat2);
+            button2.setText(cat2);
+
+            Log.d("APP_NEUESSPIEL", cat1 + cat2);
+            return true;
+        } else {
+            // TODO Fehlerbehandlung
+        }
+        return false;
+    }
+
+    /**
+     * Neu gestartetes Spiel abspeichern
+     */
+    class SaveNewGame extends AsyncTask<String, String, String> {
+        protected String doInBackground(String... params) {
             // updating UI from Background Thread
             runOnUiThread(new Runnable() {
                 public void run() {
                     gegnerID = select.getBenutzerIDFromName(gegnerName);
-                    int spieler1 = Integer.parseInt(bid);
+                    int spieler1 = spielData.getBenutzerId();
                     int spieler2 = Integer.parseInt(gegnerID);
 
-                    if (!bid.isEmpty() && !gegnerID.isEmpty()) {
-                        boolean neuesSpiel = spiel.setNeuesSpiel(spieler1, spieler2);
-                        // TODO Fehlerbehandlung, wenn neues Spiel nicht angelegt werden konnte
+                    boolean neuesSpiel = spiel.setNeuesSpiel(spieler1, spieler2);
+                    // TODO Fehlerbehandlung, wenn neues Spiel nicht angelegt werden konnte
 
-                        if (neuesSpiel) {
-                            neuesSpielID = spiel.getSpielId(spieler1, spieler2);
-                            Log.d("NEUES SPIEL ID: ", ""+neuesSpielID);
-                        }
-                        Log.d("APP Spieler Neues Spiel: ", "Status: "+neuesSpiel+" - "+spieler1 + spieler2);
-                    } else {
-                        // TODO Fehlerbehandlung
+                    if (neuesSpiel) {
+                        spielData.setSpielId(spiel.getSpielId(spieler1, spieler2));
+                        Log.d("NEUES SPIEL ID: ", ""+spielData.getSpielId());
                     }
+                    Log.d("APP Spieler Neues Spiel: ", "Status: "+neuesSpiel+" - "+spieler1 + spieler2);
+
                     asyncTaskFinished = true;
                 }
             });
@@ -86,30 +109,27 @@ public class NeuesSpielActivity extends Activity{
     }
 
 
+    /**
+     * Neue Runde mit zufälligen Fragen und Kategorie anlegen
+     * */
     class SetRound extends AsyncTask<String, String, String> {
-        /**
-         * Neue Runde mit zufälligen Fragen und Kategorie anlegen
-         * */
         protected String doInBackground(String... params) {
-
             // updating UI from Background Thread
             runOnUiThread(new Runnable() {
                 public void run() {
                     // TODO Hinweis einblenden, dass die Runde gespeichert und geladen wird
-                    int i = 0;
                 }
             });
-
             return null;
         }
     }
 
 
+    /*
+     * Kategorien laden und anzeigen
+     */
     class GetCategories extends AsyncTask<String, String, String> {
-
-        /**
-         * Before starting background thread Show Progress Dialog
-         * */
+        //Before starting background thread Show Progress Dialog
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -120,45 +140,23 @@ public class NeuesSpielActivity extends Activity{
             pDialog.show();
         }
 
-        /**
-         * Kategorien ermitteln
-         * */
+        //Kategorien ermitteln
         protected String doInBackground(String... params) {
-
             // updating UI from Background Thread
             runOnUiThread(new Runnable() {
                 public void run() {
-                    kategorie =  spiel.getKategorie(Integer.parseInt(bid));
 
-                    if (!kategorie.isEmpty()) {
-                        String cat1 = kategorie.get("cat1");
-                        String cat2 = kategorie.get("cat2");
-
-                        // Button Text ändern
-                        Button button = (Button) findViewById(R.id.cat1);
-                        button.setText(cat1);
-
-                        Button button2 = (Button) findViewById(R.id.cat2);
-                        button2.setText(cat2);
-
-                        Log.d("APP_NEUESSPIEL", cat1 + cat2);
-                    } else {
-                        // TODO Fehlerbehandlung
-                    }
                 }
             });
-
             return null;
         }
 
-        /**
-         * After completing background task Dismiss the progress dialog
-         * **/
+        // Nach Ende des Backgroundthreads den Vortschrittsdialog schließen
         protected void onPostExecute(String file_url) {
-            // dismiss the dialog once got all data
             pDialog.dismiss();
         }
     }
+
 
     private void cat1ButtonClickListener() {
         Button cat1Button = (Button) findViewById(R.id.cat1);
@@ -166,13 +164,17 @@ public class NeuesSpielActivity extends Activity{
             public void onClick(View v) {
                 if (!asyncTaskFinished) return;
                 Intent intent = new Intent(v.getContext(), FrageActivity.class);
+
                 if (!kategorie.isEmpty()) {
-                    new SetRound().execute();
-                    Bundle extras = new Bundle();
-                    extras.putString("TAG_BID",bid);
-                    extras.putString("TAG_GAME","1");
-                    extras.putString("TAG_CAT",kategorie.get("cat2_id"));
-                    intent.putExtras(extras);
+                    // Runde abspeichern
+                    spiel.setRunde(spielData.getSpielId(),Integer.parseInt(kategorie.get("cat1_id")),spielData.getBenutzerId());
+                    spielData.setKategorieId(Integer.parseInt(kategorie.get("cat1_id")));
+
+                    //Benutzer Daten an die nächste Activity übermitteln
+                    intent.putExtra(TAG_SPIEL_DATA, spielData);
+
+                    //myIntent.putExtra("cat_id", kategorie.get("cat1_id"));
+                    //myIntent.putExtra("cat_text", kategorie.get("cat1"));
                 }
                 startActivity(intent);
             }
@@ -185,12 +187,17 @@ public class NeuesSpielActivity extends Activity{
             public void onClick(View v) {
                 if (!asyncTaskFinished) return;
                 Intent intent = new Intent(v.getContext(), FrageActivity.class);
+
                 if (!kategorie.isEmpty()) {
-                    Bundle extras = new Bundle();
-                    extras.putString("TAG_BID",bid);
-                    extras.putString("TAG_GAME","1");
-                    extras.putString("TAG_CAT",kategorie.get("cat2_id"));
-                    intent.putExtras(extras);
+                    // Runde abspeichern
+                    spiel.setRunde(spielData.getSpielId(),Integer.parseInt(kategorie.get("cat2_id")),spielData.getBenutzerId());
+                    spielData.setKategorieId(Integer.parseInt(kategorie.get("cat2_id")));
+
+                    //Benutzer Daten an die nächste Activity übermitteln
+                    intent.putExtra(TAG_SPIEL_DATA, spielData);
+
+                    //myIntent.putExtra("cat_id", kategorie.get("cat2_id"));
+                    //myIntent.putExtra("cat_text", kategorie.get("cat2"));
                 }
                 startActivity(intent);
             }

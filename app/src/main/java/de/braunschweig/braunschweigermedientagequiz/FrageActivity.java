@@ -19,14 +19,11 @@ import java.util.Map;
  * Frage zur ausgewählten Kategorie wird angezeigt.
  */
 public class FrageActivity extends Activity{
-    String cat_id; // Geerbt von Kategorie_Activity, Kategorien_id
-    private static final String TAG_BID = "benutzerid";
-    private static final String TAG_GAME = "spiel";
-
+    // Datenobjekt der Benutzerdetails
+    SpielData spielData;
+    private static final String TAG_SPIEL_DATA = "spielData";
 
     Map<String, String> frage;
-    String bid;
-    int spiel_id; // Aktuelles Spiel
     Spiel spiel = new Spiel();
     boolean frageBeantwortet = false;
 
@@ -37,18 +34,13 @@ public class FrageActivity extends Activity{
 
         // Ausgewählte Kategorie Speichern
         Intent i = getIntent();
-        Bundle extras = i.getExtras();
-        String spiel_id_string = extras.getString("TAG_GAME");
-        spiel_id = Integer.parseInt(spiel_id_string);
-        bid = extras.getString("TAG_BID");
-        cat_id = extras.getString("TAG_CAT");
-
+        spielData = (SpielData) i.getSerializableExtra("spielData");
 
         // Logging
-        Log.d("Gewählte Kategorie",cat_id);
+        Log.d("Gewählte Kategorie",""+spielData.getKategorieId());
 
         // Frage zufällig aufgrund der Kategorie ID auswählen
-        frage =  spiel.getFrage(Integer.parseInt(cat_id));
+        frage =  spiel.getFrage(spielData.getKategorieId());
 
         if (!frage.isEmpty()) {
             // Frage schreiben
@@ -71,6 +63,25 @@ public class FrageActivity extends Activity{
             //Log.d("APP_NEUESSPIEL", cat1 + cat2);
         } else {
             // TODO Fehlerbehandlung
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Die Frage konnte leider nicht geladen werden!")
+                    .setCancelable(true)
+                    .setPositiveButton("Wiederholen", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            Intent intent = new Intent(((Dialog) dialog).getContext(), FrageActivity.class);
+                            intent.putExtra(TAG_SPIEL_DATA,spielData);
+                            startActivity(intent);
+                        }
+                    })
+                    .setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            Intent intent = new Intent(((Dialog) dialog).getContext(), MainMenuActivity.class);
+                            intent.putExtra(TAG_SPIEL_DATA,spielData);
+                            startActivity(intent);
+                        }
+                    });
+            AlertDialog alert = builder.create();
+            alert.show();
         }
 
         Antwort1ButtonClickListener();
@@ -130,7 +141,7 @@ public class FrageActivity extends Activity{
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         Intent myIntent = new Intent(((Dialog) dialog).getContext(), MainMenuActivity.class);
-                        myIntent.putExtra(TAG_BID,bid);
+                        myIntent.putExtra(TAG_SPIEL_DATA,spielData);
                         startActivity(myIntent);
 
                     }
@@ -146,7 +157,7 @@ public class FrageActivity extends Activity{
                 .setNegativeButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         Intent myIntent = new Intent(((Dialog) dialog).getContext(), MainMenuActivity.class);
-                        myIntent.putExtra(TAG_BID,bid);
+                        myIntent.putExtra(TAG_SPIEL_DATA,spielData);
                         startActivity(myIntent);
 
                     }

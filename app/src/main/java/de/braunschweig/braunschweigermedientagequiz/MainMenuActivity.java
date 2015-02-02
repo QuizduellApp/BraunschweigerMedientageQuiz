@@ -8,21 +8,21 @@ import android.view.View;
 import android.widget.Button;
 
 /**
- * Created by Christian on 22.11.2014.
+ * Hauptbildschirm nach dem Login
  */
 public class MainMenuActivity extends Activity {
 
-    String bid;
-    private static final String TAG_BID = "benutzerid";
+    SpielData spielData;
+    private static final String TAG_SPIEL_DATA = "spielData";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainmenu);
 
-        //Benutzer ID übernehmen
+        //Benutzer Daten übernehmen
         Intent i = getIntent();
-        bid = i.getStringExtra(TAG_BID);
+        spielData = (SpielData) i.getSerializableExtra("spielData");
 
         setNeuesSpielButtonClickListener();
         setOffeneSpieleButtonClickListener();
@@ -35,8 +35,8 @@ public class MainMenuActivity extends Activity {
         neuesSpiel.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent myIntent = new Intent(v.getContext(), FriendlistActivity.class);
-                //Benutzer ID an nächste Activity senden
-                myIntent.putExtra(TAG_BID, bid);
+                //Benutzer Daten an nächste Activity senden
+                myIntent.putExtra(TAG_SPIEL_DATA, spielData);
                 startActivityForResult(myIntent, 0);
             }
         });
@@ -47,7 +47,8 @@ public class MainMenuActivity extends Activity {
         offeneSpiele.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent myIntent = new Intent(v.getContext(), OffeneSpieleActivity.class);
-                myIntent.putExtra(TAG_BID, bid);
+                //Benutzer Daten an nächste Activity senden
+                myIntent.putExtra(TAG_SPIEL_DATA, spielData);
                 startActivityForResult(myIntent, 0);
             }
         });
@@ -58,7 +59,8 @@ public class MainMenuActivity extends Activity {
         highscore.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent myIntent = new Intent(v.getContext(), HighscoreActivity.class);
-                myIntent.putExtra(TAG_BID, bid);
+                //Benutzer Daten an nächste Activity senden
+                myIntent.putExtra(TAG_SPIEL_DATA, spielData);
                 startActivityForResult(myIntent, 0);
             }
         });
@@ -69,10 +71,8 @@ public class MainMenuActivity extends Activity {
         persDaten.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent myIntent = new Intent(v.getContext(), PersDatenActivity.class);
-
-                //Benutzer ID an nächste Activity senden
-                myIntent.putExtra(TAG_BID, bid);
-
+                //Benutzer Daten an nächste Activity senden
+                myIntent.putExtra(TAG_SPIEL_DATA, spielData);
                 startActivityForResult(myIntent, 0);
             }
         });

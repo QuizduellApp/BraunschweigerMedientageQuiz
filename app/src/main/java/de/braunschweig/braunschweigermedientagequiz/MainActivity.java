@@ -20,7 +20,8 @@ public class MainActivity extends FragmentActivity {
     EditText editUsername;
     EditText editPassword;
     Select select = new Select();
-    private static final String TAG_BID = "benutzerid";
+    SpielData spielData;
+    private static final String TAG_SPIEL_DATA = "spielData";
 
     //private MainFragment mainFragment;
 
@@ -53,7 +54,6 @@ public class MainActivity extends FragmentActivity {
         });
         request.executeAsync();
         **/
-
 
         /** Registration Button*/
         Button registrieren = (Button) findViewById(R.id.buttonNeuerBenutzer);
@@ -92,11 +92,12 @@ public class MainActivity extends FragmentActivity {
 
                     // BID überprüfen
                     if (!bid.isEmpty()) {
-                        Intent myIntent = new Intent(view.getContext(),
+                        spielData = new SpielData(Integer.parseInt(bid));
+                        Intent intent = new Intent(view.getContext(),
                                 MainMenuActivity.class);
-                        //Benutzer ID an die nächste Activity übermitteln
-                        myIntent.putExtra(TAG_BID, bid);
-                        startActivityForResult(myIntent, 0);
+                        //Benutzer Daten Objekt an die nächste Activity übermitteln
+                        intent.putExtra(TAG_SPIEL_DATA, spielData);
+                        startActivityForResult(intent, 0);
                     } else {
                         // Keine BID zurück erhalten
                         Toast.makeText(getApplicationContext(), "Konnte BenutzerID nicht abrufen!", Toast.LENGTH_LONG).show();

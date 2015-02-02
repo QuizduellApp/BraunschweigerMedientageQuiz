@@ -35,14 +35,14 @@ import java.util.List;
 public class FriendlistActivity extends Activity
 {
     EditText addfriend;
-    EditText freund;
-    String bid;
     private static final String hosturl = MyApplication.get().getString(R.string.webserver);
 
     ArrayAdapter<String> listadapter;
     ListView friendlistview;
 
-
+    // Datenobjekt der Benutzerdetails
+    SpielData spielData;
+    private static final String TAG_SPIEL_DATA = "spielData";
 
     // Progress Dialog
     private ProgressDialog pDialog;
@@ -51,51 +51,45 @@ public class FriendlistActivity extends Activity
     JSONParser jsonParser = new JSONParser();
     // JSON Node names
     private static final String TAG_SUCCESS = "success";
-    private static final String TAG_BID = "benutzerid";
     private static final String TAG_USER = "benutzer";
     private static final String TAG_NAME = "benutzername";
 
-
     // SELECT Strings for HTTP Request
     Select select = new Select();
-    InputStream is = null;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // getting user details from intent
+
+        // Benutzerdaten laden
         Intent i = getIntent();
+        spielData = (SpielData)i.getSerializableExtra(TAG_SPIEL_DATA);
 
-        // getting user id (pid) from intent
-        bid = i.getStringExtra(TAG_BID);
-
-        // Getting complete friend details in background thread
+        // Freunde im Hintergrund laden
         new GetFriends().execute();
 
         ArrayList<String> friendlist = new ArrayList<String>();
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-        //* Layout setzen */
+
+        // Layout setzen
         setContentView(R.layout.activity_friendlist);
         friendlistview = (ListView) findViewById(R.id.friendListView);
-
-
 
         // Neues Spiel starten
         friendlistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent Intent = new Intent(getBaseContext(),
+                Intent intent = new Intent(getBaseContext(),
                         NeuesSpielActivity.class);
-                Intent.putExtra(TAG_BID, bid);
-                Intent.putExtra("gegnerName", listadapter.getItem(position));
-                startActivityForResult(Intent, 0);
+                intent.putExtra(TAG_SPIEL_DATA, spielData);
+                intent.putExtra("gegnerName", listadapter.getItem(position));
+                startActivityForResult(intent, 0);
             }
         });
 
 
-
-        /** Benutzer der Freundesliste hinzufügen */
+        // Benutzer der Freundesliste hinzufügen
         Button eintragen = (Button) findViewById(R.id.buttonaddfriend);
         listadapter = new ArrayAdapter<String>(this,R.layout.simplerow,friendlist);
         eintragen.setOnClickListener(new View.OnClickListener() {
@@ -108,7 +102,7 @@ public class FriendlistActivity extends Activity
                     Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
                 }
                 /** Selbst adden verboten */
-                else if(select.self(bid).equals(addfriend.getText().toString()))
+                else if(select.self(""+spielData.getBenutzerId()).equals(addfriend.getText().toString()))
                 {
                     /** Wenn Benutzer existiert, dann in die Liste schreiben */
                     String msg = "Das bist du";
@@ -124,7 +118,7 @@ public class FriendlistActivity extends Activity
                     listadapter.add(benutzername);
                     addfriend.setText("");
                     friendlistview.setAdapter(listadapter);
-                    select.insert_friend(benutzername,bid.toString());
+                    select.insert_friend(benutzername,""+spielData.getBenutzerId());
                     String msg = "Freund hinzugefügt";
                     Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
                 }
@@ -140,7 +134,7 @@ public class FriendlistActivity extends Activity
                             listadapter.add(benutzername);
                             addfriend.setText("");
                             friendlistview.setAdapter(listadapter);
-                            select.insert_friend(benutzername,bid.toString());
+                            select.insert_friend(benutzername,""+spielData.getBenutzerId());
                             String msg = "Freund hinzugefügt";
                             Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
                             i=listadapter.getCount();
@@ -156,8 +150,8 @@ public class FriendlistActivity extends Activity
                 Intent myIntent = new Intent(view.getContext(),
                         MainMenuActivity.class);
 
-                //Benutzer ID an die nächste Activity übermitteln
-                myIntent.putExtra(TAG_BID, bid);
+                //Benutzer Daten an die nächste Activity übermitteln
+                myIntent.putExtra(TAG_SPIEL_DATA, spielData);
 
                 startActivityForResult(myIntent, 0);
             }
@@ -192,7 +186,7 @@ public class FriendlistActivity extends Activity
                     try {
                         // Building Parameters
                         List<NameValuePair> params = new ArrayList<NameValuePair>();
-                        params.add(new BasicNameValuePair("bid", bid));
+                        params.add(new BasicNameValuePair("bid", ""+spielData.getBenutzerId()));
 
                         // getting user data by making HTTP request
                         // Note that user data url will use GET request

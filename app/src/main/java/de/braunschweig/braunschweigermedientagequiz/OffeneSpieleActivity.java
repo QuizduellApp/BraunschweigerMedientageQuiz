@@ -28,12 +28,15 @@ import java.util.List;
  *
  */
 public class OffeneSpieleActivity extends Activity{
-    String bid;
     private static final String hosturl = MyApplication.get().getString(R.string.webserver);
 
     ArrayAdapter<String> benutzer;
     ArrayAdapter<String> spiele;
     ListView friendlistview;
+
+    // Datenobjekt der Benutzerdetails
+    SpielData spielData;
+    private static final String TAG_SPIEL_DATA = "spielData";
 
     // Progress Dialog
     private ProgressDialog pDialog;
@@ -42,10 +45,9 @@ public class OffeneSpieleActivity extends Activity{
     JSONParser jsonParser = new JSONParser();
     // JSON Node names
     private static final String TAG_SUCCESS = "success";
-    private static final String TAG_BID = "benutzerid";
+    private static final String TAG_GAME = "Spiel_ID";
     private static final String TAG_USER = "benutzer";
     private static final String TAG_NAME = "Benutzername";
-    private static final String TAG_GAME = "Spiel_ID";
 
     // SELECT Strings for HTTP Request
     Select select = new Select();
@@ -53,8 +55,12 @@ public class OffeneSpieleActivity extends Activity{
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // getting user details from intent
+
+        // Ausgewählte Kategorie Speichern
         Intent i = getIntent();
+        spielData = (SpielData) i.getSerializableExtra("spielData");
+
+        // Offene Spiele abrufen
         new GetOpenGames().execute();
 
         // Spiele Liste zuweisen
@@ -62,9 +68,6 @@ public class OffeneSpieleActivity extends Activity{
         benutzer = new ArrayAdapter<String>(this,R.layout.simplerow,gamesList);
         ArrayList<String> gamesidList = new ArrayList<String>();
         spiele = new ArrayAdapter<String>(this,R.layout.simplerow,gamesidList);
-
-        // getting user id (pid) from intent
-        bid = i.getStringExtra(TAG_BID);
 
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -74,31 +77,34 @@ public class OffeneSpieleActivity extends Activity{
         setContentView(R.layout.activity_opengames);
         friendlistview = (ListView) findViewById(R.id.gamesListView);
 
-        // Item Clickable
+        // Liste anklickbar machen
         friendlistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getBaseContext(),
                         FrageActivity.class);
-                Bundle extras = new Bundle();
-                String spiel = (String) spiele.getItem(position);
-                extras.putString("TAG_BID",bid);
-                extras.putString("TAG_GAME",spiel);
-                extras.putString("TAG_CAT","1");
-                intent.putExtras(extras);
+
+                // TODO Kategorie Auswahl ermöglichen
+                spielData.setSpielId(Integer.parseInt(spiele.getItem(position)));
+
+                //Benutzer Daten an die nächste Activity übermitteln
+                intent.putExtra(TAG_SPIEL_DATA, spielData);
+
                 startActivity(intent);
             }
         });
 
-        /** Step back */
+        /** Zurück */
         Button abbrechen = (Button) findViewById(R.id.buttonstepback);
         abbrechen.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Intent myIntent = new Intent(view.getContext(),
+                Intent intent = new Intent(view.getContext(),
                         MainMenuActivity.class);
-                //Benutzer ID an die nächste Activity übermitteln
-                myIntent.putExtra(TAG_BID, bid);
-                startActivityForResult(myIntent, 0);
+
+                //Benutzer Daten an die nächste Activity übermitteln
+                intent.putExtra(TAG_SPIEL_DATA, spielData);
+
+                startActivityForResult(intent, 0);
             }
         });
 
@@ -133,7 +139,7 @@ public class OffeneSpieleActivity extends Activity{
                     try {
                         // Building Parameters
                         List<NameValuePair> params = new ArrayList<NameValuePair>();
-                        params.add(new BasicNameValuePair("bid", bid));
+                        params.add(new BasicNameValuePair("bid", ""+spielData.getBenutzerId()));
 
                         // getting user data by making HTTP request
                         // Note that user data url will use GET request
@@ -181,9 +187,7 @@ public class OffeneSpieleActivity extends Activity{
 
             return null;
         }
-        /**
-         * After completing background task Dismiss the progress dialog
-         * **/
+        // Dialog schließen nach Beendigung des Hintergrund Tasks
         protected void onPostExecute(String file_url) {
             // dismiss the dialog once got all data
             pDialog.dismiss();

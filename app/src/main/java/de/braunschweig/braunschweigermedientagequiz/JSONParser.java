@@ -23,9 +23,9 @@ import android.util.Log;
 
 public class JSONParser {
 
-    static InputStream is = null;
-    static JSONObject jObj = null;
-    static String json = "";
+    private static InputStream is = null;
+    private static JSONObject jObj = null;
+    private static String json = "";
 
     // constructor
     public JSONParser() {
@@ -35,7 +35,7 @@ public class JSONParser {
     // function get json from url
     // by making HTTP POST or GET mehtod
     public JSONObject makeHttpRequest(String url, String method, List<NameValuePair> params) {
-
+        Log.d("JSON PARSER ","================");
         // Making HTTP request
         try {
 
@@ -56,6 +56,7 @@ public class JSONParser {
                 DefaultHttpClient httpClient = new DefaultHttpClient();
                 String paramString = URLEncodedUtils.format(params, "utf-8");
                 url += "?" + paramString;
+                Log.d("JSON_PARSER: ",url);
                 HttpGet httpGet = new HttpGet(url);
 
                 HttpResponse httpResponse = httpClient.execute(httpGet);
@@ -74,25 +75,26 @@ public class JSONParser {
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(is, "iso-8859-1"), 8);
             StringBuilder sb = new StringBuilder();
-            String line = null;
+            String line = "";
             while ((line = reader.readLine()) != null) {
                 sb.append(line + "\n");
             }
             is.close();
             json = sb.toString();
+
+            // try parse the string to a JSON object
+            try {
+                jObj = new JSONObject(json);
+            } catch (JSONException e) {
+                Log.e("JSON Parser", "Error parsing data " + e.toString());
+            }
+
+            // return JSON String
+            return jObj;
         } catch (Exception e) {
             Log.e("Buffer Error", "Error converting result " + e.toString());
         }
 
-        // try parse the string to a JSON object
-        try {
-            jObj = new JSONObject(json);
-        } catch (JSONException e) {
-            Log.e("JSON Parser", "Error parsing data " + e.toString());
-        }
-
-        // return JSON String
-        return jObj;
-
+        return null;
     }
 }
