@@ -35,6 +35,7 @@ public class Spiel extends Activity {
     private static final String url_set_runde_neu = hosturl+"set_runde_neu.php";
     private static final String url_set_antworten = hosturl+"set_antworten.php";
     private static final String url_set_next_to_play = hosturl+"set_next_to_play.php";
+    private static final String url_set_highscore = hosturl+"set_highscore.php";
     private static final String url_get_runde = hosturl+"get_runde.php";
     private static final String url_get_aktuelle_runde = hosturl+"get_aktuelle_runde.php";
 
@@ -81,6 +82,25 @@ public class Spiel extends Activity {
 
         Log.d("SpielID ", ""+spielId);
         Log.d("NextToPlay ",""+nextToPlay);
+
+        if (returnResult.equals("true")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Fügt die erreichten Punkte dem aktuellen Highscore des Spieler hinzu
+     */
+    public boolean setHighscore(int benutzerId, int addToHighscore){
+        ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+        nameValuePairs.add(new BasicNameValuePair("benutzer_id", ""+benutzerId));
+        nameValuePairs.add(new BasicNameValuePair("highscore_add", ""+addToHighscore));
+
+        String returnResult = httpRequest(nameValuePairs,url_set_highscore);
+
+        Log.d("Highscore erhöht um:  ", ""+addToHighscore);
 
         if (returnResult.equals("true")) {
             return true;

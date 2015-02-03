@@ -200,6 +200,11 @@ public class FrageActivity extends Activity{
         // NextToPlay auf den Gegner setzen
         spiel.setNextToPlay(spielData.getSpielId(), spielData.getGegnerId());
 
+        // Highscore erhöhen um die erreichten Punkte
+        // Je Frage ein Punkt
+        spiel.setHighscore(spielData.getBenutzerId(), spielData.getRichtigeAntworten());
+
+
         // TODO überprüfen, ob die Runde aus OFFENE SPIELE gestartet wurde, dann neue Kategorie wählen
 
     }
@@ -208,7 +213,9 @@ public class FrageActivity extends Activity{
         // Ermitteln, wie viele Fragen richtig beantwortet wurden
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Sie haben "+spielData.getRichtigeAntworten()+ " von 3 Fragen richtig beantwortet!")
+        builder.setMessage("Sie haben "+spielData.getRichtigeAntworten()+
+                " von 3 Fragen richtig beantwortet!\n\n" +
+                "Warten Sie bis Ihr Gegner gespielt hat!")
                 .setCancelable(false)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
