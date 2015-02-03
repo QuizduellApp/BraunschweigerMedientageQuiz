@@ -56,7 +56,7 @@ public class FriendlistActivity extends Activity
     // SELECT Strings for HTTP Request
     Select select = new Select();
 
-    private void neuesSpielSpeichern(String gegnerName){
+    private int neuesSpielSpeichern(String gegnerName){
         // Evtl. vorhandene SpielDaten löschen
         spielData.resetSpiel();
 
@@ -66,17 +66,23 @@ public class FriendlistActivity extends Activity
 
         Log.d("GEGNER NAME: ", gegnerName + " - ID: "+spielData.getGegnerId());
 
+        // Überprüfen, ob ein offenes Spiel mit dem gewünschten Gegner schon existiert
+        int testSpielExistiert = spiel.getSpielId(spieler1, spieler2);
+        if (testSpielExistiert > 0) {
+            return 1; // Fehler Spiel schon vorhanden
+        }
+
         // Neues Spiel abspeichern
         boolean neuesSpiel = spiel.setNeuesSpiel(spieler1, spieler2);
-
-
-        // TODO Fehlerbehandlung, wenn neues Spiel nicht angelegt werden konnte
 
         if (neuesSpiel) {
             spielData.setSpielId(spiel.getSpielId(spieler1, spieler2));
             Log.d("NEUES SPIEL ID: ", ""+spielData.getSpielId());
+            Log.d("APP Spieler Neues Spiel: ", "Status: "+neuesSpiel+" - "+spieler1 + spieler2);
+            return 0; // Alles okay mit dem Anlegen des Spiels
         }
-        Log.d("APP Spieler Neues Spiel: ", "Status: "+neuesSpiel+" - "+spieler1 + spieler2);
+
+        return 2; // Fehler mit dem Anlegen des neuen Spiels
     }
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,7 +112,18 @@ public class FriendlistActivity extends Activity
                         KategorieActivity.class);
 
                 // Spiel mit dem ausgewählten Freund abspeichern
-                neuesSpielSpeichern(listadapter.getItem(position));
+                int neuesSpielStatus = neuesSpielSpeichern(listadapter.getItem(position));
+
+                switch (neuesSpielStatus) {
+                    case 1:
+                        // Fehler: Spiel schon angelegt
+                        Toast.makeText(getApplicationContext(), "Sie haben bereits ein offenes Spiel mit diesem Freund!", Toast.LENGTH_LONG).show();
+                        return;
+                    case 2:
+                        // Fehler mit dem Anlegen des neuen Spiels
+                        Toast.makeText(getApplicationContext(), "Leider konnte das Spiel nicht angelegt werden!", Toast.LENGTH_LONG).show();
+                        return;
+                }
 
                 intent.putExtra(TAG_SPIEL_DATA, spielData);
 
