@@ -14,7 +14,7 @@ $con = $db->connect();
 if (isset($_GET["bid"])) {
     $bid = intval($_GET['bid']);
 
-$query = sprintf("SELECT Spiel.Spiel_ID, Benutzer.Benutzername
+$query = sprintf("SELECT Spiel.Spiel_ID, Benutzer.Benutzername, Benutzer.Benutzer_ID
                   FROM Spiel, Benutzer
                   WHERE Spiel.NextToPlay='%d'
                   AND Spiel.Benutzer_ID_1 = '%d'
@@ -28,6 +28,7 @@ $query = sprintf("SELECT Spiel.Spiel_ID, Benutzer.Benutzername
                mysql_real_escape_string($bid, $con),
                mysql_real_escape_string($bid, $con)
                );
+			   
 file_put_contents("get_games_log.txt",$query);
 $result = mysql_query($query);
 

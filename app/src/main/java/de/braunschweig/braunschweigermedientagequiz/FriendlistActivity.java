@@ -57,13 +57,19 @@ public class FriendlistActivity extends Activity
     Select select = new Select();
 
     private void neuesSpielSpeichern(String gegnerName){
-        String gegnerId = select.getBenutzerIDFromName(gegnerName);
+        // Evtl. vorhandene SpielDaten löschen
+        spielData.resetSpiel();
+
+        spielData.setGegnerId(Integer.parseInt(select.getBenutzerIDFromName(gegnerName)));
         int spieler1 = spielData.getBenutzerId();
-        int spieler2 = Integer.parseInt(gegnerId);
+        int spieler2 = spielData.getGegnerId();
 
-        Log.d("GEGNER NAME: ", gegnerName + " - ID: "+gegnerId);
+        Log.d("GEGNER NAME: ", gegnerName + " - ID: "+spielData.getGegnerId());
 
+        // Neues Spiel abspeichern
         boolean neuesSpiel = spiel.setNeuesSpiel(spieler1, spieler2);
+
+
         // TODO Fehlerbehandlung, wenn neues Spiel nicht angelegt werden konnte
 
         if (neuesSpiel) {

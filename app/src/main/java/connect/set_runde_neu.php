@@ -5,8 +5,6 @@
 	// Datenbankverbindungsklasse einbinden
     require_once(dirname(__FILE__).'/db_connect.php');
 
-var_dump($_REQUEST);
-
     // Klasseninstanz und -verbindung herstellen
     $db = new DB_CONNECT();
     $con = $db->connect();

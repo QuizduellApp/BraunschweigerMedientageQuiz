@@ -11,6 +11,7 @@ public class SpielData implements Serializable {
     private String benutzername;
     private String passwort;
     private int spielId;
+    private int gegnerId;
     private int kategorieId;
     private int rundeId;
     private int rundeCount;
@@ -22,6 +23,22 @@ public class SpielData implements Serializable {
     private int antwortFrage2;
     private int antwortFrage3;
     private int richtigeAntworten = 0;
+
+    public void resetSpiel(){
+        spielId = 0;
+        gegnerId = 0;
+        kategorieId = 0;
+        rundeId = 0;
+        rundeCount = 0;
+        frageAktuell = 0;
+        frage1Id = 0;
+        frage2Id = 0;
+        frage3Id = 0;
+        antwortFrage1 = 0;
+        antwortFrage2 = 0;
+        antwortFrage3 = 0;
+        richtigeAntworten = 0;
+    }
 
     public SpielData(int benutzerId){
         this.benutzerId = benutzerId;
@@ -57,6 +74,14 @@ public class SpielData implements Serializable {
 
     public void setSpielId(int spielId) {
         this.spielId = spielId;
+    }
+
+    public int getGegnerId() {
+        return gegnerId;
+    }
+
+    public void setGegnerId(int gegnerId) {
+        this.gegnerId = gegnerId;
     }
 
     public int getKategorieId() {

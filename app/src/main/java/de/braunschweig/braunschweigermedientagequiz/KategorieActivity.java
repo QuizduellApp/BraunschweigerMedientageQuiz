@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.util.Map;
 
@@ -109,26 +110,21 @@ public class KategorieActivity extends Activity{
                 if (!asyncTaskFinished) return;
                 Intent intent = new Intent(v.getContext(), FrageActivity.class);
 
+                boolean rundenDaten = false;
                 if (!kategorie.isEmpty()) {
                     // Runde abspeichern
-                    spiel.setRunde(spielData.getSpielId(),Integer.parseInt(kategorie.get("cat1_id")),spielData.getBenutzerId());
+                    spiel.setRundeNeu(spielData.getSpielId(), Integer.parseInt(kategorie.get("cat1_id")), spielData.getBenutzerId());
                     spielData.setKategorieId(Integer.parseInt(kategorie.get("cat1_id")));
 
-                    // Rundendaten, der zuvor erstellten Runde, laden
-                    int aktuelleRunde = spiel.getAktuelleRunde(spielData.getSpielId());
-                    Map<String, String> runde = spiel.getRunde(aktuelleRunde);
-
-                    spielData.setFrageAktuell(1);
-                    spielData.setFrage1Id(Integer.parseInt(runde.get("frage_id_1")));
-                    spielData.setFrage2Id(Integer.parseInt(runde.get("frage_id_2")));
-                    spielData.setFrage3Id(Integer.parseInt(runde.get("frage_id_3")));
-                    spielData.setRundeId(Integer.parseInt(runde.get("runde_id")));
-                    spielData.setRundeCount(Integer.parseInt(runde.get("runde")));
+                    // Rundendaten laden
+                    rundenDaten = rundendatenLaden();
 
                     //Benutzer Daten an die nächste Activity übermitteln
                     intent.putExtra(TAG_SPIEL_DATA, spielData);
                 }
-                startActivity(intent);
+                if (rundenDaten) {
+                    startActivity(intent);
+                }
             }
         });
     }
@@ -140,27 +136,47 @@ public class KategorieActivity extends Activity{
                 if (!asyncTaskFinished) return;
                 Intent intent = new Intent(v.getContext(), FrageActivity.class);
 
+                boolean rundenDaten = false;
                 if (!kategorie.isEmpty()) {
                     // Runde abspeichern
-                    spiel.setRunde(spielData.getSpielId(),Integer.parseInt(kategorie.get("cat2_id")),spielData.getBenutzerId());
+                    spiel.setRundeNeu(spielData.getSpielId(), Integer.parseInt(kategorie.get("cat2_id")), spielData.getBenutzerId());
                     spielData.setKategorieId(Integer.parseInt(kategorie.get("cat2_id")));
 
-                    // Rundendaten, der zuvor erstellten Runde, laden
-                    int aktuelleRunde = spiel.getAktuelleRunde(spielData.getSpielId());
-                    Map<String, String> runde = spiel.getRunde(aktuelleRunde);
-
-                    spielData.setFrage1Id(Integer.parseInt(runde.get("frage_id_1")));
-                    spielData.setFrage2Id(Integer.parseInt(runde.get("frage_id_2")));
-                    spielData.setFrage3Id(Integer.parseInt(runde.get("frage_id_3")));
-                    spielData.setRundeId(Integer.parseInt(runde.get("runde_id")));
-                    spielData.setRundeCount(Integer.parseInt(runde.get("runde")));
+                    // Rundendaten laden
+                    rundenDaten = rundendatenLaden();
 
                     //Benutzer Daten an die nächste Activity übermitteln
                     intent.putExtra(TAG_SPIEL_DATA, spielData);
                 }
-                startActivity(intent);
+                if (rundenDaten) {
+                    startActivity(intent);
+                }
             }
         });
+    }
+
+    private boolean rundendatenLaden(){
+        // Rundendaten, der zuvor erstellten Runde, laden
+        int aktuelleRunde = spiel.getAktuelleRunde(spielData.getSpielId());
+
+        if (aktuelleRunde == 0) {
+            // Konnte keine Runde zu dem Spiel finden
+
+            // Keine Runde zurück erhalten
+            Toast.makeText(getApplicationContext(), "Konnte Spieldaten nicht abrufen!", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        Map<String, String> runde = spiel.getRunde(aktuelleRunde);
+
+        spielData.setFrageAktuell(1);
+        spielData.setFrage1Id(Integer.parseInt(runde.get("frage_id_1")));
+        spielData.setFrage2Id(Integer.parseInt(runde.get("frage_id_2")));
+        spielData.setFrage3Id(Integer.parseInt(runde.get("frage_id_3")));
+        spielData.setRundeId(Integer.parseInt(runde.get("runde_id")));
+        spielData.setRundeCount(Integer.parseInt(runde.get("runde")));
+
+        return true;
     }
 }
 

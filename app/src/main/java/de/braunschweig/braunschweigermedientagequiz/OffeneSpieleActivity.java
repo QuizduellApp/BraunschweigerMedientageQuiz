@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -23,6 +24,7 @@ import org.json.JSONObject;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -32,6 +34,7 @@ public class OffeneSpieleActivity extends Activity{
 
     ArrayAdapter<String> benutzer;
     ArrayAdapter<String> spiele;
+    ArrayAdapter<String> benutzerId;
     ListView friendlistview;
 
     // Datenobjekt der Benutzerdetails
@@ -48,10 +51,9 @@ public class OffeneSpieleActivity extends Activity{
     private static final String TAG_GAME = "Spiel_ID";
     private static final String TAG_USER = "benutzer";
     private static final String TAG_NAME = "Benutzername";
+    private static final String TAG_NAME_ID = "Benutzer_ID";
 
-    // SELECT Strings for HTTP Request
-    Select select = new Select();
-    InputStream is = null;
+    Spiel spiel = new Spiel();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +70,8 @@ public class OffeneSpieleActivity extends Activity{
         benutzer = new ArrayAdapter<String>(this,R.layout.simplerow,gamesList);
         ArrayList<String> gamesidList = new ArrayList<String>();
         spiele = new ArrayAdapter<String>(this,R.layout.simplerow,gamesidList);
+        ArrayList<String> benutzerIdList = new ArrayList<String>();
+        benutzerId = new ArrayAdapter<String>(this,R.layout.simplerow,benutzerIdList);
 
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -85,7 +89,35 @@ public class OffeneSpieleActivity extends Activity{
                         FrageActivity.class);
 
                 // TODO Kategorie Auswahl ermöglichen
+
+                // Evtl. vorhandene SpielDaten löschen
+                spielData.resetSpiel();
+
+                // SpielID speichern
                 spielData.setSpielId(Integer.parseInt(spiele.getItem(position)));
+
+                // GegnerID speichern
+                spielData.setGegnerId(Integer.parseInt(benutzerId.getItem(position)));
+
+                // Rundendaten, der zuvor erstellten Runde, laden
+                int aktuelleRunde = spiel.getAktuelleRunde(spielData.getSpielId());
+
+                if (aktuelleRunde == 0) {
+                    // Konnte keine Runde zu dem Spiel finden
+
+                    // Keine Runde zurück erhalten
+                    Toast.makeText(getApplicationContext(), "Konnte Spieldaten nicht abrufen!", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                Map<String, String> runde = spiel.getRunde(aktuelleRunde);
+
+                spielData.setFrageAktuell(1);
+                spielData.setFrage1Id(Integer.parseInt(runde.get("frage_id_1")));
+                spielData.setFrage2Id(Integer.parseInt(runde.get("frage_id_2")));
+                spielData.setFrage3Id(Integer.parseInt(runde.get("frage_id_3")));
+                spielData.setRundeId(Integer.parseInt(runde.get("runde_id")));
+                spielData.setRundeCount(Integer.parseInt(runde.get("runde")));
 
                 //Benutzer Daten an die nächste Activity übermitteln
                 intent.putExtra(TAG_SPIEL_DATA, spielData);
@@ -161,7 +193,9 @@ public class OffeneSpieleActivity extends Activity{
                                 // Name des Freundes und der Spiel_ID ermitteln
                                 String game_id = spiel_ID_child.optString(TAG_GAME);
                                 String freund = spiel_ID_child.optString(TAG_NAME);
-                                Log.d("Spiel gegen: ", freund);
+                                String freundId = spiel_ID_child.optString(TAG_NAME_ID);
+
+                                Log.d("Spiel gegen: ", freund + " - SpielerID: "+freundId);
                                 Log.d("Spiel_ID: ", game_id);
                                 boolean friendExists = false;
                                 for (int j = 0; j < benutzer.getCount(); j++){
@@ -172,6 +206,8 @@ public class OffeneSpieleActivity extends Activity{
                                 if (!friendExists) {
                                     benutzer.add(freund);
                                     spiele.add(game_id);
+                                    benutzerId.add(freundId);
+
                                 }
 
                             }

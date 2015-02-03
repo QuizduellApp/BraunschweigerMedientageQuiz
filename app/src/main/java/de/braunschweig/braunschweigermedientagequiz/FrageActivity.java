@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -151,7 +150,12 @@ public class FrageActivity extends Activity{
                 // Zähler richtige Antworten hoch zählen
                 spielData.setRichtigeAntworten(spielData.getRichtigeAntworten()+1);
 
+                // Überprüfen, ob das Rundenende erreicht ist
                 if (spielData.getFrageAktuell() >= 3) {
+
+                    // Rundenende mit Daten in die Datenbank speichern und bereinigen
+                    rundenende();
+
                     // Dialog Rundenende anzeigen
                     showDialogRundenende();
                 } else {
@@ -164,7 +168,12 @@ public class FrageActivity extends Activity{
                 Button button = (Button) findViewById(resID);
                 button.setBackground( getResources().getDrawable(R.drawable.button_rightanswer));
 
+                // Überprüfen, ob das Rundenende erreicht ist
                 if (spielData.getFrageAktuell() >= 3) {
+
+                    // Rundenende mit Daten in die Datenbank speichern und bereinigen
+                    rundenende();
+
                     // Dialog Rundenende anzeigen
                     showDialogRundenende();
                 } else {
@@ -174,6 +183,25 @@ public class FrageActivity extends Activity{
             }
             spielData.setFrageAktuell(spielData.getFrageAktuell()+1);
         }
+    }
+
+    // Wenn eine Runde von drei Fragen beendet wurde
+    private void rundenende(){
+        // Daten der Runde in die Datenbank schreiben
+        spiel.setAntworten(spielData.getRundeId(), spielData.getBenutzerId(),
+                spielData.getAntwortFrage1(), spielData.getAntwortFrage2(), spielData.getAntwortFrage3());
+
+        Log.d("RUNDE_ENDE: ", "RundeID: " +spielData.getRundeId());
+        Log.d("RUNDE_ENDE: ", "BenutzerID: " +spielData.getBenutzerId());
+        Log.d("RUNDE_ENDE: ", "Antwort1: " +spielData.getAntwortFrage1());
+        Log.d("RUNDE_ENDE: ", "Antwort2: " +spielData.getAntwortFrage2());
+        Log.d("RUNDE_ENDE: ", "Antwort3: " +spielData.getAntwortFrage3());
+
+        // NextToPlay auf den Gegner setzen
+        spiel.setNextToPlay(spielData.getSpielId(), spielData.getGegnerId());
+
+        // TODO überprüfen, ob die Runde aus OFFENE SPIELE gestartet wurde, dann neue Kategorie wählen
+
     }
 
     private void showDialogRundenende() {
