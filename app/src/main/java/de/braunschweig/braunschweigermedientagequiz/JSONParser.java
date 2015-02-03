@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.net.UnknownHostException;
 import java.util.List;
 
 import org.apache.http.HttpEntity;
@@ -20,6 +21,10 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.util.Log;
 
 public class JSONParser {
@@ -85,5 +90,22 @@ public class JSONParser {
 
         // JSON Objekt zurück geben
         return jObj;
+    }
+
+    // Dialogfeld, wenn Internetverbindung nicht hergestellt werden konnte
+    // oder andere JSON Fehler
+    // Funktioniert nur leider noch nicht. Soll auf jeder Activity angezeigt werden können.
+    private void fehlerDialog() {
+        // Fehlerbehandlung
+        AlertDialog.Builder builder = new AlertDialog.Builder(MyApplication.get().getApplicationContext());
+        builder.setMessage("Es konnte leider keine Verbindung zum Internet hergestellt werden!")
+                .setCancelable(true)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // leer
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 }

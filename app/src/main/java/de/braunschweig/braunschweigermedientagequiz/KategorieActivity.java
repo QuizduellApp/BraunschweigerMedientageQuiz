@@ -12,21 +12,16 @@ import android.widget.Button;
 import java.util.Map;
 
 /**
- *
+ * Kategorien anzeigen zur Auswahl für den Benutzer
  */
-public class NeuesSpielActivity extends Activity{
-    private static final String TAG_BID = "benutzerid";
+public class KategorieActivity extends Activity{
     Map<String, String> kategorie;
 
     // Datenobjekt der Benutzerdetails
     SpielData spielData;
     private static final String TAG_SPIEL_DATA = "spielData";
 
-    String gegnerID;
-    String gegnerName;
-    //int neuesSpielID;
     Spiel spiel = new Spiel();
-    Select select = new Select();
     boolean asyncTaskFinished = false;
     private ProgressDialog pDialog; // Dialoganzeige
 
@@ -38,17 +33,10 @@ public class NeuesSpielActivity extends Activity{
         // Übergebene Daten
         Intent i = getIntent();
         spielData = (SpielData) i.getSerializableExtra(TAG_SPIEL_DATA);
-        gegnerName = i.getStringExtra("gegnerName");
 
-        Log.d("GEGNER NAME: ", gegnerName);
-
-        // Neues Spiel in die Datenbank schreiben
-        new SaveNewGame().execute();
-
-        // Kategorie Namen laden
-        //new GetCategories().execute();
-        kategorienLaden();
-
+        // Kategorien laden
+        //kategorienLaden(); // direktes laden der Kategorien
+        new GetCategories().execute(); // Kategorien im Hintergrund laden
 
         // Klick auf den Button.
         // Hier wird auch die Runde angelegt und mit zufälligen Fragen zur gewählten Kategorie befüllt.
@@ -79,51 +67,6 @@ public class NeuesSpielActivity extends Activity{
         return false;
     }
 
-    /**
-     * Neu gestartetes Spiel abspeichern
-     */
-    class SaveNewGame extends AsyncTask<String, String, String> {
-        protected String doInBackground(String... params) {
-            // updating UI from Background Thread
-            runOnUiThread(new Runnable() {
-                public void run() {
-                    gegnerID = select.getBenutzerIDFromName(gegnerName);
-                    int spieler1 = spielData.getBenutzerId();
-                    int spieler2 = Integer.parseInt(gegnerID);
-
-                    boolean neuesSpiel = spiel.setNeuesSpiel(spieler1, spieler2);
-                    // TODO Fehlerbehandlung, wenn neues Spiel nicht angelegt werden konnte
-
-                    if (neuesSpiel) {
-                        spielData.setSpielId(spiel.getSpielId(spieler1, spieler2));
-                        Log.d("NEUES SPIEL ID: ", ""+spielData.getSpielId());
-                    }
-                    Log.d("APP Spieler Neues Spiel: ", "Status: "+neuesSpiel+" - "+spieler1 + spieler2);
-
-                    asyncTaskFinished = true;
-                }
-            });
-
-            return null;
-        }
-    }
-
-
-    /**
-     * Neue Runde mit zufälligen Fragen und Kategorie anlegen
-     * */
-    class SetRound extends AsyncTask<String, String, String> {
-        protected String doInBackground(String... params) {
-            // updating UI from Background Thread
-            runOnUiThread(new Runnable() {
-                public void run() {
-                    // TODO Hinweis einblenden, dass die Runde gespeichert und geladen wird
-                }
-            });
-            return null;
-        }
-    }
-
 
     /*
      * Kategorien laden und anzeigen
@@ -133,7 +76,7 @@ public class NeuesSpielActivity extends Activity{
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            pDialog = new ProgressDialog(NeuesSpielActivity.this);
+            pDialog = new ProgressDialog(KategorieActivity.this);
             pDialog.setMessage("Kategorie wird geladen...");
             pDialog.setIndeterminate(false);
             pDialog.setCancelable(true);
@@ -145,7 +88,8 @@ public class NeuesSpielActivity extends Activity{
             // updating UI from Background Thread
             runOnUiThread(new Runnable() {
                 public void run() {
-
+                    kategorienLaden();
+                    asyncTaskFinished = true;
                 }
             });
             return null;
@@ -172,9 +116,6 @@ public class NeuesSpielActivity extends Activity{
 
                     //Benutzer Daten an die nächste Activity übermitteln
                     intent.putExtra(TAG_SPIEL_DATA, spielData);
-
-                    //myIntent.putExtra("cat_id", kategorie.get("cat1_id"));
-                    //myIntent.putExtra("cat_text", kategorie.get("cat1"));
                 }
                 startActivity(intent);
             }
@@ -195,9 +136,6 @@ public class NeuesSpielActivity extends Activity{
 
                     //Benutzer Daten an die nächste Activity übermitteln
                     intent.putExtra(TAG_SPIEL_DATA, spielData);
-
-                    //myIntent.putExtra("cat_id", kategorie.get("cat2_id"));
-                    //myIntent.putExtra("cat_text", kategorie.get("cat2"));
                 }
                 startActivity(intent);
             }

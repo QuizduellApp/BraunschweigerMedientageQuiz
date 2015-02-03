@@ -2,7 +2,6 @@ package de.braunschweig.braunschweigermedientagequiz;
 
 import android.app.Activity;
 
-import android.app.ListActivity;
 import android.app.ProgressDialog;
 
 import android.content.Intent;
@@ -16,7 +15,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.http.NameValuePair;
@@ -25,12 +23,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Dennis on 11.01.15.
+ * Freundesliste anzeigen und Möglichkeit Freunde hinzu zu fügen.
  */
 public class FriendlistActivity extends Activity
 {
@@ -39,6 +36,8 @@ public class FriendlistActivity extends Activity
 
     ArrayAdapter<String> listadapter;
     ListView friendlistview;
+
+    Spiel spiel = new Spiel();
 
     // Datenobjekt der Benutzerdetails
     SpielData spielData;
@@ -56,6 +55,23 @@ public class FriendlistActivity extends Activity
 
     // SELECT Strings for HTTP Request
     Select select = new Select();
+
+    private void neuesSpielSpeichern(String gegnerName){
+        String gegnerId = select.getBenutzerIDFromName(gegnerName);
+        int spieler1 = spielData.getBenutzerId();
+        int spieler2 = Integer.parseInt(gegnerId);
+
+        Log.d("GEGNER NAME: ", gegnerName + " - ID: "+gegnerId);
+
+        boolean neuesSpiel = spiel.setNeuesSpiel(spieler1, spieler2);
+        // TODO Fehlerbehandlung, wenn neues Spiel nicht angelegt werden konnte
+
+        if (neuesSpiel) {
+            spielData.setSpielId(spiel.getSpielId(spieler1, spieler2));
+            Log.d("NEUES SPIEL ID: ", ""+spielData.getSpielId());
+        }
+        Log.d("APP Spieler Neues Spiel: ", "Status: "+neuesSpiel+" - "+spieler1 + spieler2);
+    }
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,14 +92,18 @@ public class FriendlistActivity extends Activity
         setContentView(R.layout.activity_friendlist);
         friendlistview = (ListView) findViewById(R.id.friendListView);
 
-        // Neues Spiel starten
+        // Neues Spiel starten nach Klick auf einen Spieler in der Freundesliste
         friendlistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getBaseContext(),
-                        NeuesSpielActivity.class);
+                        KategorieActivity.class);
+
+                // Spiel mit dem ausgewählten Freund abspeichern
+                neuesSpielSpeichern(listadapter.getItem(position));
+
                 intent.putExtra(TAG_SPIEL_DATA, spielData);
-                intent.putExtra("gegnerName", listadapter.getItem(position));
+
                 startActivityForResult(intent, 0);
             }
         });
