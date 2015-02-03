@@ -32,10 +32,8 @@ if (isset($_GET["bid"])) {
             // success
             $response["success"] = 1;
 
-            // user node
-            //$response["benutzer"] = array();
-
-            //array_push($response["benutzer"], $benutzer);
+            // Array in UTF-8 encodieren da JSON nur damit funktioniert!!! Ganz wichtig!
+			array_walk_recursive($response, 'encode_items');
 
             // echoing JSON response
             echo json_encode($response);

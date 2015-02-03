@@ -114,6 +114,17 @@ public class KategorieActivity extends Activity{
                     spiel.setRunde(spielData.getSpielId(),Integer.parseInt(kategorie.get("cat1_id")),spielData.getBenutzerId());
                     spielData.setKategorieId(Integer.parseInt(kategorie.get("cat1_id")));
 
+                    // Rundendaten, der zuvor erstellten Runde, laden
+                    int aktuelleRunde = spiel.getAktuelleRunde(spielData.getSpielId());
+                    Map<String, String> runde = spiel.getRunde(aktuelleRunde);
+
+                    spielData.setFrageAktuell(1);
+                    spielData.setFrage1Id(Integer.parseInt(runde.get("frage_id_1")));
+                    spielData.setFrage2Id(Integer.parseInt(runde.get("frage_id_2")));
+                    spielData.setFrage3Id(Integer.parseInt(runde.get("frage_id_3")));
+                    spielData.setRundeId(Integer.parseInt(runde.get("runde_id")));
+                    spielData.setRundeCount(Integer.parseInt(runde.get("runde")));
+
                     //Benutzer Daten an die nächste Activity übermitteln
                     intent.putExtra(TAG_SPIEL_DATA, spielData);
                 }
@@ -133,6 +144,16 @@ public class KategorieActivity extends Activity{
                     // Runde abspeichern
                     spiel.setRunde(spielData.getSpielId(),Integer.parseInt(kategorie.get("cat2_id")),spielData.getBenutzerId());
                     spielData.setKategorieId(Integer.parseInt(kategorie.get("cat2_id")));
+
+                    // Rundendaten, der zuvor erstellten Runde, laden
+                    int aktuelleRunde = spiel.getAktuelleRunde(spielData.getSpielId());
+                    Map<String, String> runde = spiel.getRunde(aktuelleRunde);
+
+                    spielData.setFrage1Id(Integer.parseInt(runde.get("frage_id_1")));
+                    spielData.setFrage2Id(Integer.parseInt(runde.get("frage_id_2")));
+                    spielData.setFrage3Id(Integer.parseInt(runde.get("frage_id_3")));
+                    spielData.setRundeId(Integer.parseInt(runde.get("runde_id")));
+                    spielData.setRundeCount(Integer.parseInt(runde.get("runde")));
 
                     //Benutzer Daten an die nächste Activity übermitteln
                     intent.putExtra(TAG_SPIEL_DATA, spielData);

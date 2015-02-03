@@ -45,7 +45,14 @@ class DB_CONNECT {
         // closing db connection
         @mysql_close();
     }
+}
 
+/**
+ * Function to properly encode Arrays UTF-8 for JSON Objects. This is IMPORTANT for the proper response!!
+ */
+function encode_items(&$item, $key)
+{
+	$item = utf8_encode($item);
 }
 
 ?>

@@ -36,11 +36,27 @@ public class FrageActivity extends Activity{
         Intent i = getIntent();
         spielData = (SpielData) i.getSerializableExtra("spielData");
 
-        // Logging
-        Log.d("Gewählte Kategorie",""+spielData.getKategorieId());
+        // Runde laden und einzelne Fragen ermitteln, wird in Kategorie erledigt.
 
-        // Frage zufällig aufgrund der Kategorie ID auswählen
-        frage =  spiel.getFrage(spielData.getKategorieId());
+        // Ermitteln, welche Frage angezeigt werden soll
+
+        int frageId;
+        switch (spielData.getFrageAktuell()) {
+            case 1:
+                frageId = spielData.getFrage1Id();
+                break;
+            case 2:
+                frageId = spielData.getFrage2Id();
+                break;
+            case 3:
+                frageId = spielData.getFrage3Id();
+                break;
+            default:
+                frageId = 0;
+        }
+
+        // Frage abrufen, aufgrund der aktuellen ID
+        frage =  spiel.getFrage(frageId);
 
         if (!frage.isEmpty()) {
             // Frage schreiben
@@ -60,7 +76,6 @@ public class FrageActivity extends Activity{
             Button Antwort4 = (Button) findViewById(R.id.Antwort4);
             Antwort4.setText(frage.get("antwort4"));
 
-            //Log.d("APP_NEUESSPIEL", cat1 + cat2);
         } else {
             // TODO Fehlerbehandlung
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -108,30 +123,75 @@ public class FrageActivity extends Activity{
 
     private void evaluateAnswer(int benutzerAntwortNo){
         if (!frage.isEmpty() && !frageBeantwortet) {
-            // Frage in die Datenbank schreiben
-            new SaveAnswer(benutzerAntwortNo).execute();
+            frageBeantwortet = true;
 
+            // Frage in die Datenbank schreiben
+            //new SaveAnswer(benutzerAntwortNo).execute();
+
+            // Antwort speichern: Zähler der aktuellen Frage 1 hoch zählen und Antwort speichern
+            switch (spielData.getFrageAktuell()) {
+                case 1:
+                    spielData.setAntwortFrage1(benutzerAntwortNo);
+                    break;
+                case 2:
+                    spielData.setAntwortFrage2(benutzerAntwortNo);
+                    break;
+                case 3:
+                    spielData.setAntwortFrage3(benutzerAntwortNo);
+                    break;
+            }
             // Benutzer Antwort mit richtiger Antwort vergleichen
             if (Integer.parseInt(frage.get("richtige_antwort")) == benutzerAntwortNo) {
-                frageBeantwortet = true;
 
                 // Buttons einfärben, je nach richtiger oder falscher Antwort
                 int resID = getResources().getIdentifier("Antwort"+benutzerAntwortNo, "id", "de.braunschweig.braunschweigermedientagequiz");
                 Button button = (Button) findViewById(resID);
                 button.setBackground( getResources().getDrawable(R.drawable.button_wronganswer));
 
-                showDialogRightAnswer();
+                // Zähler richtige Antworten hoch zählen
+                spielData.setRichtigeAntworten(spielData.getRichtigeAntworten()+1);
 
+                if (spielData.getFrageAktuell() >= 3) {
+                    // Dialog Rundenende anzeigen
+                    showDialogRundenende();
+                } else {
+                    // Dialog richtige Antwort anzeigen
+                    showDialogRightAnswer();
+                }
             } else {
-                frageBeantwortet = true;
                 // Falsche Antwort Button einfärben
                 int resID = getResources().getIdentifier("Antwort"+benutzerAntwortNo, "id", "de.braunschweig.braunschweigermedientagequiz");
                 Button button = (Button) findViewById(resID);
                 button.setBackground( getResources().getDrawable(R.drawable.button_rightanswer));
 
-                showDialogWrongAnswer();
+                if (spielData.getFrageAktuell() >= 3) {
+                    // Dialog Rundenende anzeigen
+                    showDialogRundenende();
+                } else {
+                    // Dialog falsche Antwort anzeigen
+                    showDialogWrongAnswer();
+                }
             }
+            spielData.setFrageAktuell(spielData.getFrageAktuell()+1);
         }
+    }
+
+    private void showDialogRundenende() {
+        // Ermitteln, wie viele Fragen richtig beantwortet wurden
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Sie haben "+spielData.getRichtigeAntworten()+ " von 3 Fragen richtig beantwortet!")
+                .setCancelable(false)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Intent myIntent = new Intent(((Dialog) dialog).getContext(), MainMenuActivity.class);
+                        myIntent.putExtra(TAG_SPIEL_DATA,spielData);
+                        startActivity(myIntent);
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
+
     }
 
     private void showDialogRightAnswer() {
@@ -140,10 +200,9 @@ public class FrageActivity extends Activity{
                 .setCancelable(false)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        Intent myIntent = new Intent(((Dialog) dialog).getContext(), MainMenuActivity.class);
+                        Intent myIntent = new Intent(((Dialog) dialog).getContext(), FrageActivity.class);
                         myIntent.putExtra(TAG_SPIEL_DATA,spielData);
                         startActivity(myIntent);
-
                     }
                 });
         AlertDialog alert = builder.create();
@@ -156,7 +215,7 @@ public class FrageActivity extends Activity{
                 .setCancelable(false)
                 .setNegativeButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        Intent myIntent = new Intent(((Dialog) dialog).getContext(), MainMenuActivity.class);
+                        Intent myIntent = new Intent(((Dialog) dialog).getContext(), FrageActivity.class);
                         myIntent.putExtra(TAG_SPIEL_DATA,spielData);
                         startActivity(myIntent);
 

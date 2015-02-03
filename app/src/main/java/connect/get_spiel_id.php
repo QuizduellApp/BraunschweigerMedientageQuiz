@@ -39,6 +39,9 @@ if (isset($_GET["spieler1"]) && isset($_GET["spieler2"])) {
             // TODO Es wird nur eine Spiel ID zurück gegeben,
             // wenn wir mehrere Spiele zwischen zwei gleichen Spielern erlauben wollen,
             // dann müssen wir mehrere IDs zurück liefern
+			
+			// Array in UTF-8 encodieren da JSON nur damit funktioniert!!! Ganz wichtig!
+			array_walk_recursive($response, 'encode_items');
 
             // echoing JSON response
             echo json_encode($response);

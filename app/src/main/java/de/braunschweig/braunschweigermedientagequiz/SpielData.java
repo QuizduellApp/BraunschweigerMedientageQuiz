@@ -13,12 +13,15 @@ public class SpielData implements Serializable {
     private int spielId;
     private int kategorieId;
     private int rundeId;
+    private int rundeCount;
+    private int frageAktuell;
     private int frage1Id;
     private int frage2Id;
     private int frage3Id;
     private int antwortFrage1;
     private int antwortFrage2;
     private int antwortFrage3;
+    private int richtigeAntworten = 0;
 
     public SpielData(int benutzerId){
         this.benutzerId = benutzerId;
@@ -72,6 +75,22 @@ public class SpielData implements Serializable {
         this.rundeId = rundeId;
     }
 
+    public int getRundeCount() {
+        return rundeCount;
+    }
+
+    public void setRundeCount(int rundeCount) {
+        this.rundeCount = rundeCount;
+    }
+
+    public int getFrageAktuell() {
+        return frageAktuell;
+    }
+
+    public void setFrageAktuell(int frageAktuell) {
+        this.frageAktuell = frageAktuell;
+    }
+
     public int getFrage1Id() {
         return frage1Id;
     }
@@ -120,4 +139,11 @@ public class SpielData implements Serializable {
         this.antwortFrage3 = antwortFrage3;
     }
 
+    public int getRichtigeAntworten() {
+        return richtigeAntworten;
+    }
+
+    public void setRichtigeAntworten(int richtigeAntworten) {
+        this.richtigeAntworten = richtigeAntworten;
+    }
 }

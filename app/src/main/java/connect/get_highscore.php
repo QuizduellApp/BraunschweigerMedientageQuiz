@@ -30,6 +30,10 @@ if (!empty($result)) {
                 $response["success"] = 1;
                 array_push($response["score"], $score);
             }
+			
+			// Array in UTF-8 encodieren da JSON nur damit funktioniert!!! Ganz wichtig!
+			array_walk_recursive($response, 'encode_items');
+			
             // echoing JSON response
             echo json_encode($response);
         } else {

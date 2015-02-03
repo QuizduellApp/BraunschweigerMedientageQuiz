@@ -1,8 +1,12 @@
 <?php
 
 /*
- * Frage anhand einer Kategorie ID auswählen
+ * Frage abrufen
+ * Benötigt frage_id
  */
+
+// Richtigen UTF-8 header setzen
+header('Content-Type: application/json; charset=utf-8');
 
 // array for JSON response
 $response = array();
@@ -15,10 +19,10 @@ $db = new DB_CONNECT();
 $con = $db->connect();
 
 // check for post data
-if (!empty($_REQUEST["kategorie_id"])) {
+if (!empty($_REQUEST["frage_id"])) {
     $query = sprintf("SELECT Frage_ID,Kategorie_ID,Frage,Antwort_1,Antwort_2,Antwort_3,Antwort_4,Richtige_Antwort
-                      FROM Frage WHERE Kategorie_ID=%d ORDER BY RAND() LIMIT 1",
-                      mysql_real_escape_string($_REQUEST['kategorie_id'], $con)
+                      FROM Frage WHERE Frage_ID=%d",
+                      mysql_real_escape_string($_REQUEST['frage_id'], $con)
                       );
 
     $result = mysql_query($query,$con);
@@ -28,10 +32,14 @@ if (!empty($_REQUEST["kategorie_id"])) {
     if (!empty($result)) {
         // check for empty result
         if ($response = mysql_fetch_assoc($result)) {
+			file_put_contents("get_frage_response_log.txt",serialize($response));
 			$db->close();
             // success
             $response["success"] = 1;
-
+			
+			// Array in UTF-8 encodieren da JSON nur damit funktioniert!!! Ganz wichtig!
+			array_walk_recursive($response, 'encode_items');
+			
             // echoing JSON response
             echo json_encode($response);
         } else {

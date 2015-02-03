@@ -43,6 +43,9 @@ file_put_contents("log.txt",$query."    --     ". $_GET['bid']);
             $response["benutzer"] = array();
 
             array_push($response["benutzer"], $benutzer);
+			
+			// Array in UTF-8 encodieren da JSON nur damit funktioniert!!! Ganz wichtig!
+			array_walk_recursive($response, 'encode_items');
 
             // echoing JSON response
             echo json_encode($response);
