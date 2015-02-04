@@ -77,4 +77,7 @@
     <!-- Spiel.class -->
     <string name="title_spiel">Spiel</string>
 
+    <!-- Kategorie.class -->
+    <string name="title_activity_kategorie">Kategorie wählen</string>
+
 </resources>
