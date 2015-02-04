@@ -46,6 +46,7 @@ public class OffeneSpieleActivity extends Activity{
 
     // Progress Dialog
     private ProgressDialog pDialog;
+    private ProgressDialog nDialog;
 
     // JSON parser class
     JSONParser jsonParser = new JSONParser();
@@ -247,11 +248,11 @@ public class OffeneSpieleActivity extends Activity{
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            pDialog = new ProgressDialog(OffeneSpieleActivity.this);
-            pDialog.setMessage("Offene Spiele ggn werden geladen...");
-            pDialog.setIndeterminate(false);
-            pDialog.setCancelable(true);
-            pDialog.show();
+            nDialog = new ProgressDialog(OffeneSpieleActivity.this);
+            nDialog.setMessage("Offene Spiele ggn werden geladen...");
+            nDialog.setIndeterminate(false);
+            nDialog.setCancelable(true);
+            nDialog.show();
         }
 
         /**
@@ -316,7 +317,7 @@ public class OffeneSpieleActivity extends Activity{
         // Dialog schließen nach Beendigung des Hintergrund Tasks
         protected void onPostExecute(String file_url) {
             // dismiss the dialog once got all data
-            pDialog.dismiss();
+            nDialog.dismiss();
         }
     }
 
