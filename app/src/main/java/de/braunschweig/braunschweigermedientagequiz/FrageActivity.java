@@ -60,6 +60,9 @@ public class FrageActivity extends Activity{
         frage =  spiel.getFrage(frageId);
 
         if (!frage.isEmpty()) {
+
+            setQuestionOnInterface(spielData.getFrageAktuell());
+
             // Frage schreiben
             TextView tvFrage = (TextView) findViewById(R.id.FrageView1);
             tvFrage.setText(frage.get("frage"));
@@ -258,13 +261,13 @@ public class FrageActivity extends Activity{
 
     }
 
-    private void setRoundOnInterface (Integer Runde) {
+    private void setQuestionOnInterface (Integer Runde) {
         TextView F1 = (TextView) findViewById(R.id.TextFrage1);
         TextView F2 = (TextView) findViewById(R.id.TextFrage2);
         TextView F3 = (TextView) findViewById(R.id.TextFrage3);
-        if (Runde == 1) {F1.setTextColor(Color.parseColor("@color/orange")); F2.setTextColor(Color.parseColor("@color/schwarz")); F3.setTextColor(Color.parseColor("@color/schwarz")); }
-        else if (Runde == 2) {F2.setTextColor(Color.parseColor("@color/orange")); F1.setTextColor(Color.parseColor("@color/schwarz")); F3.setTextColor(Color.parseColor("@color/schwarz"));    }
-        else {F3.setTextColor(Color.parseColor("@color/orange")); F1.setTextColor(Color.parseColor("@color/schwarz")); F2.setTextColor(Color.parseColor("@color/schwarz"));   }
+        if (Runde == 1) {F1.setTextColor(Color.parseColor("#edae07")); F2.setTextColor(Color.parseColor("#000000")); F3.setTextColor(Color.parseColor("#000000")); }
+        else if (Runde == 2) {F2.setTextColor(Color.parseColor("#edae07")); F1.setTextColor(Color.parseColor("#000000")); F3.setTextColor(Color.parseColor("#000000"));    }
+        else {F3.setTextColor(Color.parseColor("#edae07")); F1.setTextColor(Color.parseColor("#000000")); F2.setTextColor(Color.parseColor("#000000"));   }
 
     }
 
