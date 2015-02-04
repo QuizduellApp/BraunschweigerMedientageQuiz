@@ -39,7 +39,6 @@ public class OffeneSpieleActivity extends Activity{
     ListView friendlistview;
 
     ListView vsfriendlistview;
-    MainActivity main = new MainActivity();
 
     // Datenobjekt der Benutzerdetails
     SpielData spielData;
