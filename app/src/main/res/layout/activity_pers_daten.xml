@@ -49,7 +49,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/editTextNeuesPasswort"
         android:text=""
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:inputType="textPassword" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -64,7 +65,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/editTextNeuesPasswortWdh"
         android:text=""
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:inputType="textPassword" />
 
     <Button
         android:layout_width="@dimen/button_width"

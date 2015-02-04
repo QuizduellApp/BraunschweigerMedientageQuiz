@@ -46,7 +46,8 @@ public class OffeneSpieleActivity extends Activity{
 
     // Progress Dialog
     private ProgressDialog pDialog;
-    private ProgressDialog nDialog;
+    private int fertigCount;
+    //private ProgressDialog nDialog;
 
     // JSON parser class
     JSONParser jsonParser = new JSONParser();
@@ -117,6 +118,7 @@ public class OffeneSpieleActivity extends Activity{
                     Toast.makeText(getApplicationContext(), "Konnte Spieldaten nicht abrufen!", Toast.LENGTH_LONG).show();
                     return;
                 }
+
 
                 Map<String, String> runde = spiel.getRunde(aktuelleRunde);
 
@@ -235,7 +237,8 @@ public class OffeneSpieleActivity extends Activity{
         // Dialog schließen nach Beendigung des Hintergrund Tasks
         protected void onPostExecute(String file_url) {
             // dismiss the dialog once got all data
-            pDialog.dismiss();
+            fertigCount = fertigCount + 1;
+            if (fertigCount >= 2) pDialog.dismiss();
         }
     }
 
@@ -248,11 +251,7 @@ public class OffeneSpieleActivity extends Activity{
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            nDialog = new ProgressDialog(OffeneSpieleActivity.this);
-            nDialog.setMessage("Offene Spiele ggn werden geladen...");
-            nDialog.setIndeterminate(false);
-            nDialog.setCancelable(true);
-            nDialog.show();
+            // Progress Dialog im anderen Threat gestartet
         }
 
         /**
@@ -317,7 +316,8 @@ public class OffeneSpieleActivity extends Activity{
         // Dialog schließen nach Beendigung des Hintergrund Tasks
         protected void onPostExecute(String file_url) {
             // dismiss the dialog once got all data
-            nDialog.dismiss();
+            fertigCount = fertigCount + 1;
+            if (fertigCount >= 2) pDialog.dismiss();
         }
     }
 

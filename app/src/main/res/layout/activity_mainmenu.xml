@@ -23,9 +23,9 @@
             android:layout_height="fill_parent"
             android:text="@string/text_benutzer"
             android:id="@+id/textViewEingeloggterBenutzer"
-            android:textColor="@color/blau"
+            android:textColor="#FFFFFF"
             android:textStyle="bold"
-            android:background="@color/gelb"
+            android:background="@color/orange"
             android:padding="12dp"
             android:gravity="center"
             />
