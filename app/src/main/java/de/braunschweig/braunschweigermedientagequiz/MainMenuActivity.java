@@ -16,6 +16,14 @@ public class MainMenuActivity extends Activity {
     private static final String TAG_SPIEL_DATA = "spielData";
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        // Angemeldeten Benutzer anzeigen
+        TextView tvEingeloggterBenutzer = (TextView) findViewById(R.id.textViewEingeloggterBenutzer);
+        tvEingeloggterBenutzer.setText(getString(R.string.text_benutzer)+" "+spielData.getBenutzername());
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainmenu);

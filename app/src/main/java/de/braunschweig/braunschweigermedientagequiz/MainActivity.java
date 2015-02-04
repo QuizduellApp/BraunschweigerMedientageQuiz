@@ -43,14 +43,15 @@ public class MainActivity extends FragmentActivity {
         StrictMode.setThreadPolicy(policy);
 
         // Überprüfen, ob Spielerdaten in Shared Preferences bereits vorhanden
+        // Wenn vorhanden, wird das Hauptmenü gestartet
         SessionManager sesMan = new SessionManager(getApplicationContext());
         if (sesMan.isLoggedIn()){
             Intent intent = new Intent(getApplicationContext(), MainMenuActivity.class);
 
             // spielData setzen
             Log.d("APP Benutzer ID: ",""+sesMan.getBenutzerId());
-            Log.d("APP Benutzername: ",sesMan.getBenutzername());
-            Log.d("APP Passwort: ",sesMan.getPasswort());
+            Log.d("APP Benutzername: ",""+sesMan.getBenutzername());
+            Log.d("APP Passwort: ",""+sesMan.getPasswort()); // könnte null sein
             spielData = new SpielData(sesMan.getBenutzerId()); // Benutzer ID in neuem SpielData Objekt abpseichern
             spielData.setBenutzername(sesMan.getBenutzername()); // Benutzername abspeichern
             spielData.setPasswort(sesMan.getPasswort()); // Passwort abspeichern

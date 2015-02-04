@@ -67,7 +67,7 @@ public class SessionManager {
     }
 
     public String getBenutzername() {
-        return pref.getString(KEY_NAME, null);
+        return pref.getString(KEY_NAME, "");
     }
 
     public void setBenutzername(String benutzerName) {
@@ -79,7 +79,7 @@ public class SessionManager {
     }
 
     public String getPasswort() {
-        return pref.getString(KEY_PASSWORT, null);
+        return pref.getString(KEY_PASSWORT, "");
     }
 
     public void setPasswort(String passwort) {
@@ -96,9 +96,9 @@ public class SessionManager {
      public HashMap<String, String> getUserDetails(){
         HashMap<String, String> user = new HashMap<String, String>();
         // Daten schreiben
-        user.put(KEY_NAME, pref.getString(KEY_NAME, null));
-        user.put(KEY_NAME_ID, pref.getString(KEY_NAME_ID, null));
-        user.put(KEY_PASSWORT, pref.getString(KEY_PASSWORT, null));
+        user.put(KEY_NAME, pref.getString(KEY_NAME, ""));
+        user.put(KEY_NAME_ID, ""+pref.getInt(KEY_NAME_ID, 0));
+        user.put(KEY_PASSWORT, pref.getString(KEY_PASSWORT, ""));
 
          // Benutzer zurück liefern
         return user;
@@ -128,6 +128,9 @@ public class SessionManager {
      * Login überprüfen
      * **/
      public boolean isLoggedIn(){
-        return pref.getBoolean(IS_LOGIN, false);
+         String bid = ""+ getBenutzerId();
+         if (!bid.isEmpty() && !getBenutzername().isEmpty() && !getPasswort().isEmpty()) return true;
+         return false;
+         //return pref.getBoolean(IS_LOGIN, false);
      }
 }

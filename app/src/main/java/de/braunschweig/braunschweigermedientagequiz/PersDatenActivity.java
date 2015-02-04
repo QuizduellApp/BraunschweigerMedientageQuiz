@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 /**
  * Persönliche Daten des Benutzers anzeigen.
@@ -26,7 +27,7 @@ public class PersDatenActivity extends Activity {
 
     EditText editBenutzername;
     EditText editEmail;
-    EditText editPasswort;
+    EditText editPassword;
     EditText editPasswortWdh;
 
     // Progress Dialog
@@ -89,10 +90,91 @@ public class PersDatenActivity extends Activity {
         Button datenAendern = (Button) findViewById(R.id.buttonDatenAendern);
         datenAendern.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                // starting background task to update product
-                new SaveBenutzerDetails().execute();
+                editBenutzername = (EditText) findViewById(R.id.editTextBenutzername);
+                editEmail = (EditText) findViewById(R.id.editTextEmail);
+                editPassword = (EditText) findViewById(R.id.editTextNeuesPasswort);
+                editPasswortWdh = (EditText) findViewById(R.id.editTextNeuesPasswortWdh);
+
+                // Felder überprüfen
+                if (editBenutzername.getText().length() == 0 || editEmail.getText().length() == 0) {
+                    Toast.makeText(PersDatenActivity.this, "Benutzername und E-Mail sind Pflichtfelder!", Toast.LENGTH_LONG).show();
+                } else if (editPassword.getText().length() > 0 && !editPassword.getText().toString().equals(editPasswortWdh.getText().toString())) {
+                    // Passwort Wiederholung falsch
+                    Toast.makeText(PersDatenActivity.this, "Das Passwort wurde nicht richtig wiederholt!", Toast.LENGTH_LONG).show();
+                } else {
+                    pDialog = new ProgressDialog(PersDatenActivity.this);
+                    pDialog.setMessage("Daten ändern...");
+                    pDialog.setIndeterminate(false);
+                    pDialog.setCancelable(true);
+                    pDialog.show();
+
+                    boolean status = saveBenutzerDetails();
+
+                    pDialog.dismiss();
+
+                    if (status) {
+                        // Dialog anzeigen, dass die Daten erfolgreich geändert werden konnten
+                        Toast.makeText(PersDatenActivity.this, "Daten erfolgreich geändert!", Toast.LENGTH_LONG).show();
+
+                        Intent myIntent = new Intent(getApplicationContext(), MainMenuActivity.class);
+                        //Benutzer Daten an die nächste Activity übermitteln
+                        myIntent.putExtra(TAG_SPIEL_DATA, spielData);
+                        startActivityForResult(myIntent, 0);
+
+                    } else {
+                        // Dialog anzeigen, dass die Daten nicht geändert werden konnten
+                        Toast.makeText(PersDatenActivity.this, "Fehler beim Ändern der Daten!", Toast.LENGTH_LONG).show();
+                    }
+                }
+
             }
         });
+    }
+
+    private boolean saveBenutzerDetails(){
+        // getting updated data from EditTexts
+        String benutzername = editBenutzername.getText().toString();
+        String email = editEmail.getText().toString();
+        String passwort = editPassword.getText().toString();
+
+        // Building Parameters
+        List<NameValuePair> params = new ArrayList<NameValuePair>();
+        params.add(new BasicNameValuePair("bid", ""+spielData.getBenutzerId()));
+        params.add(new BasicNameValuePair("benutzername", benutzername));
+        params.add(new BasicNameValuePair("email", email));
+        params.add(new BasicNameValuePair("passwort", passwort));
+
+        // sending modified data through http request
+        // Notice that update product url accepts POST method
+        JSONObject json = jsonParser.makeHttpRequest(url_update_persdaten, "POST", params);
+
+        // check json success tag
+        try {
+            int success = json.getInt(TAG_SUCCESS);
+
+            if (success == 1) {
+                // Erfolgreich geändert
+
+                // Session updaten
+                SessionManager sesMan = new SessionManager(getApplicationContext());
+
+                // SpielData aktualisieren
+                if (!benutzername.isEmpty()) {
+                    spielData.setBenutzername(benutzername);
+                    sesMan.setBenutzername(benutzername);
+                }
+                if(passwort != null) {
+                    spielData.setPasswort(passwort);
+                    sesMan.setPasswort(passwort);
+                }
+
+                return true;
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return false;
     }
 
 
@@ -175,86 +257,4 @@ public class PersDatenActivity extends Activity {
             pDialog.dismiss();
         }
     }
-
-    /**
-     * background Async Task to  Save product Details
-     * */
-    class SaveBenutzerDetails extends AsyncTask<String, String, String> {
-
-        /**
-         * Before starting background thread Show Progress Dialog
-         * */
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            pDialog = new ProgressDialog(PersDatenActivity.this);
-            pDialog.setMessage("Daten ändern...");
-            pDialog.setIndeterminate(false);
-            pDialog.setCancelable(true);
-            pDialog.show();
-        }
-
-        /**
-         * Saving product
-         * */
-        protected String doInBackground(String... args) {
-
-            // getting updated data from EditTexts
-            String benutzername = editBenutzername.getText().toString();
-            String email = editEmail.getText().toString();
-            String passwort = null;
-
-            if(editPasswort != null){
-                passwort = editPasswort.getText().toString();
-            }
-
-            // Building Parameters
-            List<NameValuePair> params = new ArrayList<NameValuePair>();
-            params.add(new BasicNameValuePair("bid", ""+spielData.getBenutzerId()));
-            params.add(new BasicNameValuePair("benutzername", benutzername));
-            params.add(new BasicNameValuePair("email", email));
-            params.add(new BasicNameValuePair("passwort", passwort));
-
-            // sending modified data through http request
-            // Notice that update product url accepts POST method
-            JSONObject json = jsonParser.makeHttpRequest(url_update_persdaten, "POST", params);
-
-            // check json success tag
-            try {
-                int success = json.getInt(TAG_SUCCESS);
-
-                if (success == 1) {
-                    // Erfolgreich geändert
-                    // SpielData aktualisieren
-                    spielData.setBenutzername(benutzername);
-                    spielData.setPasswort(passwort);
-                    // Session updaten
-                    SessionManager sesMan = new SessionManager(getApplicationContext());
-                    sesMan.setBenutzername(benutzername);
-                    sesMan.setPasswort(passwort);
-
-                    Intent i = getIntent();
-                    // send result code 100 to notify about product update
-                    setResult(100, i);
-                    finish();
-                } else {
-                    // failed to update product
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-            return null;
-        }
-
-        /**
-         * After completing background task Dismiss the progress dialog
-         * **/
-        protected void onPostExecute(String file_url) {
-            // dismiss the dialog once product updated
-            pDialog.dismiss();
-        }
-    }
-
-
 }
