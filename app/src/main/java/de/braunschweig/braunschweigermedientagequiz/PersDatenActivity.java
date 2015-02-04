@@ -29,6 +29,7 @@ public class PersDatenActivity extends Activity {
     EditText editPasswort;
     EditText editPasswortWdh;
     String bid;
+    MainActivity main = new MainActivity();
 
     // Progress Dialog
     private ProgressDialog pDialog;
@@ -71,6 +72,7 @@ public class PersDatenActivity extends Activity {
 
         /** Step back */
         Button abbrechen = (Button) findViewById(R.id.buttonbackpers);
+        main.buttonpressed(abbrechen);
         abbrechen.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Intent myIntent = new Intent(view.getContext(),
@@ -87,6 +89,7 @@ public class PersDatenActivity extends Activity {
 
     private void setDatenAendernButtonClickListener() {
         Button datenAendern = (Button) findViewById(R.id.buttonDatenAendern);
+        main.buttonpressed(datenAendern);
         datenAendern.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // starting background task to update product

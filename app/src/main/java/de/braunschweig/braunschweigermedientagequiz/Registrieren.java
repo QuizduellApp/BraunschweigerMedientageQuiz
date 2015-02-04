@@ -40,6 +40,7 @@ public class Registrieren extends Activity
 
     // SELECT Strings for HTTP Request
     Select select = new Select();
+    MainActivity main = new MainActivity();
     InputStream is = null;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +52,7 @@ public class Registrieren extends Activity
         setContentView(R.layout.activity_registrieren);
 
         Button eintragen = (Button) findViewById(R.id.buttonEintragen);
+        main.buttonpressed(eintragen);
         eintragen.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view1) {
                 editUsername = (EditText) findViewById(R.id.editUsername);
@@ -139,6 +141,7 @@ public class Registrieren extends Activity
         });
 
         Button abbrechen = (Button) findViewById(R.id.buttonAbbrechen);
+        main.buttonpressed(abbrechen);
         abbrechen.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(),

@@ -36,7 +36,7 @@ public class FriendlistActivity extends Activity
 
     ArrayAdapter<String> listadapter;
     ListView friendlistview;
-
+    MainActivity main = new MainActivity();
     Spiel spiel = new Spiel();
 
     // Datenobjekt der Benutzerdetails
@@ -134,6 +134,7 @@ public class FriendlistActivity extends Activity
 
         // Benutzer der Freundesliste hinzufügen
         Button eintragen = (Button) findViewById(R.id.buttonaddfriend);
+        main.buttonpressed(eintragen);
         listadapter = new ArrayAdapter<String>(this,R.layout.simplerow,friendlist);
         eintragen.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view1) {
@@ -188,6 +189,7 @@ public class FriendlistActivity extends Activity
 
         /** Step back */
         Button abbrechen = (Button) findViewById(R.id.buttonstepback);
+        main.buttonpressed(abbrechen);
         abbrechen.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Intent myIntent = new Intent(view.getContext(),

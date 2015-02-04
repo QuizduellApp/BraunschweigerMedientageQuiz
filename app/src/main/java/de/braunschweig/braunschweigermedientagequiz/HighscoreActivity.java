@@ -27,6 +27,7 @@ public class HighscoreActivity extends Activity {
 
     // Datenobjekt der Benutzerdetails
     SpielData spielData;
+    MainActivity main = new MainActivity();
     private static final String TAG_SPIEL_DATA = "spielData";
 
     ArrayAdapter<String> user;
@@ -72,6 +73,7 @@ public class HighscoreActivity extends Activity {
 
         // Button zurück
         Button abbrechen = (Button) findViewById(R.id.buttonstepback);
+        main.buttonpressed(abbrechen);
         abbrechen.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(),

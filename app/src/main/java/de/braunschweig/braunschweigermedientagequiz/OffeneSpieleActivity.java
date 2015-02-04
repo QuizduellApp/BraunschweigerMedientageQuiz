@@ -36,7 +36,7 @@ public class OffeneSpieleActivity extends Activity{
     ArrayAdapter<String> spiele;
     ArrayAdapter<String> benutzerId;
     ListView friendlistview;
-
+    MainActivity main = new MainActivity();
     // Datenobjekt der Benutzerdetails
     SpielData spielData;
     private static final String TAG_SPIEL_DATA = "spielData";
@@ -128,6 +128,7 @@ public class OffeneSpieleActivity extends Activity{
 
         /** Zurück */
         Button abbrechen = (Button) findViewById(R.id.buttonstepback);
+        main.buttonpressed(abbrechen);
         abbrechen.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(),

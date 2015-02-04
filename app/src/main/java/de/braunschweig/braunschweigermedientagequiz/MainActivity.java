@@ -1,14 +1,19 @@
 package de.braunschweig.braunschweigermedientagequiz;
 
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -55,8 +60,14 @@ public class MainActivity extends FragmentActivity {
         request.executeAsync();
         **/
 
+
+
+
+
+
         /** Registration Button*/
-        Button registrieren = (Button) findViewById(R.id.buttonNeuerBenutzer);
+        final Button registrieren = (Button) findViewById(R.id.buttonNeuerBenutzer);
+        buttonpressed(registrieren);
         registrieren.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Intent myIntent = new Intent(view.getContext(),
@@ -68,6 +79,7 @@ public class MainActivity extends FragmentActivity {
 
         /** Login Button*/
         Button login = (Button) findViewById(R.id.button_Login);
+        buttonpressed(login);
         login.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 editUsername = (EditText) findViewById(R.id.editTextEmail);
@@ -164,5 +176,20 @@ public class MainActivity extends FragmentActivity {
 
         // Logs 'app deactivate' App Event.
         AppEventsLogger.deactivateApp(this);
+    }
+
+    public void buttonpressed(final Button x) {
+        x.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    x.setTextColor(Color.parseColor("#ff0000")); //  Hier was er machen soll, wenn man drückt
+                }
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    x.setTextColor(Color.parseColor("#ffffff")); //  Hier was er machen soll, wenn man loslässt
+                }
+                return false;
+            }
+        });
     }
 }
