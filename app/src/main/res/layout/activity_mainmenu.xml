@@ -10,11 +10,30 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Angemeldet als: "
+        android:text="@string/text_benutzer"
         android:id="@+id/textViewEingeloggterBenutzer"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="10dp"
+        android:textColor="@color/blau"
+        android:textStyle="bold"
+        android:background="@color/gelb"
+        android:padding="12dp"
+        />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/button_abmelden"
+        android:id="@+id/buttonAbmelden"
+        android:background="@drawable/button_selector"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:textSize="@dimen/button_text"
+        android:textColor="@color/button_text"/>
 
     <Button
         android:layout_width="@dimen/button_width"
@@ -24,7 +43,7 @@
         android:layout_below="@+id/textViewEingeloggterBenutzer"
         android:layout_centerHorizontal="true"
         android:background="@drawable/button_selector"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="50dp"
         android:textSize="@dimen/button_text"
         android:textColor="@color/button_text" />
 
@@ -63,6 +82,7 @@
         android:layout_marginTop="20dp"
         android:textSize="@dimen/button_text"
         android:textColor="@color/button_text" />
+
 
 
 

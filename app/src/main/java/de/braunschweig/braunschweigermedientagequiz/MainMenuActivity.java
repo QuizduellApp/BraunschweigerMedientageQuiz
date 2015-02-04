@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 /**
  * Hauptbildschirm nach dem Login
@@ -24,10 +25,28 @@ public class MainMenuActivity extends Activity {
         Intent i = getIntent();
         spielData = (SpielData) i.getSerializableExtra("spielData");
 
+        // Angemeldeten Benutzer anzeigen
+        TextView tvEingeloggterBenutzer = (TextView) findViewById(R.id.textViewEingeloggterBenutzer);
+        tvEingeloggterBenutzer.setText(getString(R.string.text_benutzer)+" "+spielData.getBenutzername());
+
+        setAbmeldenButtonClickListener();
         setNeuesSpielButtonClickListener();
         setOffeneSpieleButtonClickListener();
         setHighscoreButtonClickListener();
         setPersDatenButtonClickListener();
+    }
+
+    private void setAbmeldenButtonClickListener(){
+        Button abmelden = (Button) findViewById(R.id.buttonAbmelden);
+        abmelden.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //Benutzer Daten löschen
+                spielData.resetSpielData();
+
+                // Login Session zurück setzen, ruft Main Activity auf
+                new SessionManager(getApplicationContext()).logoutUser();
+            }
+        });
     }
 
     private void setNeuesSpielButtonClickListener() {

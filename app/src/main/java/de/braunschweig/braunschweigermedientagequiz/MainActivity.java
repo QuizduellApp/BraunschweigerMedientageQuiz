@@ -43,20 +43,23 @@ public class MainActivity extends FragmentActivity {
         StrictMode.setThreadPolicy(policy);
 
         // Überprüfen, ob Spielerdaten in Shared Preferences bereits vorhanden
-        /*SessionManager sesMan = new SessionManager(getApplicationContext());
+        SessionManager sesMan = new SessionManager(getApplicationContext());
         if (sesMan.isLoggedIn()){
             Intent intent = new Intent(getApplicationContext(), MainMenuActivity.class);
 
             // spielData setzen
-            spielData.setBenutzerId(sesMan.getBenutzerId());
-            spielData.setBenutzername(sesMan.getBenutzername());
-            spielData.setPasswort(sesMan.getPasswort());
+            Log.d("APP Benutzer ID: ",""+sesMan.getBenutzerId());
+            Log.d("APP Benutzername: ",sesMan.getBenutzername());
+            Log.d("APP Passwort: ",sesMan.getPasswort());
+            spielData = new SpielData(sesMan.getBenutzerId()); // Benutzer ID in neuem SpielData Objekt abpseichern
+            spielData.setBenutzername(sesMan.getBenutzername()); // Benutzername abspeichern
+            spielData.setPasswort(sesMan.getPasswort()); // Passwort abspeichern
 
             //Benutzer Daten Objekt an die nächste Activity übermitteln
             intent.putExtra(TAG_SPIEL_DATA, spielData);
 
             startActivityForResult(intent, 0);
-        }*/
+        }
 
         setContentView(R.layout.activity_main);
 

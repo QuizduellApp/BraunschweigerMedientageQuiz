@@ -29,6 +29,8 @@
     <string name="edit_text_e_mail">Email</string>
 
     <!-- MainMenuActivity.class -->
+    <string name="text_benutzer">Eingeloggt als: </string>
+    <string name="button_abmelden">Abmelden</string>
     <string name="title_activity_mainmenu">Hauptmenü</string>
     <string name="button_neuesSpiel">Freund herausfordern</string>
     <string name="button_offeneSpiele">Offene Spiele</string>
@@ -47,16 +49,14 @@
     <string name="headline">Fordere einen Freund zum Duell heraus!</string>
     <string name="addfriend">Freund hinzufügen</string>
 
-
     <!-- OffeneSpieleActivity.class -->
     <string name="button_cat1">Kategorie1</string>
     <string name="button_cat2">Kategorie2</string>
     <string name="playagainst">Gegen folgende Freunde hast du noch offene Spiele:</string>
 
-    <!-- NeuesSpielActivity.class -->
+    <!-- KategorieActivity.class -->
     <string name="title_activity_offenespiele">Offene Spiele</string>
     <string name="choosecat">  Bitte wähle eine Kategorie  </string>
-
 
     <!-- FrageActivity.class -->
     <string name="FrageNr1">1</string>
@@ -68,7 +68,6 @@
     <string name="Antwort3">Antwort3</string>
     <string name="Antwort4">Antwort4</string>
     <string name="Frage">Frage</string>
-
 
     <!-- HighscoreActivity.class -->
     <string name="title_activity_highscore">Highscore</string>

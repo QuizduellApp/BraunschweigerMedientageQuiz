@@ -64,6 +64,4 @@
         android:textSize="@dimen/button_text"
         android:textColor="@color/button_text" />
 
-
-
 </RelativeLayout>

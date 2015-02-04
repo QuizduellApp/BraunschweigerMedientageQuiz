@@ -40,6 +40,26 @@ public class SpielData implements Serializable {
         richtigeAntworten = 0;
     }
 
+    // Alle Daten zurück setzen
+    public void resetSpielData(){
+        benutzerId = 0;
+        benutzername = "";
+        passwort = "";
+        spielId = 0;
+        gegnerId = 0;
+        kategorieId = 0;
+        rundeId = 0;
+        rundeCount = 0;
+        frageAktuell = 0;
+        frage1Id = 0;
+        frage2Id = 0;
+        frage3Id = 0;
+        antwortFrage1 = 0;
+        antwortFrage2 = 0;
+        antwortFrage3 = 0;
+        richtigeAntworten = 0;
+    }
+
     public SpielData(int benutzerId){
         this.benutzerId = benutzerId;
     }
