@@ -1,92 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@drawable/background">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/edit_text_username"
-        android:id="@+id/textViewBenutzername"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp" />
 
-    <EditText
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/editTextBenutzername"
-        android:text=""
-        android:layout_gravity="center_horizontal" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/edit_text_username"
+            android:id="@+id/textViewBenutzername"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/edit_text_e_mail"
-        android:id="@+id/textViewEmail"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp" />
+        <EditText
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/editTextBenutzername"
+            android:text=""
+            android:layout_gravity="center_horizontal" />
 
-    <EditText
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/editTextEmail"
-        android:text=""
-        android:layout_gravity="center_horizontal" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/edit_text_e_mail"
+            android:id="@+id/textViewEmail"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/password"
-        android:id="@+id/textViewNeuesPasswort"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp" />
+        <EditText
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/editTextEmail"
+            android:text=""
+            android:layout_gravity="center_horizontal" />
 
-    <EditText
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/editTextNeuesPasswort"
-        android:text=""
-        android:layout_gravity="center_horizontal"
-        android:inputType="textPassword" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/password"
+            android:id="@+id/textViewNeuesPasswort"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/button_password"
-        android:id="@+id/textViewNeuesPasswortWdh"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp" />
+        <EditText
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/editTextNeuesPasswort"
+            android:text=""
+            android:layout_gravity="center_horizontal"
+            android:inputType="textPassword" />
 
-    <EditText
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/editTextNeuesPasswortWdh"
-        android:text=""
-        android:layout_gravity="center_horizontal"
-        android:inputType="textPassword" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/button_password"
+            android:id="@+id/textViewNeuesPasswortWdh"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp" />
 
-    <Button
-        android:layout_width="@dimen/button_width"
-        android:layout_height="wrap_content"
-        android:text="@string/button_datenAendern"
-        android:id="@+id/buttonDatenAendern"
-        android:layout_marginTop="20dp"
-        android:textSize="@dimen/button_text"
-        android:background="@drawable/button_selector"
-        android:layout_gravity="center_horizontal"
-        android:textColor="@color/button_text" />
+        <EditText
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/editTextNeuesPasswortWdh"
+            android:text=""
+            android:layout_gravity="center_horizontal"
+            android:inputType="textPassword" />
 
-    <Button
-        android:layout_width="@dimen/button_width"
-        android:layout_height="wrap_content"
-        android:text="@string/stepback"
-        android:id="@+id/buttonbackpers"
-        android:layout_marginTop="20dp"
-        android:textSize="@dimen/button_text"
-        android:background="@drawable/button_selector"
-        android:layout_gravity="center_horizontal"
-        android:textColor="@color/button_text" />
-</LinearLayout>
+        <Button
+            android:layout_width="@dimen/button_width"
+            android:layout_height="wrap_content"
+            android:text="@string/button_datenAendern"
+            android:id="@+id/buttonDatenAendern"
+            android:layout_marginTop="20dp"
+            android:textSize="@dimen/button_text"
+            android:background="@drawable/button_selector"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/button_text" />
+
+        <Button
+            android:layout_width="@dimen/button_width"
+            android:layout_height="wrap_content"
+            android:text="@string/stepback"
+            android:id="@+id/buttonbackpers"
+            android:layout_marginTop="20dp"
+            android:textSize="@dimen/button_text"
+            android:background="@drawable/button_selector"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/button_text" />
+    </LinearLayout>
+</ScrollView>

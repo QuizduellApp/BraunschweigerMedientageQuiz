@@ -2,7 +2,8 @@
 <resources>
 
     <!-- Settings -->
-    <string name="webserver">http://androidlab.besaba.com/</string>
+    <!-- <string name="webserver">http://androidlab.besaba.com/</string> -->
+    <string name="webserver">http://www.iwan-schindler.de/android/</string>
 
     <!-- General -->
     <string name="stepback">Zum Hauptmenü</string>
@@ -16,7 +17,7 @@
     <string name="button_facebook_login">Facebook Login</string>
     <string name="button_benutzer_anmelden">Neuer Benutzer</string>
     <string name="button_login">Login</string>
-    <string name="edit_text_email">Ihre E-Mail-Adresse</string>
+    <string name="edit_text_email">Ihr Benutzername</string>
     <string name="edit_text_passwort">Ihr Passwort</string>
 
     <!-- Registieren.class -->

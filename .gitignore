@@ -10,3 +10,7 @@
 .idea/inspectionProfiles/profiles_settings.xml
 
 app/src/main/java/connect/_notes/dwsync.xml
+
+app/manifest-merger-release-report.txt
+
+*.apk
