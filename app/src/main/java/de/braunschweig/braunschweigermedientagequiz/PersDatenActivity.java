@@ -28,8 +28,6 @@ public class PersDatenActivity extends Activity {
     EditText editEmail;
     EditText editPasswort;
     EditText editPasswortWdh;
-    String bid;
-    MainActivity main = new MainActivity();
 
     // Progress Dialog
     private ProgressDialog pDialog;
@@ -51,6 +49,9 @@ public class PersDatenActivity extends Activity {
     private static final String TAG_EMAIL = "email";
     private static final String TAG_PASSWORD = "passwort";
 
+    SpielData spielData;
+    private static final String TAG_SPIEL_DATA = "spielData";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,26 +60,24 @@ public class PersDatenActivity extends Activity {
 
         Log.i("APP", url_get_persdaten);
 
-        // getting product details from intent
+        //Benutzer Daten übernehmen
         Intent i = getIntent();
-
-        // getting product id (pid) from intent
-        bid = i.getStringExtra(TAG_BID);
+        spielData = (SpielData) i.getSerializableExtra("spielData");
 
         // Getting complete product details in background thread
         new GetBenutzerDetails().execute();
 
         setDatenAendernButtonClickListener();
 
-        /** Step back */
-        Button abbrechen = (Button) findViewById(R.id.buttonbackpers);
+        // Button zurück
+        Button abbrechen = (Button) findViewById(R.id.buttonstepback);
         abbrechen.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Intent myIntent = new Intent(view.getContext(),
+                Intent intent = new Intent(view.getContext(),
                         MainMenuActivity.class);
-                //Benutzer ID an die nächste Activity übermitteln
-                myIntent.putExtra(TAG_BID, bid);
-                startActivityForResult(myIntent, 0);
+                //Benutzer Daten an nächste Activity senden
+                intent.putExtra(TAG_SPIEL_DATA, spielData);
+                startActivityForResult(intent, 0);
             }
         });
     }
@@ -128,14 +127,14 @@ public class PersDatenActivity extends Activity {
                     try {
                         // Building Parameters
                         List<NameValuePair> params = new ArrayList<NameValuePair>();
-                        params.add(new BasicNameValuePair("bid", bid));
+                        params.add(new BasicNameValuePair("bid", ""+spielData.getBenutzerId()));
 
                         // getting user data by making HTTP request
                         // Note that user data url will use GET request
                         JSONObject json = jsonParser.makeHttpRequest(url_get_persdaten, "GET", params);
 
                         // check your log for json response
-                        Log.d("User Data BID:", bid);
+                        Log.d("User Data BID:", ""+spielData.getBenutzerId());
                         Log.d("User Data", json.toString());
 
                         // json success tag
@@ -193,7 +192,6 @@ public class PersDatenActivity extends Activity {
             pDialog.setIndeterminate(false);
             pDialog.setCancelable(true);
             pDialog.show();
-
         }
 
         /**
@@ -212,7 +210,7 @@ public class PersDatenActivity extends Activity {
 
             // Building Parameters
             List<NameValuePair> params = new ArrayList<NameValuePair>();
-            params.add(new BasicNameValuePair("bid", bid));
+            params.add(new BasicNameValuePair("bid", ""+spielData.getBenutzerId()));
             params.add(new BasicNameValuePair("benutzername", benutzername));
             params.add(new BasicNameValuePair("email", email));
             params.add(new BasicNameValuePair("passwort", passwort));
@@ -226,7 +224,15 @@ public class PersDatenActivity extends Activity {
                 int success = json.getInt(TAG_SUCCESS);
 
                 if (success == 1) {
-                    // successfully updated
+                    // Erfolgreich geändert
+                    // SpielData aktualisieren
+                    spielData.setBenutzername(benutzername);
+                    spielData.setPasswort(passwort);
+                    // Session updaten
+                    SessionManager sesMan = new SessionManager(getApplicationContext());
+                    sesMan.setBenutzername(benutzername);
+                    sesMan.setPasswort(passwort);
+
                     Intent i = getIntent();
                     // send result code 100 to notify about product update
                     setResult(100, i);
