@@ -98,7 +98,6 @@ public class MainActivity extends FragmentActivity {
 
         /** Registration Button*/
         final Button registrieren = (Button) findViewById(R.id.buttonNeuerBenutzer);
-        buttonpressed(registrieren);
         registrieren.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Intent myIntent = new Intent(view.getContext(),
@@ -110,7 +109,6 @@ public class MainActivity extends FragmentActivity {
 
         /** Login Button*/
         Button login = (Button) findViewById(R.id.button_Login);
-        buttonpressed(login);
         login.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 editUsername = (EditText) findViewById(R.id.editTextEmail);
@@ -221,18 +219,4 @@ public class MainActivity extends FragmentActivity {
         AppEventsLogger.deactivateApp(this);
     }
 
-    public void buttonpressed(final Button x) {
-        x.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    x.setTypeface(null, Typeface.BOLD);  //  Hier was er machen soll, wenn man drückt
-                }
-                if (event.getAction() == MotionEvent.ACTION_UP) {
-                    x.setTypeface(null, Typeface.NORMAL); //  Hier was er machen soll, wenn man loslässt
-                }
-                return false;
-            }
-        });
-    }
 }

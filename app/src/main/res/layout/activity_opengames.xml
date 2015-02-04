@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:text="@string/stepback"
         android:id="@+id/buttonstepback"
-        android:background="@drawable/button_layout"
+        android:background="@drawable/button_selector"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="80dp"
         android:textSize="@dimen/button_text"

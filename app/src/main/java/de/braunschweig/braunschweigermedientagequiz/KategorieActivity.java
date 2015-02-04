@@ -56,11 +56,9 @@ public class KategorieActivity extends Activity{
 
             // Button Text ändern
             Button button = (Button) findViewById(R.id.cat1);
-            main.buttonpressed(button);
             button.setText(cat1);
 
             Button button2 = (Button) findViewById(R.id.cat2);
-            main.buttonpressed(button2);
             button2.setText(cat2);
 
             Log.d("APP_NEUESSPIEL", cat1 + cat2);

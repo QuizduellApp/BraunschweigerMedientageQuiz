@@ -69,19 +69,15 @@ public class FrageActivity extends Activity{
 
             // Button Text ändern
             Button Antwort1 = (Button) findViewById(R.id.Antwort1);
-            main.buttonpressed(Antwort1);
             Antwort1.setText(frage.get("antwort1"));
 
             Button Antwort2 = (Button) findViewById(R.id.Antwort2);
-            main.buttonpressed(Antwort2);
             Antwort2.setText(frage.get("antwort2"));
 
             Button Antwort3 = (Button) findViewById(R.id.Antwort3);
-            main.buttonpressed(Antwort3);
             Antwort3.setText(frage.get("antwort3"));
 
             Button Antwort4 = (Button) findViewById(R.id.Antwort4);
-            main.buttonpressed(Antwort4);
             Antwort4.setText(frage.get("antwort4"));
 
         } else {

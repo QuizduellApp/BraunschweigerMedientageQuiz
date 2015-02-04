@@ -128,7 +128,6 @@ public class OffeneSpieleActivity extends Activity{
 
         /** Zurück */
         Button abbrechen = (Button) findViewById(R.id.buttonstepback);
-        main.buttonpressed(abbrechen);
         abbrechen.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(),

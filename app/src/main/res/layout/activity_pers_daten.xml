@@ -75,7 +75,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:textSize="@dimen/button_text"
-        android:background="@drawable/button_layout"
+        android:background="@drawable/button_selector"
         android:layout_gravity="center_horizontal"
         android:textColor="@color/button_text" />
 
@@ -88,7 +88,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:textSize="@dimen/button_text"
-        android:background="@drawable/button_layout"
+        android:background="@drawable/button_selector"
         android:layout_gravity="center_horizontal"
         android:textColor="@color/button_text" />
 </LinearLayout>
