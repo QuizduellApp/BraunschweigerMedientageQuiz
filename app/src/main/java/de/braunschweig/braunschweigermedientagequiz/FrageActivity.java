@@ -5,12 +5,15 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.Map;
 
@@ -249,6 +252,18 @@ public class FrageActivity extends Activity{
         alert.show();
 
     }
+
+    private void setRoundOnInterface (Integer Runde) {
+        TextView F1 = (TextView) findViewById(R.id.TextFrage1);
+        TextView F2 = (TextView) findViewById(R.id.TextFrage2);
+        TextView F3 = (TextView) findViewById(R.id.TextFrage3);
+        if (Runde == 1) {F1.setTextColor(Color.parseColor("@color/orange")); F2.setTextColor(Color.parseColor("@color/schwarz")); F3.setTextColor(Color.parseColor("@color/schwarz")); }
+        else if (Runde == 2) {F2.setTextColor(Color.parseColor("@color/orange")); F1.setTextColor(Color.parseColor("@color/schwarz")); F3.setTextColor(Color.parseColor("@color/schwarz"));    }
+        else {F3.setTextColor(Color.parseColor("@color/orange")); F1.setTextColor(Color.parseColor("@color/schwarz")); F2.setTextColor(Color.parseColor("@color/schwarz"));   }
+
+    }
+
+
     private void showDialogWrongAnswer() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Sie haben die Frage leider falsch beantwortet!")

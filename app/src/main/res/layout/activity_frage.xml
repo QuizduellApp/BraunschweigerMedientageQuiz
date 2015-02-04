@@ -10,11 +10,61 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
 
+
+
+    <TableRow
+        android:id="@+id/tableRow0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="20dip"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:gravity="center_horizontal"
+            android:textAlignment="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/FrageNr1"
+                android:id="@+id/TextFrage1"
+                android:padding="10dip"
+                android:textAlignment="center"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/FrageNr2"
+                android:id="@+id/TextFrage2"
+                android:padding="10dip"
+                android:textAlignment="center"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/FrageNr3"
+                android:id="@+id/TextFrage3"
+                android:padding="10dip"
+                android:textAlignment="center"
+                android:layout_gravity="center"/>
+        </LinearLayout>
+    </TableRow>
+
+
         <TableRow
             android:id="@+id/tableRow1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="50dip" >
+            android:padding="30dip" >
 
         <TextView
             android:id="@+id/FrageView1"

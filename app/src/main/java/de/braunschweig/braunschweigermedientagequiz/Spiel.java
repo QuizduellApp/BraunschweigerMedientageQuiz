@@ -39,6 +39,8 @@ public class Spiel extends Activity {
     private static final String url_get_runde = hosturl+"get_runde.php";
     private static final String url_get_aktuelle_runde = hosturl+"get_aktuelle_runde.php";
 
+
+
     int bid;
 
     private static final String TAG_SUCCESS = "success";

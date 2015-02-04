@@ -59,6 +59,9 @@
 
 
     <!-- FrageActivity.class -->
+    <string name="FrageNr1">1</string>
+    <string name="FrageNr2">2</string>
+    <string name="FrageNr3">3</string>
     <string name="title_activity_frage">Frage beantworten</string>
     <string name="Antwort1">Antwort1</string>
     <string name="Antwort2">Antwort2</string>

@@ -5,6 +5,7 @@
     <color name="orange">#edae07</color>
     <color name="gelb">#ffed00</color>
     <color name="gruen">#c1d100</color>
+    <color name="schwarz">#000000</color>
 
     <color name="richtige_antwort">#00ff00</color>
     <color name="falsche_antwort">#ff0000</color>
