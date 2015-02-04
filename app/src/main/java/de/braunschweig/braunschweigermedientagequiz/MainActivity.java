@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -183,10 +184,10 @@ public class MainActivity extends FragmentActivity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    x.setTextColor(Color.parseColor("#ff0000")); //  Hier was er machen soll, wenn man drückt
+                    x.setTypeface(null, Typeface.BOLD);  //  Hier was er machen soll, wenn man drückt
                 }
                 if (event.getAction() == MotionEvent.ACTION_UP) {
-                    x.setTextColor(Color.parseColor("#ffffff")); //  Hier was er machen soll, wenn man loslässt
+                    x.setTypeface(null, Typeface.NORMAL); //  Hier was er machen soll, wenn man loslässt
                 }
                 return false;
             }

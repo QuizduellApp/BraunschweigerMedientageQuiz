@@ -13,8 +13,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.Map;
 
 /**
@@ -153,7 +151,7 @@ public class FrageActivity extends Activity{
                 // Buttons einfärben, je nach richtiger oder falscher Antwort
                 int resID = getResources().getIdentifier("Antwort"+benutzerAntwortNo, "id", "de.braunschweig.braunschweigermedientagequiz");
                 Button button = (Button) findViewById(resID);
-                button.setBackground( getResources().getDrawable(R.drawable.button_wronganswer));
+                button.setBackground( getResources().getDrawable(R.drawable.button_rightanswer));
 
                 // Zähler richtige Antworten hoch zählen
                 spielData.setRichtigeAntworten(spielData.getRichtigeAntworten()+1);
@@ -174,7 +172,14 @@ public class FrageActivity extends Activity{
                 // Falsche Antwort Button einfärben
                 int resID = getResources().getIdentifier("Antwort"+benutzerAntwortNo, "id", "de.braunschweig.braunschweigermedientagequiz");
                 Button button = (Button) findViewById(resID);
-                button.setBackground( getResources().getDrawable(R.drawable.button_rightanswer));
+                button.setBackground( getResources().getDrawable(R.drawable.button_wronganswer));
+                Log.d("resID",String.valueOf(resID));
+
+                //Richtige Antwort anzeigen
+                int rightanswer = Integer.parseInt(frage.get("richtige_antwort"));
+                int bID = getResources().getIdentifier("Antwort"+rightanswer, "id", "de.braunschweig.braunschweigermedientagequiz");
+                Button button1 = (Button) findViewById(bID);
+                button1.setBackground( getResources().getDrawable(R.drawable.button_rightanswer));
 
                 // Überprüfen, ob das Rundenende erreicht ist
                 if (spielData.getFrageAktuell() >= 3) {
