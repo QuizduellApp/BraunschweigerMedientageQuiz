@@ -98,7 +98,7 @@ public class PersDatenActivity extends Activity {
 
 
     /**
-     * Background Async Task to get user data
+     * background Async Task to get user data
      * */
     class GetBenutzerDetails extends AsyncTask<String, String, String> {
 
@@ -120,7 +120,7 @@ public class PersDatenActivity extends Activity {
          * */
         protected String doInBackground(String... params) {
 
-            // updating UI from Background Thread
+            // updating UI from background Thread
             runOnUiThread(new Runnable() {
                 public void run() {
                     // Check for success tag
@@ -178,7 +178,7 @@ public class PersDatenActivity extends Activity {
     }
 
     /**
-     * Background Async Task to  Save product Details
+     * background Async Task to  Save product Details
      * */
     class SaveBenutzerDetails extends AsyncTask<String, String, String> {
 
