@@ -1,6 +1,5 @@
 package de.braunschweig.braunschweigermedientagequiz;
 
-
 import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
@@ -22,12 +21,17 @@ import android.widget.Toast;
 
 import com.facebook.AppEventsLogger;
 
+import java.util.HashMap;
+
 public class MainActivity extends FragmentActivity {
     EditText editUsername;
     EditText editPassword;
     Select select = new Select();
     SpielData spielData;
     private static final String TAG_SPIEL_DATA = "spielData";
+
+    // Internet detector
+    ConnectionDetector cd;
 
     //private MainFragment mainFragment;
 
@@ -38,10 +42,39 @@ public class MainActivity extends FragmentActivity {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
+        // Überprüfen, ob Spielerdaten in Shared Preferences bereits vorhanden
+        /*SessionManager sesMan = new SessionManager(getApplicationContext());
+        if (sesMan.isLoggedIn()){
+            Intent intent = new Intent(getApplicationContext(), MainMenuActivity.class);
+
+            // spielData setzen
+            spielData.setBenutzerId(sesMan.getBenutzerId());
+            spielData.setBenutzername(sesMan.getBenutzername());
+            spielData.setPasswort(sesMan.getPasswort());
+
+            //Benutzer Daten Objekt an die nächste Activity übermitteln
+            intent.putExtra(TAG_SPIEL_DATA, spielData);
+
+            startActivityForResult(intent, 0);
+        }*/
+
         setContentView(R.layout.activity_main);
 
-        String hosturl = this.getString(R.string.webserver);
-        Log.i("APP", "HOSTURL: "+hosturl);
+        // Internet überprüfen
+        cd = new ConnectionDetector(getApplicationContext());
+
+        // Alert dialog manager
+        AlertDialogManager alert = new AlertDialogManager();
+
+        // Auf Internetverbindung überprüfen
+        if (!cd.isConnectingToInternet()) {
+            // Keine Internetverbindung vorhanden
+            alert.showAlertDialog(this,
+                    "Internet Fehler",
+                    "Bitte verbinden Sie das Telefon mit dem Internet", false);
+            // Anwendung wird hier gestoppt
+            return;
+        }
 
         /** TEST FOR FACEBOOK FUNCTION **/
         /**Settings.addLoggingBehavior(LoggingBehavior.INCLUDE_ACCESS_TOKENS);
@@ -60,9 +93,6 @@ public class MainActivity extends FragmentActivity {
         });
         request.executeAsync();
         **/
-
-
-
 
 
 
@@ -105,11 +135,23 @@ public class MainActivity extends FragmentActivity {
 
                     // BID überprüfen
                     if (!bid.isEmpty()) {
-                        spielData = new SpielData(Integer.parseInt(bid));
+                        // Neue Spielerdaten abspeichern
+                        spielData = new SpielData(Integer.parseInt(bid)); // BID abspeichern
+                        spielData.setBenutzername(editUsername.getText().toString()); // Benutzername abspeichern
+                        spielData.setPasswort(editPassword.getText().toString()); // Passwort abspeichern
+
+                        // Daten permanent in Shared Preferences speichern
+                        new SessionManager(getApplicationContext()).createLoginSession(
+                                spielData.getBenutzername(),
+                                spielData.getBenutzerId(),
+                                spielData.getPasswort()
+                        );
+
                         Intent intent = new Intent(view.getContext(),
                                 MainMenuActivity.class);
                         //Benutzer Daten Objekt an die nächste Activity übermitteln
                         intent.putExtra(TAG_SPIEL_DATA, spielData);
+
                         startActivityForResult(intent, 0);
                     } else {
                         // Keine BID zurück erhalten

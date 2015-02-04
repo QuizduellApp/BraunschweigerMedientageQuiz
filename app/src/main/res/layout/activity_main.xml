@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:text="@string/button_benutzer_anmelden"
         android:id="@+id/buttonNeuerBenutzer"
-        android:background="@drawable/button_layout"
+        android:background="@drawable/button_selector"
         android:layout_marginTop="40dp"
         android:textSize="@dimen/button_text"
         android:textColor="@color/button_text"
@@ -60,7 +60,7 @@
         android:id="@+id/button_Login"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/button_layout"
+        android:background="@drawable/button_selector"
         android:layout_marginBottom="30dp"
         android:textSize="@dimen/button_text"
         android:textColor="@color/button_text" />
