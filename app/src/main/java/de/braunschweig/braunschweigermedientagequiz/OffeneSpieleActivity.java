@@ -37,11 +37,10 @@ public class OffeneSpieleActivity extends Activity{
     ArrayAdapter<String> spiele;
     ArrayAdapter<String> benutzerId;
     ListView friendlistview;
-<<<<<<< HEAD
+
     ListView vsfriendlistview;
     MainActivity main = new MainActivity();
-=======
->>>>>>> FETCH_HEAD
+
     // Datenobjekt der Benutzerdetails
     SpielData spielData;
     private static final String TAG_SPIEL_DATA = "spielData";
