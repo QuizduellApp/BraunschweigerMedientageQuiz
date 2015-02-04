@@ -12,7 +12,6 @@ import android.widget.TextView;
  * Hauptbildschirm nach dem Login
  */
 public class MainMenuActivity extends Activity {
-    MainActivity main = new MainActivity();
     SpielData spielData;
     private static final String TAG_SPIEL_DATA = "spielData";
 

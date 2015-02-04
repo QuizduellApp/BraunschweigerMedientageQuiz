@@ -40,7 +40,6 @@ public class Registrieren extends Activity
 
     // SELECT Strings for HTTP Request
     Select select = new Select();
-    MainActivity main = new MainActivity();
     InputStream is = null;
 
     protected void onCreate(Bundle savedInstanceState) {

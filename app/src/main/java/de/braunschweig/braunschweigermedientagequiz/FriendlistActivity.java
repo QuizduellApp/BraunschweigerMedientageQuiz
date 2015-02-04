@@ -36,7 +36,6 @@ public class FriendlistActivity extends Activity
 
     ArrayAdapter<String> listadapter;
     ListView friendlistview;
-    MainActivity main = new MainActivity();
     Spiel spiel = new Spiel();
 
     // Datenobjekt der Benutzerdetails

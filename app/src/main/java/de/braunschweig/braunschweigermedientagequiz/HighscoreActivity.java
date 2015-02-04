@@ -27,7 +27,6 @@ public class HighscoreActivity extends Activity {
 
     // Datenobjekt der Benutzerdetails
     SpielData spielData;
-    MainActivity main = new MainActivity();
     private static final String TAG_SPIEL_DATA = "spielData";
 
     ArrayAdapter<String> user;

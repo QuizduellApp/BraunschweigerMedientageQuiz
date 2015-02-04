@@ -20,7 +20,6 @@ public class KategorieActivity extends Activity{
 
     // Datenobjekt der Benutzerdetails
     SpielData spielData;
-    MainActivity main = new MainActivity();
     private static final String TAG_SPIEL_DATA = "spielData";
 
     Spiel spiel = new Spiel();
