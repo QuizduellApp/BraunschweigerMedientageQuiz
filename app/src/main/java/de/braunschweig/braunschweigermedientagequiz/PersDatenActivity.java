@@ -70,7 +70,7 @@ public class PersDatenActivity extends Activity {
         setDatenAendernButtonClickListener();
 
         // Button zurück
-        Button abbrechen = (Button) findViewById(R.id.buttonstepback);
+        Button abbrechen = (Button) findViewById(R.id.buttonbackpers);
         abbrechen.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(),

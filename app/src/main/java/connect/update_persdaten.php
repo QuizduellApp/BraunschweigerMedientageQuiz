@@ -1,47 +1,47 @@
 <?php
 
-/*
- * Following code will update personal data of one user
- * A user is identified by user id (bid)
- */
+	/*
+	* Persönliche Daten des Spielers werden gespewichert
+	*/
+	// Datenbankverbindungsklasse einbinden
+    require_once(dirname(__FILE__).'/db_connect.php');
 
-// array for JSON response
-$response = array();
-
-if (isset($_POST['bid']) && isset($_POST['benutzername']) && isset($_POST['email']) && isset($_POST['passwort'])) {
-
-    $bid = $_POST['bid'];
-    $benutzername = $_POST['benutzername'];
-    $email = $_POST['email'];
-    $passwort = $_POST['passwort'];
-
-    // include db connect class
-    require_once('/home/a4717469/public_html/db_connect.php');
-
-    // connecting to db
+    // Klasseninstanz und -verbindung herstellen
     $db = new DB_CONNECT();
+    $con = $db->connect();
 
-    // mysql update row with matched bid
-    $result = mysql_query("UPDATE Benutzer SET benutzername = '$benutzername', email = '$email', passwort = '$passwort' WHERE benutzer_id = $bid");
+    // Variablen müssen vorhanden sein
+    if(empty($_REQUEST['bid']) || empty($_REQUEST['benutzername']) || empty($_REQUEST['email'])
+			 || empty($_REQUEST['passwort'])) {
+		// required field is missing
+		$response["success"] = 0;
+		$response["message"] = "Required field(s) is missing";
+	
+		// echoing JSON response
+		echo json_encode($response);
+        exit();
+    }
 
-    // check if row inserted or not
-    if ($result) {
-        // successfully updated
+	$query = sprintf("UPDATE Benutzer SET benutzername = '%s', email = '%s', passwort = '%s' WHERE benutzer_id = %d",
+			mysql_real_escape_string($_REQUEST['benutzername'], $con),
+			mysql_real_escape_string($_REQUEST['email'], $con),
+			mysql_real_escape_string($_REQUEST['passwort'], $con),
+			mysql_real_escape_string($_REQUEST['bid'], $con)
+			);
+			
+	$result = mysql_query($query);
+
+	if (!empty($result)) {
+		file_put_contents("update_persdaten_log.txt",$query);
+		
+		// successfully updated
         $response["success"] = 1;
-        $response["message"] = "Product successfully updated.";
+        $response["message"] = "Spielerdaten erfolgreich geaendert.";
 
         // echoing JSON response
         echo json_encode($response);
-    } else {
-
+	} else {
+		echo "false";
     }
-} else {
-     // required field is missing
-     $response["success"] = 0;
-     $response["message"] = "Required field(s) is missing";
-
-     // echoing JSON response
-     echo json_encode($response);
-}
-
+	$db->close();
 ?>
