@@ -33,9 +33,11 @@ public class OffeneSpieleActivity extends Activity{
     private static final String hosturl = MyApplication.get().getString(R.string.webserver);
 
     ArrayAdapter<String> benutzer;
+    ArrayAdapter<String> vsbenutzer;
     ArrayAdapter<String> spiele;
     ArrayAdapter<String> benutzerId;
     ListView friendlistview;
+    ListView vsfriendlistview;
     MainActivity main = new MainActivity();
     // Datenobjekt der Benutzerdetails
     SpielData spielData;
@@ -64,10 +66,13 @@ public class OffeneSpieleActivity extends Activity{
 
         // Offene Spiele abrufen
         new GetOpenGames().execute();
+        new GetOpenGamesAgainst().execute();
 
         // Spiele Liste zuweisen
         ArrayList<String> gamesList = new ArrayList<String>();
         benutzer = new ArrayAdapter<String>(this,R.layout.simplerow,gamesList);
+        ArrayList<String> vsgamesList = new ArrayList<String>();
+        vsbenutzer = new ArrayAdapter<String>(this,R.layout.simplerow,vsgamesList);
         ArrayList<String> gamesidList = new ArrayList<String>();
         spiele = new ArrayAdapter<String>(this,R.layout.simplerow,gamesidList);
         ArrayList<String> benutzerIdList = new ArrayList<String>();
@@ -80,6 +85,7 @@ public class OffeneSpieleActivity extends Activity{
         //* Layout setzen */
         setContentView(R.layout.activity_opengames);
         friendlistview = (ListView) findViewById(R.id.gamesListView);
+        vsfriendlistview = (ListView) findViewById(R.id.opengamesListView);
 
         // Liste anklickbar machen
         friendlistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -147,7 +153,7 @@ public class OffeneSpieleActivity extends Activity{
 
         /**
          * Before starting background thread Show Progress Dialog
-         * */
+         */
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -160,7 +166,7 @@ public class OffeneSpieleActivity extends Activity{
 
         /**
          * Offene Spiele laden
-         * */
+         */
         protected String doInBackground(String... params) {
 
             // updating UI from background Thread
@@ -171,11 +177,11 @@ public class OffeneSpieleActivity extends Activity{
                     try {
                         // Building Parameters
                         List<NameValuePair> params = new ArrayList<NameValuePair>();
-                        params.add(new BasicNameValuePair("bid", ""+spielData.getBenutzerId()));
+                        params.add(new BasicNameValuePair("bid", "" + spielData.getBenutzerId()));
 
                         // getting user data by making HTTP request
                         // Note that user data url will use GET request
-                        JSONObject json = jsonParser.makeHttpRequest(hosturl+"get_games.php", "GET", params);
+                        JSONObject json = jsonParser.makeHttpRequest(hosturl + "get_games.php", "GET", params);
                         Log.d("User Data", json.toString());
                         // json success tag
                         success = json.getInt(TAG_SUCCESS);
@@ -186,7 +192,7 @@ public class OffeneSpieleActivity extends Activity{
                             Log.d("Freunde", String.valueOf(friends.length()));
                             int lengthJsonArr = friends.length();
 
-                            for(int i=0; i < lengthJsonArr; i++) {
+                            for (int i = 0; i < lengthJsonArr; i++) {
                                 // Get Objekt für jedes Spiel
                                 JSONObject spiel_ID_child = friends.getJSONObject(i);
 
@@ -195,10 +201,10 @@ public class OffeneSpieleActivity extends Activity{
                                 String freund = spiel_ID_child.optString(TAG_NAME);
                                 String freundId = spiel_ID_child.optString(TAG_NAME_ID);
 
-                                Log.d("Spiel gegen: ", freund + " - SpielerID: "+freundId);
+                                Log.d("Spiel gegen: ", freund + " - SpielerID: " + freundId);
                                 Log.d("Spiel_ID: ", game_id);
                                 boolean friendExists = false;
-                                for (int j = 0; j < benutzer.getCount(); j++){
+                                for (int j = 0; j < benutzer.getCount(); j++) {
                                     if (freund.equals(benutzer.getItem(j))) {
                                         friendExists = true;
                                     }
@@ -212,7 +218,8 @@ public class OffeneSpieleActivity extends Activity{
 
                             }
                             friendlistview.setAdapter(benutzer);
-                        }else{
+
+                        } else {
                             // user with bid not found
                         }
                     } catch (JSONException e) {
@@ -230,5 +237,86 @@ public class OffeneSpieleActivity extends Activity{
         }
     }
 
+    /** Vorhandene Spiele ggn Freunde laden */
+    class GetOpenGamesAgainst extends AsyncTask<String, String, String> {
+
+        /**
+         * Before starting background thread Show Progress Dialog
+         */
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pDialog = new ProgressDialog(OffeneSpieleActivity.this);
+            pDialog.setMessage("Offene Spiele ggn werden geladen...");
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(true);
+            pDialog.show();
+        }
+
+        /**
+         * Offene Spiele laden
+         */
+        protected String doInBackground(String... params) {
+
+            // updating UI from background Thread
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    // Check for success tag
+                    int success;
+                    try {
+                        // Building Parameters
+                        List<NameValuePair> params = new ArrayList<NameValuePair>();
+                        params.add(new BasicNameValuePair("bid", "" + spielData.getBenutzerId()));
+
+                        // getting user data by making HTTP request
+                        // Note that user data url will use GET request
+                        JSONObject json = jsonParser.makeHttpRequest(hosturl + "get_opengames.php", "GET", params);
+                        Log.d("User Data", json.toString());
+                        // json success tag
+                        success = json.getInt(TAG_SUCCESS);
+                        if (success == 1) {
+                            // successfully received user data
+                            JSONArray friends = json.getJSONArray(TAG_USER);
+                            Log.d("APP_Games", friends.toString());
+                            Log.d("Freunde", String.valueOf(friends.length()));
+                            int lengthJsonArr = friends.length();
+
+                            for (int i = 0; i < lengthJsonArr; i++) {
+                                // Get Objekt für jedes Spiel
+                                JSONObject spiel_ID_child = friends.getJSONObject(i);
+
+                                // Name des Freundes und der Spiel_ID ermitteln
+                                String freund = spiel_ID_child.optString(TAG_NAME);
+
+                                boolean friendExists = false;
+                                for (int j = 0; j < vsbenutzer.getCount(); j++) {
+                                    if (freund.equals(vsbenutzer.getItem(j))) {
+                                        friendExists = true;
+                                    }
+                                }
+                                if (!friendExists) {
+                                    vsbenutzer.add(freund);
+                                }
+
+                            }
+                            vsfriendlistview.setAdapter(vsbenutzer);
+
+                        } else {
+                            // user with bid not found
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+            return null;
+        }
+        // Dialog schließen nach Beendigung des Hintergrund Tasks
+        protected void onPostExecute(String file_url) {
+            // dismiss the dialog once got all data
+            pDialog.dismiss();
+        }
+    }
 
 }
