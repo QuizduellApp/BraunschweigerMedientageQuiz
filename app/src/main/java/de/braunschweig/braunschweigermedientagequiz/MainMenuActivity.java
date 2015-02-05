@@ -17,6 +17,8 @@ import android.widget.TextView;
 public class MainMenuActivity extends Activity {
     SpielData spielData;
     private static final String TAG_SPIEL_DATA = "spielData";
+    // Internet detector
+    ConnectionDetector cd;
 
     @Override
     // Verhindern, dass der Benutzer das Spiel beendet oder zurück zur vorherigen Activity springt
@@ -54,6 +56,22 @@ public class MainMenuActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainmenu);
+
+        // Internet überprüfen
+        cd = new ConnectionDetector(getApplicationContext());
+
+        // Alert dialog manager
+        AlertDialogManager alert = new AlertDialogManager();
+
+        // Auf Internetverbindung überprüfen
+        if (!cd.isConnectingToInternet()) {
+            // Keine Internetverbindung vorhanden
+            alert.showAlertDialog(this,
+                    "Internet Fehler",
+                    "Bitte verbinden Sie das Telefon mit dem Internet", false);
+            // Anwendung wird hier gestoppt
+            return;
+        }
 
         //Benutzer Daten übernehmen
         Intent i = getIntent();
