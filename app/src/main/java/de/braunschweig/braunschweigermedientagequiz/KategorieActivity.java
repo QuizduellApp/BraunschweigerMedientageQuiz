@@ -1,7 +1,10 @@
 package de.braunschweig.braunschweigermedientagequiz;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -25,6 +28,28 @@ public class KategorieActivity extends Activity{
     Spiel spiel = new Spiel();
     boolean asyncTaskFinished = false;
     private ProgressDialog pDialog; // Dialoganzeige
+
+    @Override
+    // Verhindern, dass der Benutzer das Spiel beendet oder zurück zur vorherigen Activity springt
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Wollen Sie weiter Spielen?")
+                .setCancelable(true)
+                .setNegativeButton("NEIN", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Intent intent = new Intent(((Dialog) dialog).getContext(), MainMenuActivity.class);
+                        intent.putExtra(TAG_SPIEL_DATA,spielData);
+                        startActivity(intent);
+                    }
+                })
+                .setPositiveButton("JA", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        return;
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

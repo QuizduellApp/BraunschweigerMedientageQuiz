@@ -1,6 +1,9 @@
 package de.braunschweig.braunschweigermedientagequiz;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +17,30 @@ import android.widget.TextView;
 public class MainMenuActivity extends Activity {
     SpielData spielData;
     private static final String TAG_SPIEL_DATA = "spielData";
+
+    @Override
+    // Verhindern, dass der Benutzer das Spiel beendet oder zurück zur vorherigen Activity springt
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Wollen Sie sich abmelden?")
+                .setCancelable(true)
+                .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        //Benutzer Daten löschen
+                        spielData.resetSpielData();
+
+                        // Login Session zurück setzen, ruft Main Activity auf
+                        new SessionManager(getApplicationContext()).logoutUser();
+                    }
+                })
+                .setNegativeButton("Nein", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        return;
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
 
     @Override
     protected void onResume() {

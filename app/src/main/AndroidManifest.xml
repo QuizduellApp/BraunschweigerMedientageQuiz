@@ -38,7 +38,6 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -75,16 +74,6 @@
         <activity
             android:name=".HighscoreActivity"
             android:label="@string/title_activity_highscore"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity
-            android:name=".Select"
-            android:label="@string/title_select"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity
-            android:name=".Spiel"
-            android:label="@string/title_spiel"
             android:screenOrientation="portrait">
         </activity>
         <activity

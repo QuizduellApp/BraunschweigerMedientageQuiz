@@ -5,7 +5,7 @@ android {
     buildToolsVersion "20.0.0" // Neueste Version: 21.1.2
     defaultConfig {
         applicationId "de.braunschweig.braunschweigermedientagequiz"
-        minSdkVersion 14 // 14 als Minimum wegen Facebook SDK
+        minSdkVersion 14 // 14 als Minimum wegen Facebook SDK, 16 wegen AndroidManifest: android:parentActivityName
         targetSdkVersion 21
         versionCode 1
         versionName "1.0"
@@ -38,4 +38,5 @@ dependencies {
     compile files('lib/json-lib-2.4-jdk15.jar')
     //compile 'com.facebook.android:facebook-android-sdk:3.20.0'
     compile project(':libraries:facebook')
+    //compile "com.android.support:support-v4:18.0.+" // Support Library
 }

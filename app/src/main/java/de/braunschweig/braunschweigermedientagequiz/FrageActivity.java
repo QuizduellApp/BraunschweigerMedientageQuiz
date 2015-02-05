@@ -27,6 +27,27 @@ public class FrageActivity extends Activity{
     Spiel spiel = new Spiel();
     boolean frageBeantwortet = false;
 
+    // Verhindern, dass der Benutzer das Spiel beendet oder zurück zur vorherigen Activity springt
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Wollen Sie weiter Spielen?")
+                .setCancelable(true)
+                .setNegativeButton("NEIN", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Intent intent = new Intent(((Dialog) dialog).getContext(), MainMenuActivity.class);
+                        intent.putExtra(TAG_SPIEL_DATA,spielData);
+                        startActivity(intent);
+                    }
+                })
+                .setPositiveButton("JA", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        return;
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
