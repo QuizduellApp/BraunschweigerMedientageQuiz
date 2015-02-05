@@ -30,9 +30,9 @@
     <string name="edit_text_e_mail">Email</string>
 
     <!-- MainMenuActivity.class -->
-    <string name="text_benutzer">Eingeloggt als: </string>
+    <string name="text_benutzer">Spieler: </string>
     <string name="button_abmelden">Abmelden</string>
-    <string name="title_activity_mainmenu">Hauptmenü</string>
+    <string name="title_activity_mainmenu">BS MediaQuiz</string>
     <string name="button_neuesSpiel">Freund herausfordern</string>
     <string name="button_offeneSpiele">Offene Spiele</string>
     <string name="button_highscore">Highscore</string>
