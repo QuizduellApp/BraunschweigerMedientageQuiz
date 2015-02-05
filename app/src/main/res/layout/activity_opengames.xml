@@ -27,7 +27,7 @@
 
         <ListView
         android:layout_width="match_parent"
-        android:layout_height="96dp"
+        android:layout_height="140dp"
         android:id="@+id/gamesListView"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
@@ -44,7 +44,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="20dp"
             android:padding="10dp"
             android:textColor="#FFFFFF"
             android:textAlignment="center"
@@ -53,13 +53,15 @@
 
         <ListView
             android:layout_width="match_parent"
-            android:layout_height="106dp"
+            android:layout_height="140dp"
             android:id="@+id/opengamesListView"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:background="@drawable/listview_background"
             android:layout_marginTop="10dp"
-            android:focusable="false"/>
+            android:focusable="false"
+            android:clickable="false"
+            android:listSelector="@android:color/transparent"/>
 
         <Button
             android:layout_width="wrap_content"
@@ -68,7 +70,8 @@
             android:id="@+id/buttonstepback"
             android:background="@drawable/button_selector"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="20dp"
             android:textSize="@dimen/button_text"
             android:textColor="@color/button_text" />
     </LinearLayout>

@@ -94,8 +94,7 @@ public class OffeneSpieleActivity extends Activity{
         friendlistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getBaseContext(),
-                        FrageActivity.class);
+
 
                 // TODO Kategorie Auswahl ermöglichen
 
@@ -113,9 +112,15 @@ public class OffeneSpieleActivity extends Activity{
 
                 if (aktuelleRunde == 0) {
                     // Konnte keine Runde zu dem Spiel finden
+                    // Auf Kategorie weiterleiten um neue Runde zu starten
 
-                    // Keine Runde zurück erhalten
-                    Toast.makeText(getApplicationContext(), "Konnte Spieldaten nicht abrufen!", Toast.LENGTH_LONG).show();
+                    spielData.setSpielId(spielData.getSpielId());
+
+                    Intent intent = new Intent(getBaseContext(),
+                            KategorieActivity.class);
+                    intent.putExtra(TAG_SPIEL_DATA, spielData);
+                    startActivityForResult(intent, 0);
+
                     return;
                 }
 
@@ -130,8 +135,9 @@ public class OffeneSpieleActivity extends Activity{
                 spielData.setRundeCount(Integer.parseInt(runde.get("runde")));
 
                 //Benutzer Daten an die nächste Activity übermitteln
+                Intent intent = new Intent(getBaseContext(),
+                        FrageActivity.class);
                 intent.putExtra(TAG_SPIEL_DATA, spielData);
-
                 startActivity(intent);
             }
         });

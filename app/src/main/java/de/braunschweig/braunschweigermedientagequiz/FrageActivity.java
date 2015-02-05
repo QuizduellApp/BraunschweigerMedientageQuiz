@@ -157,11 +157,11 @@ public class FrageActivity extends Activity{
                 // Überprüfen, ob das Rundenende erreicht ist
                 if (spielData.getFrageAktuell() >= 3) {
 
-                    // Rundenende mit Daten in die Datenbank speichern und bereinigen
-                    rundenende();
-
                     // Dialog Rundenende anzeigen
                     showDialogRundenende();
+
+                    // Rundenende mit Daten in die Datenbank speichern und bereinigen
+                    new RundenEnde().execute();
                 } else {
                     // Dialog richtige Antwort anzeigen
                     showDialogRightAnswer();
@@ -181,12 +181,11 @@ public class FrageActivity extends Activity{
 
                 // Überprüfen, ob das Rundenende erreicht ist
                 if (spielData.getFrageAktuell() >= 3) {
-
-                    // Rundenende mit Daten in die Datenbank speichern und bereinigen
-                    rundenende();
-
                     // Dialog Rundenende anzeigen
                     showDialogRundenende();
+
+                    // Rundenende mit Daten in die Datenbank speichern und bereinigen
+                    new RundenEnde().execute();
                 } else {
                     // Dialog falsche Antwort anzeigen
                     showDialogWrongAnswer();
@@ -196,29 +195,46 @@ public class FrageActivity extends Activity{
         }
     }
 
-    // Wenn eine Runde von drei Fragen beendet wurde
-    private void rundenende(){
-        // Daten der Runde in die Datenbank schreiben
-        spiel.setAntworten(spielData.getRundeId(), spielData.getBenutzerId(),
-                spielData.getAntwortFrage1(), spielData.getAntwortFrage2(), spielData.getAntwortFrage3());
-
-        Log.d("RUNDE_ENDE: ", "RundeID: " +spielData.getRundeId());
-        Log.d("RUNDE_ENDE: ", "BenutzerID: " +spielData.getBenutzerId());
-        Log.d("RUNDE_ENDE: ", "Antwort1: " +spielData.getAntwortFrage1());
-        Log.d("RUNDE_ENDE: ", "Antwort2: " +spielData.getAntwortFrage2());
-        Log.d("RUNDE_ENDE: ", "Antwort3: " +spielData.getAntwortFrage3());
-
-        // NextToPlay auf den Gegner setzen
-        spiel.setNextToPlay(spielData.getSpielId(), spielData.getGegnerId());
-
-        // Highscore erhöhen um die erreichten Punkte
-        // Je Frage ein Punkt
-        spiel.setHighscore(spielData.getBenutzerId(), spielData.getRichtigeAntworten());
 
 
-        // TODO überprüfen, ob die Runde aus OFFENE SPIELE gestartet wurde, dann neue Kategorie wählen
 
+    /** Rundenende */
+    class RundenEnde extends AsyncTask<String, String, String> {
+        protected String doInBackground(String... params) {
+            // updating UI from background Thread
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    // Wenn eine Runde von drei Fragen beendet wurde
+
+                    // Daten der Runde in die Datenbank schreiben
+                    spiel.setAntworten(spielData.getRundeId(), spielData.getBenutzerId(),
+                            spielData.getAntwortFrage1(), spielData.getAntwortFrage2(), spielData.getAntwortFrage3());
+
+                    Log.d("RUNDE_ENDE: ", "RundeID: " +spielData.getRundeId());
+                    Log.d("RUNDE_ENDE: ", "BenutzerID: " +spielData.getBenutzerId());
+                    Log.d("RUNDE_ENDE: ", "Antwort1: " +spielData.getAntwortFrage1());
+                    Log.d("RUNDE_ENDE: ", "Antwort2: " +spielData.getAntwortFrage2());
+                    Log.d("RUNDE_ENDE: ", "Antwort3: " +spielData.getAntwortFrage3());
+
+                    // NextToPlay auf den Gegner setzen
+                    spiel.setNextToPlay(spielData.getSpielId(), spielData.getGegnerId());
+
+                    // Highscore erhöhen um die erreichten Punkte
+                    // Je Frage ein Punkt
+                    spiel.setHighscore(spielData.getBenutzerId(), spielData.getRichtigeAntworten());
+
+
+                    // TODO überprüfen, ob die Runde aus OFFENE SPIELE gestartet wurde, dann neue Kategorie wählen
+
+
+                }
+            });
+
+            return null;
+        }
     }
+
+
 
     private void showDialogRundenende() {
         // Ermitteln, wie viele Fragen richtig beantwortet wurden

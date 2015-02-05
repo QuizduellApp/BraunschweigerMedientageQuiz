@@ -67,20 +67,21 @@
                 android:id="@+id/tableRow1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="20dip" >
+                android:padding="10dip" >
 
-            <TextView
-                android:id="@+id/FrageView1"
-                android:text="@string/Frage"
-                android:background="@drawable/text_question"
-                android:gravity="center"
-                android:layout_gravity="center_horizontal"
-                android:singleLine="false"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:inputType="textMultiLine"
-                android:layout_span="3" />
+                <TextView
+                    android:id="@+id/FrageView1"
+                    android:text="@string/Frage"
+                    android:background="@drawable/text_question"
+                    android:gravity="center"
+                    android:layout_gravity="center_horizontal"
+                    android:singleLine="false"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="20dp"
+                    android:padding="10dp"
+                    android:layout_weight=".50"/>
 
             </TableRow>
 
@@ -97,7 +98,7 @@
                     android:text="@string/Antwort1"
                     android:singleLine="false"
                     android:layout_width="0dp"
-                    android:layout_marginRight="4dp"
+                    android:layout_marginRight="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".50"
                     android:textSize="@dimen/button_text" />
@@ -116,7 +117,7 @@
                 android:text="@string/Antwort2"
                 android:singleLine="false"
                 android:layout_width="0dp"
-                android:layout_marginRight="4dp"
+                android:layout_marginRight="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight=".50"
                 android:textSize="@dimen/button_text" />
@@ -135,7 +136,7 @@
                 android:text="@string/Antwort3"
                 android:singleLine="false"
                 android:layout_width="0dp"
-                android:layout_marginRight="4dp"
+                android:layout_marginRight="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight=".50"
                 android:textSize="@dimen/button_text" />
@@ -154,7 +155,7 @@
                     android:text="@string/Antwort4"
                     android:singleLine="false"
                     android:layout_width="0dp"
-                    android:layout_marginRight="4dp"
+                    android:layout_marginRight="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".50"
                     android:textSize="@dimen/button_text" />

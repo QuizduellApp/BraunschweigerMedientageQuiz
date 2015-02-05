@@ -103,7 +103,9 @@ public class FriendlistActivity extends Activity
         setContentView(R.layout.activity_friendlist);
         friendlistview = (ListView) findViewById(R.id.friendListView);
 
-        // Neues Spiel starten nach Klick auf einen Spieler in der Freundesliste
+        /*
+        *  Neues Spiel starten nach Klick auf einen Spieler in der Freundesliste
+        */
         friendlistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

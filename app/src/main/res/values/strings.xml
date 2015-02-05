@@ -53,8 +53,8 @@
     <!-- OffeneSpieleActivity.class -->
     <string name="button_cat1">Kategorie1</string>
     <string name="button_cat2">Kategorie2</string>
-    <string name="me_next">Gegen folgende Freunde musst du noch spielen:</string>
-    <string name="enemy_next">Folgende Freunde haben noch offene Spiele gegen dich:</string>
+    <string name="me_next">Hier bist du am Zug:</string>
+    <string name="enemy_next">Folgende Gegner sind dran:</string>
 
     <!-- KategorieActivity.class -->
     <string name="title_activity_offenespiele">Offene Spiele</string>

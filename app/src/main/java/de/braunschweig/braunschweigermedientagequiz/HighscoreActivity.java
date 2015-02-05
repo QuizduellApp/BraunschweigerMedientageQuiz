@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -19,6 +20,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -29,10 +31,7 @@ public class HighscoreActivity extends Activity {
     SpielData spielData;
     private static final String TAG_SPIEL_DATA = "spielData";
 
-    ArrayAdapter<String> user;
-    ArrayAdapter<String> score;
-    ListView userlistview;
-    ListView scoreListview;
+    ListView highscoreListView;
 
     // Progress Dialog
     private ProgressDialog pDialog;
@@ -55,20 +54,12 @@ public class HighscoreActivity extends Activity {
         // Highscore Liste im Hintergrund ermitteln
         new GetHighscores().execute();
 
-        // Highscore Liste zuweisen
-        ArrayList<String> userList = new ArrayList<String>();
-        user = new ArrayAdapter<String>(this,R.layout.simplerow,userList);
-
-        ArrayList<String> scoreList = new ArrayList<String>();
-        score = new ArrayAdapter<String>(this,R.layout.simplerow,scoreList);
-
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
         // Layout setzen
         setContentView(R.layout.activity_highscore);
-        userlistview = (ListView) findViewById(R.id.listView_user);
-        scoreListview = (ListView) findViewById(R.id.listView_score);
+        highscoreListView = (ListView) findViewById(R.id.listViewHighscore);
 
         // Button zurück
         Button abbrechen = (Button) findViewById(R.id.buttonstepback);
@@ -122,6 +113,7 @@ public class HighscoreActivity extends Activity {
 
                             int lengthJsonArr = points.length();
 
+                            ArrayList<HashMap<String, String>> mylist = new ArrayList<HashMap<String, String>>();
                             for(int i=0; i < lengthJsonArr; i++) {
                                 // Get Objekt für jedes Spiel
                                 JSONObject JSONchild = points.getJSONObject(i);
@@ -132,11 +124,15 @@ public class HighscoreActivity extends Activity {
                                 Log.d("Benutzername: ", username);
                                 Log.d("Highscore: ", punkte);
 
-                                user.add(username);
-                                score.add(punkte);
+                                // Liste befüllen
+                                HashMap<String, String> map = new HashMap<String, String>();
+                                map.put("name", username);
+                                map.put("highscore", ""+punkte);
+                                mylist.add(map);
                             }
-                            userlistview.setAdapter(user);
-                            scoreListview.setAdapter(score);
+                            SimpleAdapter listHighscore = new SimpleAdapter(getApplicationContext(), mylist, R.layout.two_column_row,
+                                    new String[] {"name", "highscore"}, new int[] {R.id.listName, R.id.listHighscore});
+                            highscoreListView.setAdapter(listHighscore);
                         }else{
                             // user with bid not found
                         }
