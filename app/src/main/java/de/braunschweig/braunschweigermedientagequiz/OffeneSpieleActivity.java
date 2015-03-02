@@ -45,7 +45,7 @@ public class OffeneSpieleActivity extends Activity{
     private static final String TAG_SPIEL_DATA = "spielData";
 
     // Progress Dialog
-    private ProgressDialog pDialog;
+    private ProgressDialog pDialog = null;
     private int fertigCount;
     //private ProgressDialog nDialog;
 
@@ -67,6 +67,14 @@ public class OffeneSpieleActivity extends Activity{
         Intent i = getIntent();
         spielData = (SpielData) i.getSerializableExtra("spielData");
 
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
+        //* Layout setzen */
+        setContentView(R.layout.activity_opengames);
+        friendlistview = (ListView) findViewById(R.id.gamesListView);
+        vsfriendlistview = (ListView) findViewById(R.id.opengamesListView);
+
         // Offene Spiele abrufen
         new GetOpenGames().execute();
         new GetOpenGamesAgainst().execute();
@@ -80,15 +88,6 @@ public class OffeneSpieleActivity extends Activity{
         spiele = new ArrayAdapter<String>(this,R.layout.simplerow,gamesidList);
         ArrayList<String> benutzerIdList = new ArrayList<String>();
         benutzerId = new ArrayAdapter<String>(this,R.layout.simplerow,benutzerIdList);
-
-
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
-
-        //* Layout setzen */
-        setContentView(R.layout.activity_opengames);
-        friendlistview = (ListView) findViewById(R.id.gamesListView);
-        vsfriendlistview = (ListView) findViewById(R.id.opengamesListView);
 
         // Liste anklickbar machen
         friendlistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -167,6 +166,9 @@ public class OffeneSpieleActivity extends Activity{
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+
+            if (pDialog != null) return;
+
             pDialog = new ProgressDialog(OffeneSpieleActivity.this);
             pDialog.setMessage("Offene Spiele werden geladen...");
             pDialog.setIndeterminate(false);
@@ -258,6 +260,14 @@ public class OffeneSpieleActivity extends Activity{
         protected void onPreExecute() {
             super.onPreExecute();
             // Progress Dialog im anderen Threat gestartet
+
+            if (pDialog != null) return;
+
+            pDialog = new ProgressDialog(OffeneSpieleActivity.this);
+            pDialog.setMessage("Offene Spiele werden geladen...");
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(true);
+            pDialog.show();
         }
 
         /**

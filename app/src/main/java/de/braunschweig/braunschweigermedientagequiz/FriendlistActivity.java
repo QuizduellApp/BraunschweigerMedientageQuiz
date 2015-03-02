@@ -87,21 +87,21 @@ public class FriendlistActivity extends Activity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // Layout setzen
+        setContentView(R.layout.activity_friendlist);
+        friendlistview = (ListView) findViewById(R.id.friendListView);
+
         // Benutzerdaten laden
         Intent i = getIntent();
         spielData = (SpielData)i.getSerializableExtra(TAG_SPIEL_DATA);
-
-        // Freunde im Hintergrund laden
-        new GetFriends().execute();
 
         ArrayList<String> friendlist = new ArrayList<String>();
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        // Layout setzen
-        setContentView(R.layout.activity_friendlist);
-        friendlistview = (ListView) findViewById(R.id.friendListView);
+        // Freunde im Hintergrund laden
+        new GetFriends().execute();
 
         /*
         *  Neues Spiel starten nach Klick auf einen Spieler in der Freundesliste

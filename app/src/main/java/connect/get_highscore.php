@@ -14,9 +14,9 @@ $con = $db->connect();
 if (isset($_GET["bid"])) {
     $bid = intval($_GET['bid']);
 
-$query = "SELECT Benutzer.Benutzername, Benutzer.Highscore
+$query = "SELECT Benutzername, Highscore
           FROM Benutzer
-          GROUP BY Benutzer.Highscore DESC
+          ORDER BY Highscore DESC
           LIMIT 10";
 file_put_contents("get_highscore_log.txt",$query);
 $result = mysql_query($query);
